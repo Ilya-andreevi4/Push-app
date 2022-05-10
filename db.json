@@ -1,0 +1,29 @@
+{
+  "configs": [
+    {
+      "id": 1,
+      "title": "Telemed",
+      "system": "IOS Push"
+    },
+    {
+      "id": 2,
+      "title": "Telemed",
+      "system": "Android Push"
+    },
+    {
+      "id": 3,
+      "title": "Forum",
+      "system": "IOS Push"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}
