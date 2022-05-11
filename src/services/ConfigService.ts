@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 import { IConfig } from "../app/models/IConfig";
 
 export const configAPI = createApi({
-  reducerPath: 'configAPI',
+  reducerPath: 'postAPI',
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000'}),
   tagTypes:['Config'],
   endpoints: (build) => ({
@@ -16,11 +16,10 @@ export const configAPI = createApi({
       providesTags: result => ['Config']
     }),
     createConfig: build.mutation<IConfig, IConfig>({
-      query: (config) => ({
+      query: ({title, system}) => ({
         url: '/configs',
         method: 'POST',
-        title: config,
-        system: config
+        body: {title, system}
       }),
       invalidatesTags: ['Config']
     }),
@@ -28,8 +27,7 @@ export const configAPI = createApi({
       query: (config) => ({
         url: `/configs/${config.id}`,
         method: 'PUT',
-        title: config,
-        system: config
+        body: config
       }),
       invalidatesTags: ['Config']
     }),

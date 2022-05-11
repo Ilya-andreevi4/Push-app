@@ -1,8 +1,8 @@
 import { Button, Typography} from "@mui/material";
 import React from "react";
-import CreateConfigDialog from "../../app/models/CreateConfigDialog";
-import { IConfig } from "../../app/models/IConfig";
-import { configAPI } from "../../services/ConfigService";
+import CreateConfigDialog from "./CreateConfigDialog";
+import { IConfig } from "../../../app/models/IConfig";
+import { configAPI } from "../../../services/ConfigService";
 import ConfigItem from "./ConfigItem";
 
 const ConfigContainer = () => {

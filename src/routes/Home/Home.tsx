@@ -1,5 +1,5 @@
 import { Grid, Typography, Box} from "@mui/material";
-import ConfigContainer from "../../features/config/ConfigContainer";
+import ConfigContainer from "./ConfigList/ConfigContainer";
 
 function Home() {
   return (
@@ -16,6 +16,9 @@ function Home() {
         justifyContent="flex-start"
         sx={{p:0, ml:0}}
       >
+
+        {/* Work on it */}
+
         <Grid item xs={5}
           alignItems="stretch"
           sx={{
@@ -29,6 +32,10 @@ function Home() {
           </Typography>
           <ConfigContainer />
         </Grid>
+        
+        {/* Work on it */}
+
+
         <Grid item xs={5} 
           alignItems="stretch"
           sx={{

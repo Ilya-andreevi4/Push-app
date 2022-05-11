@@ -1,14 +1,14 @@
-import { Button, Dialog, DialogTitle, TextField } from "@mui/material";
+import { Button, Container, Dialog, DialogTitle, TextField } from "@mui/material";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { configAPI } from "../../services/ConfigService";
-import { IConfig } from "./IConfig";
+import { configAPI } from "../../../services/ConfigService";
+import { IConfig } from "../../../app/models/IConfig";
 
 export function CreateConfigDialog() {
   
   const [isLoading, setIsLoading] = useState(false);
-  const {register, handleSubmit} = useForm();
   const [open, setOpen] = React.useState(false);
+  const {register, handleSubmit} = useForm();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -18,10 +18,18 @@ export function CreateConfigDialog() {
   }
   const [createConfig] = configAPI.useCreateConfigMutation()  
 
+//   const handleCreateTest = async (data:any) => {
+//     const {title, system} = data
+//     await createConfig({title, system, body: data, } as IConfig)
+// }
+
   const handleCreate = async (data:any) => {
+    
+    const {title, system} = data
+
       try {
         setIsLoading(true)
-        await createConfig(data as IConfig)
+        await createConfig({title, system} as IConfig)
       } catch (e){
         console.log(e)
       } finally{
@@ -30,7 +38,7 @@ export function CreateConfigDialog() {
   }
 
   return (
-    <div>
+    <Container>
       <Button variant="contained" color="secondary" onClick={handleClickOpen}>
         Добавить
       </Button>
@@ -40,7 +48,6 @@ export function CreateConfigDialog() {
           <TextField
             name="title"
             margin="normal"
-            id="title"
             inputRef={register}
             fullWidth={true}
             label="Title"
@@ -49,7 +56,6 @@ export function CreateConfigDialog() {
           <TextField
             name="system"
             margin="normal"
-            id="system"
             inputRef={register}
             label="System"
             defaultValue=""
@@ -72,7 +78,7 @@ export function CreateConfigDialog() {
           </Button>
         </form>
       </Dialog>
-    </div>
+    </Container>
   );
 }
 

@@ -1,6 +1,6 @@
 import { Button, Grid } from '@mui/material';
 import React, { FC } from 'react';
-import { IConfig } from '../../app/models/IConfig';
+import { IConfig } from '../../../app/models/IConfig';
 
 interface ConfigItemProps {
   config: IConfig;
