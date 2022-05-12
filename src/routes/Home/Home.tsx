@@ -17,8 +17,6 @@ function Home() {
         sx={{p:0, ml:0}}
       >
 
-        {/* Work on it */}
-
         <Grid item xs={5}
           alignItems="stretch"
           sx={{
@@ -32,8 +30,6 @@ function Home() {
           </Typography>
           <ConfigContainer />
         </Grid>
-        
-        {/* Work on it */}
 
 
         <Grid item xs={5} 

@@ -7,7 +7,7 @@ export const configAPI = createApi({
   tagTypes:['Config'],
   endpoints: (build) => ({
     fetchAllConfigs: build.query<IConfig[], number>({
-      query: (limit = 5) => ({
+      query: (limit = 10) => ({
         url: '/configs',
         params: {
           _limit: limit
@@ -38,5 +38,5 @@ export const configAPI = createApi({
       }),
       invalidatesTags: ['Config']
     })
-})
+  })
 })

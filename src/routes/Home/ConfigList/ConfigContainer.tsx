@@ -7,7 +7,7 @@ import ConfigItem from "./ConfigItem";
 
 const ConfigContainer = () => {
 
-  const {data: configs, error, isLoading, refetch} = configAPI.useFetchAllConfigsQuery(5)
+  const {data: configs, error, isLoading, refetch} = configAPI.useFetchAllConfigsQuery(10)
   const [deleteConfig] = configAPI.useDeleteConfigMutation()
   
   

@@ -1,6 +1,5 @@
-import { Button, Container, Dialog, DialogTitle, TextField } from "@mui/material";
+import { Button, Container, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
 import { configAPI } from "../../../services/ConfigService";
 import { IConfig } from "../../../app/models/IConfig";
 
@@ -8,7 +7,8 @@ export function CreateConfigDialog() {
   
   const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = React.useState(false);
-  const {register, handleSubmit} = useForm();
+  const [title, setTitle] = React.useState("");
+  const [system, setSystem] = React.useState("");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -18,18 +18,11 @@ export function CreateConfigDialog() {
   }
   const [createConfig] = configAPI.useCreateConfigMutation()  
 
-//   const handleCreateTest = async (data:any) => {
-//     const {title, system} = data
-//     await createConfig({title, system, body: data, } as IConfig)
-// }
-
   const handleCreate = async (data:any) => {
-    
-    const {title, system} = data
 
       try {
         setIsLoading(true)
-        await createConfig({title, system} as IConfig)
+        await createConfig(data as IConfig)
       } catch (e){
         console.log(e)
       } finally{
@@ -44,42 +37,42 @@ export function CreateConfigDialog() {
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Create Config</DialogTitle>
-        <form onSubmit={handleSubmit(handleCreate)}>
+        <DialogContent>
+        <form
+            id="myform"
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleCreate({title, system});
+              handleClose();
+            }}
+          >
           <TextField
-            name="title"
-            margin="normal"
-            inputRef={register}
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
             fullWidth={true}
             label="Title"
             variant="filled"
           />
           <TextField
-            name="system"
-            margin="normal"
-            inputRef={register}
+            value={system}
+            onChange={(e) => setSystem(e.target.value)}
+            fullWidth={true}
             label="System"
-            defaultValue=""
-            fullWidth
-            variant="standard"
+            variant="filled"
           />
-          <Button onClick={handleClose} 
-            variant="contained"
-            color="primary"
-          >
+          </form>
+          </DialogContent>
+          <DialogActions>
+          <Button variant="contained" onClick={() => setOpen(false)}>
             Cancel
           </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            type="submit"
-            disabled={isLoading}
-          >
+          <Button variant="contained" type="submit" form="myform" disabled={isLoading}>
             Create
           </Button>
-        </form>
+        </DialogActions>
       </Dialog>
     </Container>
   );
 }
 
-export default CreateConfigDialog
+export default CreateConfigDialog;

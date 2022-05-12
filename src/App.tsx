@@ -6,7 +6,8 @@ import {
   Container, 
   Toolbar,
   Box, 
-  Typography} from '@mui/material';
+  Typography,
+  Grid} from '@mui/material';
 import { Link } from 'react-router-dom';
 import AppRoutes from './routes/Routes';
 
@@ -24,15 +25,35 @@ function App() {
                 Test App
             </Typography>
             <Box sx={{ flexGrow: 1 }} />
-            <div >
-              <Button 
-                color="inherit" 
-                component={Link} to="/" 
-                sx={{ flexGrow: 1, display: { xs: "flex"} }}
-              >
-                Home
-              </Button>
-            </div>
+            <Grid container spacing={3} >
+              <Grid item xs={3}>
+                <Button 
+                  color="inherit" 
+                  component={Link} to="/" 
+                  sx={{ flexGrow: 1, display: { xs: "flex"} }}
+                >
+                  Home
+                </Button>
+              </Grid>
+              <Grid item xs={3}>
+                <Button 
+                  color="inherit" 
+                  component={Link} to="/reg" 
+                  sx={{ flexGrow: 1, display: { xs: "flex"} }}
+                >
+                  Sign Up
+                </Button>
+              </Grid>
+              <Grid item xs={3}>
+                <Button 
+                  color="inherit" 
+                  component={Link} to="/log" 
+                  sx={{ flexGrow: 1, display: { xs: "flex"} }}
+                >
+                  Log In
+                </Button>
+              </Grid>
+            </Grid>
           </Toolbar>
         </Container>
       </AppBar>

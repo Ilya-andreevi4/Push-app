@@ -8,17 +8,12 @@
     {
       "id": 2,
       "title": "Telemed",
-      "system": "Android Push"
-    },
-    {
-      "id": 3,
-      "title": "Forum",
       "system": "IOS Push"
     },
     {
-      "id": 4,
-      "title": "Test",
-      "system": "Android Push"
+      "id": 3,
+      "title": "Telemed",
+      "system": "IOS Push"
     }
   ],
   "users": [
@@ -33,6 +28,12 @@
       "lastName": "typi",
       "mail": "codetypi@mail.com",
       "password": "321321"
+    },
+    {
+      "firstName": "Илья",
+      "lastName": "Андреевич",
+      "email": "ilya-andreevi4@mail.ru",
+      "password": "123123"
     }
   ]
 }

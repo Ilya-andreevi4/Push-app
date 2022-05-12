@@ -17,8 +17,11 @@ const initialState: UserState = {
 export const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: { addUser(state, action: PayloadAction<IUser>) {
+    state.users.push(action.payload)    
+  }},
   extraReducers: {
+
     [fetchUsers.fulfilled.type]: (state, action: PayloadAction<IUser[]>) => {
       state.isLoading = false;
       state.error = '';

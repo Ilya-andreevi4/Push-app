@@ -15,17 +15,27 @@ export const fetchUsers = createAsyncThunk(
 )
 
 
-// export const addUser = createAsyncThunk(
-//   'user/addUser',
-//   async (data, {rejectWithValue, dispatch}) => {
-//     try { 
-//       const user = {
-
-//       }
-//     const response = await axios.post<IUser[]>('http://localhost:5000/users')
-//     return response.data;
-//     } catch(e) {
-//       return rejectWithValue(`${e} Не удалось создать профиль`)
-//     }
-//   }
-// )
+export const addUser = createAsyncThunk(
+  'user/addUser',
+  async (data:IUser, {rejectWithValue, dispatch}) => {
+    try { 
+      const user = {
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+        password: data.password
+      }
+    const response = await fetch('http://localhost:5000/users', {
+      method: 'POST',
+      body: JSON.stringify(user)
+    })
+    if (!response.ok) {
+      throw new Error('Can\'t registration user. Server error');
+    }
+    const userData = await response.json();
+    dispatch(addUser(userData))
+    } catch(e) {
+      return rejectWithValue(`${e} Не удалось создать профиль`)
+    }
+  }
+)

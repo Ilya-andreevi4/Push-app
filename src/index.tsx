@@ -7,6 +7,7 @@ import reportWebVitals from './reportWebVitals';
 import './index.css';
 import { ThemeProvider, createTheme } from '@mui/material';
 import { BrowserRouter as Router } from 'react-router-dom';
+import './firebase';
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);
