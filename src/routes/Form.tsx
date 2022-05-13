@@ -1,13 +1,18 @@
-import { useState } from "react";
+import { FC, useState } from "react";
 import {
   TextField,
   Grid,
   Button,
 } from "@mui/material";
 
-const Form = ({title, handleClick}:any) => {
+interface FormProps {
+  title: string;
+  handleClick: (email:any, password:any) => void;
+}
+
+const Form: FC<FormProps> = ({title, handleClick}) => {
   const [email, setEmail] = useState('');
-  const [pass, setPass] = useState('');
+  const [password, setPassword] = useState('');
 
   return (        
     <Grid container spacing={3}>
@@ -16,7 +21,7 @@ const Form = ({title, handleClick}:any) => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               fullWidth={true}
-              label="First name"
+              label="Email"
               variant="filled"
             />
       </Grid>
@@ -24,10 +29,10 @@ const Form = ({title, handleClick}:any) => {
       <Grid item xs={12}>
         
             <TextField
-              value={pass}
-              onChange={(e) => setPass(e.target.value)}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               fullWidth={true}
-              label="Last name"
+              label="Password"
               variant="filled"
             />
       </Grid>
@@ -35,14 +40,14 @@ const Form = ({title, handleClick}:any) => {
         <Button
           variant="contained"
           color="primary"
-          onClick={() => handleClick(email, pass)}
+          sx={{}}
+          onClick={() => handleClick(email, password)}
         >
             {title}
         </Button>
       </Grid>
     </Grid>
   )
-
 }
 
 export {Form}

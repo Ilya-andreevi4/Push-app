@@ -1,5 +1,7 @@
 import { Grid, Typography, Box} from "@mui/material";
 import ConfigContainer from "./ConfigList/ConfigContainer";
+import PushCreator from "./PushCreator/PushCreator";
+
 
 function Home() {
   return (
@@ -42,6 +44,9 @@ function Home() {
           <Typography variant="h5" gutterBottom>
               Создание Пуш-уведомлений
           </Typography>
+          
+          <PushCreator />
+          
         </Grid>
         <Grid item xs={2} 
           alignItems="stretch"
@@ -61,7 +66,7 @@ function Home() {
         </Grid>
       </Grid>
     </Box>
-  );
+  )
 }
 
 export default Home

@@ -1,19 +1,19 @@
 {
   "configs": [
     {
-      "id": 1,
       "title": "Telemed",
-      "system": "IOS Push"
+      "system": "IOS Push",
+      "id": 1
     },
     {
-      "id": 2,
       "title": "Telemed",
-      "system": "IOS Push"
+      "system": "Android Push",
+      "id": 2
     },
     {
-      "id": 3,
-      "title": "Telemed",
-      "system": "IOS Push"
+      "title": "Forum",
+      "system": "IOS Push",
+      "id": 3
     }
   ],
   "users": [

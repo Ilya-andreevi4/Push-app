@@ -12,10 +12,11 @@ export const userAPI = createApi({
         url: '/users',
         method: 'POST',
         body: {
-          firstName: data.firstName,
-          lastName: data.lastName,
+          // firstName: data.firstName,
+          // lastName: data.lastName,
           email: data.email,
-          password: data.password
+          token: data.token,
+          id: data.id,
         }
       }),
       invalidatesTags: ['User']
