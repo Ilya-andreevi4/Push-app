@@ -33,58 +33,60 @@ export function PushCreator() {
   }
 
   return (
-    <Container>
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
-          <Box sx={{ minWidth: 120 }}>
-            {apiLoading && 
-              <Typography>
-                Идёт загрузка конфигов...
-              </Typography>
-            }
-            {error && 
-              <Typography>
-                Произошла ошибка при загрузке конфигов.
-              </Typography>
-            }
-            {configs &&
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Config</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={ConfigId}
-                label="Config"
-                onChange={handleChange}
-              >
-                {configs.map(config =>
-                  <MenuItem value={config.id}>{config.id}. {config.title} - {config.system}</MenuItem>
-                )}
-              </Select>
-            </FormControl>
-            }
-          </Box>
+    <Container maxWidth="xs" >
+      <div className="push-create-container">
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <Box >
+              {apiLoading && 
+                <Typography>
+                  Идёт загрузка конфигов...
+                </Typography>
+              }
+              {error && 
+                <Typography>
+                  Произошла ошибка при загрузке конфигов.
+                </Typography>
+              }
+              {configs &&
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Config</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={ConfigId}
+                  label="Config"
+                  onChange={handleChange}
+                >
+                  {configs.map(config =>
+                    <MenuItem value={config.id}>{config.id}. {config.title} - {config.system}</MenuItem>
+                  )}
+                </Select>
+              </FormControl>
+              }
+            </Box>
+          </Grid>
+          <Grid item xs={12}>
+                <TextField
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  fullWidth={true}
+                  label="Message"
+                  variant="filled"
+                />
+          </Grid>
+          <Grid item xs={12}>
+            <Button
+              variant="contained"
+              color="primary"
+              disabled={isLoading}
+              onClick={() => handleSubmit(ConfigId, message)}
+            >
+              Submit
+            </Button>
+          </Grid>
         </Grid>
-        <Grid item xs={12}>
-              <TextField
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                fullWidth={true}
-                label="Message"
-                variant="filled"
-              />
-        </Grid>
-        <Grid item xs={12}>
-          <Button
-            variant="contained"
-            color="primary"
-            disabled={isLoading}
-            onClick={() => handleSubmit(ConfigId, message)}
-          >
-            Submit
-          </Button>
-        </Grid>
-      </Grid>
+      </div>
     </Container>
   );
 }

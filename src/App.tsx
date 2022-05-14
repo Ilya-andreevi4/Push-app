@@ -7,7 +7,8 @@ import {
   Toolbar,
   Box, 
   Typography,
-  Grid} from '@mui/material';
+  Grid,
+  ButtonGroup} from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAuth } from './app/hooks/hooks';
 import AppRoutes from './routes/Routes';
@@ -20,12 +21,12 @@ function App() {
 
   const dispatch = useAppDispatch();
 
-  return isAuth ? (
+  return (
     <div className="App">
       <AppBar position='static'>
         <Container maxWidth="xl">
           <Toolbar>
-            <Typography>
+            <Typography variant='h4' gutterBottom>
                 My Test App
             </Typography>
             <Box sx={{ flexGrow: 1 }} />
@@ -38,70 +39,39 @@ function App() {
                 >
                   Home
                 </Button>
-                <Button 
+                {isAuth &&(
+                  <Button 
                   color="inherit" 
                   onClick={()=> dispatch(removeUser())} 
                   sx={{ flexGrow: 1, display: { xs: "flex"} }}
                 >
                   Log out from {email}
                 </Button>
+                )}
               </Grid>
-              <Grid item xs={9}>
-
-              </Grid>
-              
-            </Grid>
-          </Toolbar>
-        </Container>
-      </AppBar>
-      <AppRoutes />
-    </div>
-  ):(
-    <div className="App">
-      <AppBar position='static'>
-        <Container maxWidth="xl">
-          <Toolbar>
-            <Typography>
-                My Test App
-            </Typography>
-            <Grid container spacing={1}>
-              <Grid item xs={1}>
-                <Button 
-                  color="inherit" 
-                  component={Link} to="/" 
-                  sx={{ flexGrow: 1, display: { xs: "flex"} }}
-                >
-                  Home
-                </Button>
-              </Grid>
-              <Grid item xs={9}>
-
-              </Grid>
-              
-              <Grid item xs={1}>
-                <Button 
-                  color="inherit" 
-                  component={Link} to="/reg" 
-                  sx={{ flexGrow: 1, display: { xs: "flex"} }}
-                >
-                  Sign Up
-                </Button>
-              </Grid>
-              <Grid item xs={1}>
-                <Button 
-                  color="inherit" 
-                  component={Link} to="/log" 
-                  sx={{ flexGrow: 1, display: { xs: "flex"} }}
-                >
-                  Log In
-                </Button>
-              </Grid>
+              <Grid item xs={8}/>
+              {!isAuth &&(
+                  <Grid item xs={2}>
+                    <ButtonGroup disableElevation variant="contained">
+                      <Button 
+                        component={Link} to="/reg" 
+                      >
+                        Sign Up
+                      </Button>
+                      <Button 
+                        component={Link} to="/log" 
+                      >
+                        Log In
+                      </Button>
+                    </ButtonGroup>
+                  </Grid>
+                )}
             </Grid>
           </Toolbar>
         </Container>
       </AppBar>
       <AppRoutes/>
-    </div>
+    </div>  
   )
 }
 
