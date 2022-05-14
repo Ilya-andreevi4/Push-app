@@ -1,5 +1,8 @@
 import { Grid, Typography, Box} from "@mui/material";
 import ConfigContainer from "./ConfigList/ConfigContainer";
+import PushCreator from "./PushList/PushCreator";
+import PushList from "./PushList/PushList";
+
 
 function Home() {
   return (
@@ -25,7 +28,7 @@ function Home() {
             boxShadow: 3
           }}
         >
-          <Typography variant="h5" gutterBottom>
+          <Typography variant="h5" gutterBottom align="center">
               Мои Конфигурации
           </Typography>
           <ConfigContainer />
@@ -39,9 +42,12 @@ function Home() {
             p:2,
           }}
         >
-          <Typography variant="h5" gutterBottom>
+          <Typography variant="h5" gutterBottom align="center">
               Создание Пуш-уведомлений
           </Typography>
+          
+          <PushCreator />
+          
         </Grid>
         <Grid item xs={2} 
           alignItems="stretch"
@@ -51,17 +57,14 @@ function Home() {
             boxShadow: 3
           }}
         >
-          <Typography variant="body1" gutterBottom>
-              This is demo app with login, registration and updating profile
-              flows. This is demo app with login, registration and updating profile
-              flows.This is demo app with login, registration and updating profile
-              flows. This is demo app with login, registration and updating profile
-              flows.
+          <Typography variant="h5" gutterBottom align="center">
+              История сообщений
           </Typography>
+          <PushList />
         </Grid>
       </Grid>
     </Box>
-  );
+  )
 }
 
 export default Home

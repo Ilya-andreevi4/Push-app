@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import {
-  TextField,
   Grid,
   Container,
   Button,
@@ -8,28 +7,29 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 // import { addUser } from "../../app/store/reducers/ActionCreators";
-import { userAPI } from "../../services/UserService";
-import { IUser } from "../../app/models/IUser";
+// import { userAPI } from "../../services/UserService";
+// import { IUser } from "../../app/models/IUser";
+import { SignUp } from "./SignUp";
 
-function Registration() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [firstName, setFirstName] = React.useState("");
-  const [lastName, setLastName] = React.useState("");
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [createUser] = userAPI.useCreateUserMutation()
+function RegPage() {
+  // const [isLoading, setIsLoading] = useState(false);
+  // const [firstName, setFirstName] = React.useState("");
+  // const [lastName, setLastName] = React.useState("");
+  // const [email, setEmail] = React.useState("");
+  // const [password, setPassword] = React.useState("");
+  // const [createUser] = userAPI.useCreateUserMutation()
 
-  const handleCreate = async (data:any) => {
-    try {
-      setIsLoading(true);
-      console.log(data);
-      await createUser(data as IUser);
-    } catch (e){
-      console.log(e);
-    } finally{
-      setIsLoading(false);
-  }
-  };
+  // const handleCreate = async (data:any) => {
+  //   try {
+  //     setIsLoading(true);
+  //     console.log(data);
+  //     await createUser(data as IUser);
+  //   } catch (e){
+  //     console.log(e);
+  //   } finally{
+  //     setIsLoading(false);
+  // }
+  // };
 
   return (
     <Container maxWidth="xs" sx={{mt:"5rem"}}>
@@ -38,7 +38,17 @@ function Registration() {
           <Typography variant="h6">Create new account</Typography>
         </Grid>
       </Grid>
-      <form onSubmit={(e) => {
+
+      <SignUp/>
+      
+      <Button
+        color="inherit"
+        component={Link}
+        to="/log"
+      >
+          Already have an account?
+      </Button>
+      {/* <form onSubmit={(e) => {
               e.preventDefault();
               handleCreate({firstName, lastName, email, password});
             }}>
@@ -102,9 +112,9 @@ function Registration() {
             </Button>
           </Grid>
         </Grid>
-      </form>
+      </form> */}
     </Container>
   );
 }
 
-export default Registration;
+export default RegPage;
