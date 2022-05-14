@@ -28,8 +28,8 @@ export const pushAPI = createApi({
       invalidatesTags: ['Push']
     }),
     deletePush: build.mutation<IPush, IPush>({
-      query: (config) => ({
-        url: `/push/${config.idConfigs}`,
+      query: (push) => ({
+        url: `/push/${push.idConfigs}`,
         method: 'DELETE'
       }),
       invalidatesTags: ['Push']

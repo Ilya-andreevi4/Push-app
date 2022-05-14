@@ -1,8 +1,10 @@
 import { configureStore, ThunkAction, Action, combineReducers } from '@reduxjs/toolkit';
 import { configAPI } from '../../services/ConfigService';
+import { pushAPI } from '../../services/PushService';
 import userReducer from './reducers/UserSlice'
 const rootReducer = combineReducers({
   [configAPI.reducerPath]: configAPI.reducer,
+  [pushAPI.reducerPath]: pushAPI.reducer,
   userReducer
 })
 

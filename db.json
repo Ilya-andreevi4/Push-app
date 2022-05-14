@@ -2,11 +2,6 @@
   "configs": [
     {
       "title": "Telemed",
-      "system": "IOS Push",
-      "id": 1
-    },
-    {
-      "title": "Telemed",
       "system": "Android Push",
       "id": 2
     },
@@ -14,6 +9,31 @@
       "title": "Forum",
       "system": "IOS Push",
       "id": 3
+    },
+    {
+      "title": "World",
+      "system": "IOS",
+      "id": 4
+    }
+  ],
+  "push": [
+    {
+      "id": 3,
+      "idConfigs": 3,
+      "message": "test",
+      "date": "2022-05-14T03:38:35.780Z"
+    },
+    {
+      "idConfigs": 3,
+      "message": "Илья",
+      "date": "2022-05-14T04:42:12.512Z",
+      "id": 4
+    },
+    {
+      "idConfigs": 4,
+      "message": "123",
+      "date": "2022-05-14T04:53:26.994Z",
+      "id": 5
     }
   ],
   "users": [
