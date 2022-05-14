@@ -14,14 +14,25 @@
       "title": "World",
       "system": "IOS",
       "id": 4
+    },
+    {
+      "title": "Store",
+      "system": "Android",
+      "id": 5
     }
   ],
   "push": [
     {
+      "idConfigs": 5,
+      "message": "Wow!",
+      "date": "Sat May 14 2022",
+      "id": 8
+    },
+    {
       "idConfigs": 4,
-      "message": "123",
-      "date": "2022-05-14T04:53:26.994Z",
-      "id": 5
+      "message": "Пример уведомления на пользовательское устройство.",
+      "date": "Sat May 14 2022",
+      "id": 9
     }
   ],
   "users": [

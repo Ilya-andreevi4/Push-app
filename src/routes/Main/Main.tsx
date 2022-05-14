@@ -1,26 +1,19 @@
-import { Grid, Typography, Box} from "@mui/material";
+import { Grid, Typography} from "@mui/material";
 import ConfigContainer from "./ConfigList/ConfigContainer";
 import PushCreator from "./PushList/PushCreator";
 import PushList from "./PushList/PushList";
 
 
-function Home() {
+function Main() {
   return (
-    <Box 
-      maxWidth="xl"
-      sx={{
-        p:0,
-        ml:0
-      }}
-    >
+    <div className="Content">
       <Grid container
         direction="row"
         alignItems="stretch"
         justifyContent="flex-start"
         sx={{p:0, ml:0}}
       >
-
-        <Grid item xs={5}
+        <Grid item xs={4}
           alignItems="stretch"
           sx={{
             p:2,
@@ -33,8 +26,6 @@ function Home() {
           </Typography>
           <ConfigContainer />
         </Grid>
-
-
         <Grid item xs={5} 
           alignItems="stretch"
           sx={{
@@ -45,15 +36,15 @@ function Home() {
           <Typography variant="h5" gutterBottom align="center">
               Создание Пуш-уведомлений
           </Typography>
-          
           <PushCreator />
-          
         </Grid>
-        <Grid item xs={2} 
+        <Grid item xs={3} 
           alignItems="stretch"
           sx={{
             justifyContent:"flex-end",
             p:2,
+            pr:3,
+            pl:3,
             boxShadow: 3
           }}
         >
@@ -63,8 +54,8 @@ function Home() {
           <PushList />
         </Grid>
       </Grid>
-    </Box>
+    </div>
   )
 }
 
-export default Home
+export default Main

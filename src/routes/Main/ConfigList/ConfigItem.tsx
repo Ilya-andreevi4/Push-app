@@ -28,7 +28,7 @@ const ConfigItem: FC<ConfigItemProps> = ({config, remove}) => {
         <Button
           onClick={handleRemove}
           variant="contained"
-          color="warning"
+          color="error"
           sx={{
             height:20,
             width:15,

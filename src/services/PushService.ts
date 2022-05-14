@@ -22,14 +22,14 @@ export const pushAPI = createApi({
         body: {
           idConfigs, 
           message, 
-          date: new Date(),
+          date: new Date().toDateString(),
         }
       }),
       invalidatesTags: ['Push']
     }),
     deletePush: build.mutation<IPush, IPush>({
       query: (push) => ({
-        url: `/push/${push.idConfigs}`,
+        url: `/push/${push.id}`,
         method: 'DELETE'
       }),
       invalidatesTags: ['Push']

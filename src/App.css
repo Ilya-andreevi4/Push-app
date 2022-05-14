@@ -4,6 +4,16 @@
   box-sizing: border-box;
 }
 
+.AppBar{
+  padding: 10px 0;
+}
+
+.Content{
+  padding: 0;
+  margin: 0;
+  width: 100vw;
+}
+
 .config__list {
   width: 100%;
   padding: 20px;
@@ -40,3 +50,14 @@
   margin: 5; 
   padding: 3;
 }
+
+.push {
+  background-color: rgb(238, 238, 238);
+  padding: 10px;
+  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.712);
+  margin-top: 15px;
+  width: 100%;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+} 

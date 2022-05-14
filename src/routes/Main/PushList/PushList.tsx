@@ -15,8 +15,6 @@ const PushList = () => {
 
   return (
     <div>
-      
-      <div className="config__list">
         <Button 
             color="secondary" 
             onClick={() => refetch() 
@@ -36,7 +34,6 @@ const PushList = () => {
         {push && push.map(push =>
           <PushItem remove={handleRemove} key={push.id} push={push}/>
         )}
-      </div>
     </div>
   )
 }
