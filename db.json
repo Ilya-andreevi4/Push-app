@@ -19,6 +19,11 @@
       "title": "Store",
       "system": "Android",
       "id": 5
+    },
+    {
+      "title": "123",
+      "system": "Windows",
+      "id": 6
     }
   ],
   "push": [
@@ -29,10 +34,16 @@
       "id": 8
     },
     {
-      "idConfigs": 4,
-      "message": "Пример уведомления на пользовательское устройство.",
+      "idConfigs": 5,
+      "message": "Хай!",
       "date": "Sat May 14 2022",
-      "id": 9
+      "id": 10
+    },
+    {
+      "idConfigs": 4,
+      "message": "Привет!",
+      "date": "Sun May 15 2022",
+      "id": 11
     }
   ],
   "users": [

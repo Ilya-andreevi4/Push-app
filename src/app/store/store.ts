@@ -12,7 +12,7 @@ export const setupStore = () => {
   return configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(configAPI.middleware)
+    getDefaultMiddleware().concat(configAPI.middleware, pushAPI.middleware)
   });
 }
 
