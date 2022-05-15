@@ -1,9 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
-// import { IConfig } from "../app/models/IConfig";
 import { IUser } from "../app/models/IUser";
 
 export const userAPI = createApi({
-  reducerPath: 'postAPI',
+  reducerPath: 'userAPI',
   baseQuery: fetchBaseQuery({baseUrl: 'http://localhost:5000'}),
   tagTypes:['User'],
   endpoints: (build) => ({
@@ -12,8 +11,6 @@ export const userAPI = createApi({
         url: '/users',
         method: 'POST',
         body: {
-          // firstName: data.firstName,
-          // lastName: data.lastName,
           email: data.email,
           token: data.token,
           id: data.id,
@@ -31,7 +28,7 @@ export const userAPI = createApi({
     }),
     deleteUser: build.mutation<IUser, IUser>({
       query: (user) => ({
-        url: `/configs/${user.id}`,
+        url: `/user/${user.id}`,
         method: 'DELETE'
       }),
       invalidatesTags: ['User']

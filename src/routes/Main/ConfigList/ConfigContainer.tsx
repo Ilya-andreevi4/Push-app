@@ -25,8 +25,9 @@ const ConfigContainer = () => {
       <div className="config__list">
         <Button 
           color="secondary" 
-          onClick={() => refetch() 
-        }>
+          onClick={() => refetch()}
+          sx={{float:"right", mb:1}}
+        >
           Refetch
         </Button>
         {isLoading && 

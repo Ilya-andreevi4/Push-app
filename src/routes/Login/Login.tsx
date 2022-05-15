@@ -27,20 +27,24 @@ const Login = () => {
     <Container maxWidth="xs" sx={{mt:"5rem"}}>
       <Grid container spacing={3} >
         <Grid item xs={12}>
-          <Typography variant="h6">Введите данные для входа</Typography>
+          <Typography variant="h6">Account login</Typography>
         </Grid>
-        <Form 
-          title="log in"
-          handleClick={handlerLogin}
-        />
-      </Grid>
-      <Button
-        color="inherit"
-        component={Link}
-        to="/reg"
-      >
-          Don't have an account?
-      </Button>
+        <Grid item xs={12}>
+          <Form 
+            title="log in"
+            handleClick={handlerLogin}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Button
+            color="inherit"
+            component={Link}
+            to="/reg"
+          >
+              Don't have an account?
+          </Button>
+        </Grid>        
+      </Grid>      
     </Container>
   )
 }
