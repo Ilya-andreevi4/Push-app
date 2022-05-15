@@ -16,9 +16,10 @@ const PushList = () => {
   return (
     <div>
         <Button 
-            color="secondary" 
-            onClick={() => refetch() 
-          }>
+          color="secondary" 
+          onClick={() => refetch()}
+          sx={{float:"right", mb:1}}
+        >
           Refetch
         </Button>
         {isLoading && 

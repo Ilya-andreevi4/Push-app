@@ -22,7 +22,11 @@ const PushItem: FC<PushItemProps> = ({push, remove}) => {
               <Grid item xs={6}>
               </Grid>
               <Grid item xs={6}>
-                <Typography variant='caption'>
+                <Typography variant='caption' 
+                  sx={{
+                    float:'right'
+                  }}
+                >
                   {push.date} 
                 </Typography>
               </Grid>
@@ -46,6 +50,7 @@ const PushItem: FC<PushItemProps> = ({push, remove}) => {
               variant="contained"
               color="error"
               sx={{
+                float:'right',
                 height:20,
                 width:15,
                 mt:1

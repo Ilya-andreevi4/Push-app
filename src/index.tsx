@@ -2,11 +2,11 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { setupStore } from './app/store/store';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import './index.css';
 import { ThemeProvider, createTheme } from '@mui/material';
 import { BrowserRouter as Router } from 'react-router-dom';
+import reportWebVitals from './reportWebVitals';
+import App from './App';
+import './index.css';
 import './firebase';
 
 const container = document.getElementById('root')!;

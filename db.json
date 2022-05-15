@@ -6,11 +6,6 @@
       "id": 2
     },
     {
-      "title": "Forum",
-      "system": "IOS Push",
-      "id": 3
-    },
-    {
       "title": "World",
       "system": "IOS",
       "id": 4
@@ -29,41 +24,21 @@
   "push": [
     {
       "idConfigs": 5,
-      "message": "Wow!",
-      "date": "Sat May 14 2022",
-      "id": 8
+      "message": "Message #1",
+      "date": "Sun May 15 2022",
+      "id": 13
+    },
+    {
+      "idConfigs": 2,
+      "message": "Message #2",
+      "date": "Sun May 15 2022",
+      "id": 14
     },
     {
       "idConfigs": 5,
-      "message": "Хай!",
-      "date": "Sat May 14 2022",
-      "id": 10
-    },
-    {
-      "idConfigs": 4,
-      "message": "Привет!",
+      "message": "Message #3",
       "date": "Sun May 15 2022",
-      "id": 11
-    }
-  ],
-  "users": [
-    {
-      "firstName": "typi",
-      "lastName": "code",
-      "mail": "typicode@mail.com",
-      "password": "123123"
-    },
-    {
-      "firstName": "code",
-      "lastName": "typi",
-      "mail": "codetypi@mail.com",
-      "password": "321321"
-    },
-    {
-      "firstName": "Илья",
-      "lastName": "Андреевич",
-      "email": "ilya-andreevi4@mail.ru",
-      "password": "123123"
+      "id": 15
     }
   ]
 }

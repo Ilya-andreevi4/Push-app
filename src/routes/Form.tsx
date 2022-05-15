@@ -7,7 +7,7 @@ import {
 
 interface FormProps {
   title: string;
-  handleClick: (email:any, password:any) => void;
+  handleClick: (email:string, password:string) => void;
 }
 
 const Form: FC<FormProps> = ({title, handleClick}) => {
