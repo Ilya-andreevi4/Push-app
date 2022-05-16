@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Grid,
   Container,
@@ -12,15 +12,34 @@ import { useAppDispatch } from "../../app/hooks/hooks";
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 
 function RegPage() {
+  
+  const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const handlerSignUp = (email:string, password:string) => {
+  const navigate = useNavigate(); 
+
+
+  const handlerSignUp = async (email:string, password:string) => {
     const auth = getAuth();
+    try {
+      setIsLoading(true)
+      await createUserWithEmailAndPassword(auth, email, password)
+        .then(({user}) => {        
+          dispatch(addUser({
+            email: user.email,
+            id: user.uid,
+            token: user.refreshToken,
+          }));
+          navigate('/')
+        })
+    } catch (e){
+      console.log(e)
+    } finally{
+      setIsLoading(false)
+    }
+
     createUserWithEmailAndPassword(auth, email, password)
-      .then(({user}) => {
-        console.log(user);
-        
+      .then(({user}) => {        
         dispatch(addUser({
           email: user.email,
           id: user.uid,
@@ -41,6 +60,7 @@ function RegPage() {
           <Form 
             title="sign up"
             handleClick={handlerSignUp}
+            isLoading={isLoading}
           />
         </Grid>
         <Grid item xs={12}>
