@@ -8,9 +8,10 @@ import {
 interface FormProps {
   title: string;
   handleClick: (email:string, password:string) => void;
+  isLoading: boolean;
 }
 
-const Form: FC<FormProps> = ({title, handleClick}) => {
+const Form: FC<FormProps> = ({title, handleClick, isLoading}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -42,6 +43,7 @@ const Form: FC<FormProps> = ({title, handleClick}) => {
           color="primary"
           sx={{}}
           onClick={() => handleClick(email, password)}
+          disabled={isLoading}
         >
             {title}
         </Button>
