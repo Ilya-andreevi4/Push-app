@@ -3,7 +3,7 @@ import { IPush } from "../app/models/IPush";
 
 export const pushAPI = createApi({
   reducerPath: 'pushAPI',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000'}),
+  baseQuery: fetchBaseQuery({ baseUrl: 'https://my-app-70669-default-rtdb.europe-west1.firebasedatabase.app'}),
   tagTypes:['Push'],
   endpoints: (build) => ({
     fetchAllPush: build.query<IPush[], number>({
