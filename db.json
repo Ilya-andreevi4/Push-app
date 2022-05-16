@@ -19,6 +19,11 @@
       "title": "123",
       "system": "Windows",
       "id": 6
+    },
+    {
+      "title": "Hi!",
+      "system": "IOS Push",
+      "id": 7
     }
   ],
   "push": [
@@ -39,6 +44,12 @@
       "message": "Message #3",
       "date": "Sun May 15 2022",
       "id": 15
+    },
+    {
+      "idConfigs": 7,
+      "message": "Privet!",
+      "date": "Sun May 15 2022",
+      "id": 16
     }
   ]
 }
