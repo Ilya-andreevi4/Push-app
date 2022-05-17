@@ -1,26 +1,34 @@
 import { Button, Typography} from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import CreateConfigDialog from "./CreateConfigDialog";
 import { IConfig } from "../../../app/models/IConfig";
 import { configAPI } from "../../../services/ConfigService";
 import ConfigItem from "./ConfigItem";
-import { db } from "../../../firebase";
-import { collection, getDocs } from "firebase/firestore";
+// import { db } from "../../../firebase";
+// import { collection, onSnapshot} from "firebase/firestore";
 
 const ConfigContainer = () => {
-  
-  const [configs, setConfigs] = useState([]);
-  const configsCollectionsRef = collection(db, "configs")
+  // const [configs, setConfigs] = useState<IConfig[]>();
+  // const configsCollectionsRef = collection(db, "configs")
 
-  useEffect(() => {
-    const getConfigs = async () => {
-      const data = await getDocs(configsCollectionsRef);
-      console.log(data);
+  // useEffect(() => {
+  //   const getConfigs = async () => {
+  //     try {
+  //       const configList = onSnapshot(configsCollectionsRef, doc => {
+  //         doc.forEach((d:any)=> {
+  //           setConfigs(prev =>[...prev, d.data()])
+  //         })
+  //       })
+  //       console.log(configList());
+  //     } catch(e: any) {
+  //       console.error(e);        
+  //     }
       
-      // setConfigs(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    }
-    getConfigs();
-  }, [])
+  //   }
+  //   return()=>{
+  //     getConfigs()
+  //   }
+  // }, [])
 
   const {data: localConfigs, error, isLoading, refetch} = configAPI.useFetchAllConfigsQuery(10)
   const [deleteConfig] = configAPI.useDeleteConfigMutation()

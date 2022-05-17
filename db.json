@@ -14,42 +14,20 @@
       "title": "Store",
       "system": "Android",
       "id": 5
-    },
-    {
-      "title": "123",
-      "system": "Windows",
-      "id": 6
-    },
-    {
-      "title": "Hi!",
-      "system": "IOS Push",
-      "id": 7
     }
   ],
   "push": [
     {
-      "idConfigs": 5,
-      "message": "Message #1",
-      "date": "Sun May 15 2022",
-      "id": 13
+      "idConfigs": "Store",
+      "message": "Test message",
+      "date": "Tue May 17 2022",
+      "id": 25
     },
     {
-      "idConfigs": 2,
-      "message": "Message #2",
-      "date": "Sun May 15 2022",
-      "id": 14
-    },
-    {
-      "idConfigs": 5,
-      "message": "Message #3",
-      "date": "Sun May 15 2022",
-      "id": 15
-    },
-    {
-      "idConfigs": 7,
-      "message": "Privet!",
-      "date": "Sun May 15 2022",
-      "id": 16
+      "idConfigs": "Store - Android",
+      "message": "Test message",
+      "date": "Tue May 17 2022",
+      "id": 29
     }
   ]
 }

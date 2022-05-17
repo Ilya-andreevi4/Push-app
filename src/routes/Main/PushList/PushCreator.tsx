@@ -11,19 +11,18 @@ export function PushCreator() {
   const [message, setMessage] = React.useState("");
   const [ConfigId, setConfigId] = React.useState("");
   
-  const {data: configs, error, isLoading:apiLoading} = configAPI.useFetchAllConfigsQuery(10)
-  const [createPush] = pushAPI.useCreatePushMutation()  
+  const {data: configs, error, isLoading:apiLoading} = configAPI.useFetchAllConfigsQuery(10);
+  const [createPush] = pushAPI.useCreatePushMutation();
 
   // Mui selector
   const handleChange = (event: SelectChangeEvent) => {
-    setConfigId(event.target.value as string);
+    setConfigId(event.target.value as any);
   };
   // Mui selector
 
   const handleSubmit = async (idConfigs:any, message:any) => {
       try {
         setIsLoading(true)
-        console.log(idConfigs, message);
         await createPush({idConfigs, message} as IPush)
       } catch (e){
         console.log(e)
@@ -59,7 +58,7 @@ export function PushCreator() {
                   onChange={handleChange}
                 >
                   {configs.map(config =>
-                    <MenuItem value={config.id}>{config.id}. {config.title} - {config.system}</MenuItem>
+                    <MenuItem key={config.id} value={[config.title, ' - ', config.system].toString().split(',').join('')}>{config.id}. {config.title} - {config.system}</MenuItem>
                   )}
                 </Select>
               </FormControl>

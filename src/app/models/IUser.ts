@@ -2,6 +2,7 @@
 
 export interface IUser {
   email: any;
-  token: any;
-  id: any;  
+  password?: any;
+  token?: any;
+  id?: any;  
 }

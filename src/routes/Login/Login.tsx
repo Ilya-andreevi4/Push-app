@@ -26,7 +26,7 @@ const Login = () => {
           navigate('/');
         })
     } catch (e){
-      console.log(e)
+      console.error(e)
       alert('Неправильно введен пароль или почта!')
     } finally{
       setIsLoading(false)
@@ -48,6 +48,7 @@ const Login = () => {
         </Grid>
         <Grid item xs={12}>
           <Button
+            size="small"
             color="inherit"
             component={Link}
             to="/reg"
