@@ -3,6 +3,7 @@ import {
   TextField,
   Grid,
   Button,
+  Typography,
 } from "@mui/material";
 
 interface FormProps {
@@ -24,6 +25,7 @@ const Form: FC<FormProps> = ({title, handleClick, isLoading}) => {
               fullWidth={true}
               label="Email"
               variant="filled"
+              required
             />
       </Grid>
 
@@ -35,6 +37,7 @@ const Form: FC<FormProps> = ({title, handleClick, isLoading}) => {
               fullWidth={true}
               label="Password"
               variant="filled"
+              required
             />
       </Grid>
       <Grid item xs={12}>
@@ -47,6 +50,13 @@ const Form: FC<FormProps> = ({title, handleClick, isLoading}) => {
         >
             {title}
         </Button>
+      </Grid>
+      <Grid item xs={12}>
+        {isLoading ? (
+          <Typography variant="caption">Подождите секунду</Typography>
+        ):(
+          <Typography variant="caption">Введите данные</Typography>
+        )}
       </Grid>
     </Grid>
   )

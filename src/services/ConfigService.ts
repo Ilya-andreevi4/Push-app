@@ -3,7 +3,7 @@ import { IConfig } from "../app/models/IConfig";
 
 export const configAPI = createApi({
   reducerPath: 'postAPI',
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://my-app-70669-default-rtdb.europe-west1.firebasedatabase.app'}),
+  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000'}),
   tagTypes:['Config'],
   endpoints: (build) => ({
     fetchAllConfigs: build.query<IConfig[], number>({

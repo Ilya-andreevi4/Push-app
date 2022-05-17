@@ -20,21 +20,20 @@ const PushItem: FC<PushItemProps> = ({push, remove}) => {
           <Grid item xs={12}>
             <Grid container>
               <Grid item xs={6}>
+                <Typography variant='caption'>
+                  {push.idConfigs}
+                </Typography> 
               </Grid>
               <Grid item xs={6}>
-                <Typography variant='caption' 
-                  sx={{
-                    float:'right'
-                  }}
-                >
+                <Typography variant='caption' sx={{float:"right"}}> 
                   {push.date} 
                 </Typography>
               </Grid>
             </Grid>
           </Grid>
           <Grid item xs={12}>
-            <Typography variant='h5'>
-              {push.idConfigs}. {push.message}
+            <Typography variant='h6' >
+             {push.message}
             </Typography> 
           </Grid>           
         </Grid>   

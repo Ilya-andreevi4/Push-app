@@ -34,24 +34,14 @@ function RegPage() {
         })
     } catch (e){
       console.log(e)
+
     } finally{
       setIsLoading(false)
     }
-
-    createUserWithEmailAndPassword(auth, email, password)
-      .then(({user}) => {        
-        dispatch(addUser({
-          email: user.email,
-          id: user.uid,
-          token: user.refreshToken,
-        }));
-        navigate('/')
-      })
-      .catch(console.error)
   }
 
   return (
-    <Container maxWidth="xs" sx={{mt:"5rem"}}>
+    <Container maxWidth="xs" sx={{mt:5}}>
       <Grid container spacing={3} >
         <Grid item xs={12}>
           <Typography variant="h6">Create new account</Typography>
@@ -65,6 +55,7 @@ function RegPage() {
         </Grid>
         <Grid item xs={12}>
           <Button
+            size="small"
             color="inherit"
             component={Link}
             to="/log"

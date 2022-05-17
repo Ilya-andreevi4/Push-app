@@ -1,7 +1,6 @@
-
 export interface IPush {
   id: number;
-  idConfigs: number;
+  idConfigs: any;
   message: any;
   date: any;
 }

@@ -10,11 +10,12 @@ import { Link } from 'react-router-dom';
 import { useAppDispatch, useAuth } from './app/hooks/hooks';
 import AppRoutes from './routes/Routes';
 import { removeUser } from './app/store/reducers/UserSlice';
+import { IUser } from './app/models/IUser';
 
 
 function App() {
   
-  const {isAuth, email} = useAuth();
+  const {ga, user} = useAuth();
 
   const dispatch = useAppDispatch();
 
@@ -39,7 +40,7 @@ function App() {
               </Button>
             </Grid>
             <Grid item xs={7}/>
-            { !isAuth ? (
+            { !ga ? (
                 <Grid item xs={2}>
                   <ButtonGroup disableElevation variant="contained">
                     <Button 
@@ -61,7 +62,7 @@ function App() {
                     onClick={()=> dispatch(removeUser())} 
                     sx={{ flexGrow: 1, display: { xs: "flex"} }}
                   >
-                    Log out from {email}
+                    Log out from {user && user.email}
                   </Button>
                 </Grid>
               )}
