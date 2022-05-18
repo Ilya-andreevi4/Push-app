@@ -12,7 +12,9 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const handlerLogin = async (email:any, password:any) => {
+  // const {ga} = useAuth();
+
+  const handleLogin = async (email:any, password:any) => {
     const auth = getAuth();
     try {
       setIsLoading(true)
@@ -25,10 +27,11 @@ const Login = () => {
           }));
           navigate('/');
         })
-    } catch (e){
-      console.error(e)
-      alert('Неправильно введен пароль или почта!')
-    } finally{
+    }catch(e:any){
+      const errorCode = e.code;
+      const errorMessage = e.message;
+      alert({errorCode, errorMessage})
+    }finally{
       setIsLoading(false)
     }
   }
@@ -42,7 +45,7 @@ const Login = () => {
         <Grid item xs={12}>
           <Form 
             title="log in"
-            handleClick={handlerLogin}
+            handleClick={handleLogin}
             isLoading={isLoading}
           />
         </Grid>

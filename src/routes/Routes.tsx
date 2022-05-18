@@ -8,12 +8,12 @@ function AppRoutes() {
 
   return (
     <div className="Content">
-      <Routes>  
-        <Route path="/" element={<Main />} />
-        <Route path="/reg" element={<RegPage />}/>
-        <Route path="/log" element={<Login />}/>
-      </Routes>
-    </div>    
+        <Routes>  
+          <Route path="/" element={<Main />} />
+          <Route path="/reg" element={<RegPage />}/>
+          <Route path="/log" element={<Login />}/>
+        </Routes>
+    </div> 
   );
 }
 export default AppRoutes;
