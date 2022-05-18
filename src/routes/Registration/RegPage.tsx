@@ -9,7 +9,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Form } from "../Form";
 import { addUser } from "../../app/store/reducers/UserSlice";
 import { useAppDispatch } from "../../app/hooks/hooks";
-import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth} from "firebase/auth";
 
 function RegPage() {
   
@@ -17,10 +17,11 @@ function RegPage() {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate(); 
-
+  // const {ga} = useAuth();
 
   const handlerSignUp = async (email:string, password:string) => {
     const auth = getAuth();
+    
     try {
       setIsLoading(true)
       await createUserWithEmailAndPassword(auth, email, password)
@@ -32,9 +33,10 @@ function RegPage() {
           }));
           navigate('/')
         })
-    } catch (e){
-      console.log(e)
-
+    } catch (e:any){
+      const errorCode = e.code;
+      const errorMessage = e.message;
+      alert({errorCode, errorMessage})
     } finally{
       setIsLoading(false)
     }

@@ -14,6 +14,11 @@
       "title": "Store",
       "system": "Android",
       "id": 5
+    },
+    {
+      "title": "123",
+      "system": "123",
+      "id": 6
     }
   ],
   "push": [
@@ -28,6 +33,12 @@
       "message": "Test message",
       "date": "Tue May 17 2022",
       "id": 29
+    },
+    {
+      "idConfigs": "123 - 123",
+      "message": "123",
+      "date": "Wed May 18 2022",
+      "id": 30
     }
   ]
 }
