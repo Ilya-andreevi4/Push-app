@@ -8,7 +8,7 @@ import reportWebVitals from './reportWebVitals';
 import App from './App';
 import './index.css';
 import './firebase';
-import { AuthProvider } from './app/auth/AuthProvider';
+import { UserAuthContextProvider } from './services/provider/AuthProvider';
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);
@@ -22,19 +22,19 @@ const theme = createTheme({
       main: '#5ea9ff'
     }
   }
-})
+});
 
 root.render(
   <React.StrictMode>
-    <AuthProvider>
+    <UserAuthContextProvider>
       <Provider store={store}>
-        <ThemeProvider theme={theme}>
+        <ThemeProvider theme={theme}>            
           <Router>                 
             <App /> 
           </Router>
         </ThemeProvider>
       </Provider>
-    </AuthProvider>
+    </UserAuthContextProvider>
   </React.StrictMode>
 );
 

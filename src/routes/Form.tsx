@@ -3,18 +3,52 @@ import {
   TextField,
   Grid,
   Button,
-  Typography,
+  Alert,
 } from "@mui/material";
+import { useUserAuth } from "../services/provider/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 interface FormProps {
   title: string;
-  handleClick: (email:string, password:string) => void;
-  isLoading: boolean;
 }
 
-const Form: FC<FormProps> = ({title, handleClick, isLoading}) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+const Form: FC<FormProps> = ({title}) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+  const { signUp, logIn } = useUserAuth();
+  const navigate = useNavigate(); 
+
+  const handleSubmit = async (e: any) => {
+    setIsLoading(true);    
+    e.preventDefault();
+    setError("")
+    if (title==="sign up"){
+      try {
+        await signUp(email, password);
+        navigate('/')
+      } catch (err:any) {
+        setError(err.message);
+        console.error(error);        
+      } finally{
+        setIsLoading(false);
+      }
+    } else if (title==="log in"){
+      try {
+        await logIn(email, password);
+        navigate('/')
+      } catch (err:any) {
+        setError(err.message);
+        console.error(error);        
+      } finally{
+        setIsLoading(false);
+      }
+    } else {
+      setError("Что-то пошло не так...");
+      console.error(error);
+    }
+  }
 
   return (        
     <Grid container spacing={3}>
@@ -45,7 +79,7 @@ const Form: FC<FormProps> = ({title, handleClick, isLoading}) => {
           variant="contained"
           color="primary"
           sx={{}}
-          onClick={() => handleClick(email, password)}
+          onClick={handleSubmit}
           disabled={isLoading}
         >
             {title}
@@ -53,9 +87,11 @@ const Form: FC<FormProps> = ({title, handleClick, isLoading}) => {
       </Grid>
       <Grid item xs={12}>
         {isLoading ? (
-          <Typography variant="caption">Подождите секунду</Typography>
+          <Alert severity="warning">Подождите секунду</Alert>
+        ):error?(
+          <Alert severity="error">{error}</Alert>
         ):(
-          <Typography variant="caption">Введите данные</Typography>
+          <Alert severity="info">Введите данные</Alert>
         )}
       </Grid>
     </Grid>
