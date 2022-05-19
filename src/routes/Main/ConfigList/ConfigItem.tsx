@@ -4,15 +4,16 @@ import { IConfig } from '../../../app/models/IConfig';
 
 interface ConfigItemProps {
   config: IConfig;
-  remove: (config: IConfig) => void;
+  index: number;
+  remove: (id: number) => void;
   // update: (config: IConfig) => void;
 }
 
-const ConfigItem: FC<ConfigItemProps> = ({config, remove}) => {
+const ConfigItem: FC<ConfigItemProps> = ({config, index, remove}) => {
 
   const handleRemove = (event: React.MouseEvent) => {
     event.stopPropagation()
-    remove(config)
+    remove(config.id)
   }
   // const handleUpdate = (event: React.MouseEvent) => {
   //   event.stopPropagation()
@@ -22,7 +23,7 @@ const ConfigItem: FC<ConfigItemProps> = ({config, remove}) => {
   return (
     <Grid container className="config">
       <Grid item xs={12}>
-        {config.id}. {config.title} - {config.system}          
+        {index}. {config.title} - {config.system}          
       </Grid>
       <Grid item xs={12}>
         <Button

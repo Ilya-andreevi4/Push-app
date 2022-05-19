@@ -1,54 +1,43 @@
 import { Button, Typography} from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CreateConfigDialog from "./CreateConfigDialog";
 import { IConfig } from "../../../app/models/IConfig";
 import { configAPI } from "../../../services/ConfigService";
+import ConfigDataServices from "../../../services/FBConfigServices";
 import ConfigItem from "./ConfigItem";
-// import { db } from "../../../firebase";
-// import { collection, onSnapshot} from "firebase/firestore";
 
 const ConfigContainer = () => {
-  // const [configs, setConfigs] = useState<IConfig[]>();
-  // const configsCollectionsRef = collection(db, "configs")
-
-  // useEffect(() => {
-  //   const getConfigs = async () => {
-  //     try {
-  //       const configList = onSnapshot(configsCollectionsRef, doc => {
-  //         doc.forEach((d:any)=> {
-  //           setConfigs(prev =>[...prev, d.data()])
-  //         })
-  //       })
-  //       console.log(configList());
-  //     } catch(e: any) {
-  //       console.error(e);        
-  //     }
-      
-  //   }
-  //   return()=>{
-  //     getConfigs()
-  //   }
-  // }, [])
 
   const {data: localConfigs, error, isLoading, refetch} = configAPI.useFetchAllConfigsQuery(10)
   const [deleteConfig] = configAPI.useDeleteConfigMutation()
   
+  const [configs, setConfigs] = useState<IConfig[]>([]);
+
+  const getConfigs = async () => {
+    const data = await ConfigDataServices.getAllConfigs();
+    setConfigs(data.docs.map((doc: any) => ({...doc.data(), id: doc.id} as any)))
+  }
+
+  useEffect(() => {
+    getConfigs();
+  }, [configs]);
   
-  const handleRemove = (config:IConfig) => {
-    deleteConfig(config)
+  const handleRemove = async (id:any) => {
+    await ConfigDataServices.deleteConfig(id);
+    getConfigs();
   }
 
 
   return (
     <div>
-      {localConfigs && 
+      {configs && 
         <CreateConfigDialog />
       }
       
       <div className="config__list">
         <Button 
           color="secondary" 
-          onClick={() => refetch()}
+          onClick={getConfigs}
           sx={{float:"right", mb:1}}
         >
           Refetch
@@ -63,12 +52,14 @@ const ConfigContainer = () => {
             Произошла ошибка при загрузке конфигов.
           </Typography>
         }
-        {localConfigs && localConfigs.map(config =>
-          <ConfigItem remove={handleRemove} key={config.id} config={config}/>
+        {configs && configs.map((doc, index) =>
+          <ConfigItem 
+            remove={handleRemove} 
+            key={doc.id} 
+            index={index + 1} 
+            config={doc}
+          />
         )}
-        {/* {configs.map(config =>
-          <ConfigItem remove={handleRemove} key={config.id} config={config}/>
-        )} */}
       </div>
     </div>
   )
