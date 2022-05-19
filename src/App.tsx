@@ -7,41 +7,39 @@ import {
   Grid,
   ButtonGroup} from '@mui/material';
 import { Link } from 'react-router-dom';
-import { useAppDispatch } from './app/hooks/hooks';
 import AppRoutes from './routes/Routes';
-import { removeUser } from './app/store/reducers/UserSlice';
-import { useAuth } from './app/hooks/hooks';
+import { useUserAuth } from './services/provider/AuthProvider';
 
 
 function App() {
 
-  const {isAuth, email} = useAuth();
+  const { user, logOut } = useUserAuth();
+  const handleLogOut = async () => {
+    try{
+      await logOut();
+    } catch (err: any) {
+      console.log(err.message);
+    }
+  }
   
-
-  const dispatch = useAppDispatch();
-
   return (
     <div className="App">
         <AppBar position='static'>
           <Grid container className='AppBar' maxWidth="xl" spacing={1}>
             <Grid item xs={1}>
             </Grid>
-            <Grid item xs={1}>
-              <Typography variant='h5' gutterBottom>
-                  My App
-              </Typography>
+            <Grid item xs={2}>
+              <Button 
+                size="small"
+                color="inherit" 
+                component={Link} to="/" 
+                sx={{ flexGrow: 1, display: { xs: "flex"} }}
+              >
+                <Typography variant="h6">My App</Typography> 
+              </Button>
             </Grid>
-            <Grid item xs={1}>
-                <Button 
-                  color="inherit" 
-                  component={Link} to="/" 
-                  sx={{ flexGrow: 1, display: { xs: "flex"} }}
-                >
-                  Main
-                </Button>
-              </Grid>
               <Grid item xs={7}/>
-              { !isAuth ? (
+              { !user ? (
                   <Grid item xs={2}>
                     <ButtonGroup disableElevation variant="contained">
                       <Button 
@@ -57,13 +55,13 @@ function App() {
                     </ButtonGroup>
                   </Grid>
                 ):(
-                  <Grid item xs={1}>
+                  <Grid item xs={2}>
                     <Button 
                       color="inherit" 
-                      onClick={()=> dispatch(removeUser())} 
+                      onClick={handleLogOut} 
                       sx={{ flexGrow: 1, display: { xs: "flex"} }}
                     >
-                      Log out from {email}
+                      Log out from {user.email}
                     </Button>
                   </Grid>
                 )}

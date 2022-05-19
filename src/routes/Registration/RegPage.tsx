@@ -1,46 +1,42 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Grid,
   Container,
   Button,
   Typography,
 } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Form } from "../Form";
-import { addUser } from "../../app/store/reducers/UserSlice";
-import { useAppDispatch } from "../../app/hooks/hooks";
-import { createUserWithEmailAndPassword, getAuth} from "firebase/auth";
+// import { addUser } from "../../app/store/reducers/UserSlice";
+// import { useAppDispatch } from "../../app/hooks/hooks";
+// import { createUserWithEmailAndPassword, getAuth} from "firebase/auth";
 
 function RegPage() {
-  
-  const [isLoading, setIsLoading] = useState(false);
 
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate(); 
+  // const dispatch = useAppDispatch();
+  // const navigate = useNavigate(); 
+
   // const {ga} = useAuth();
 
-  const handlerSignUp = async (email:string, password:string) => {
-    const auth = getAuth();
+  // const handlerSignUp = async (email:string, password:string) => {
+  //   const auth = getAuth();
     
-    try {
-      setIsLoading(true)
-      await createUserWithEmailAndPassword(auth, email, password)
-        .then(({user}) => {        
-          dispatch(addUser({
-            email: user.email,
-            id: user.uid,
-            token: user.refreshToken,
-          }));
-          navigate('/')
-        })
-    } catch (e:any){
-      const errorCode = e.code;
-      const errorMessage = e.message;
-      alert({errorCode, errorMessage})
-    } finally{
-      setIsLoading(false)
-    }
-  }
+  //   try {
+  //     await createUserWithEmailAndPassword(auth, email, password)
+  //       .then(({user}) => {        
+  //         dispatch(addUser({
+  //           email: user.email,
+  //           id: user.uid,
+  //           token: user.refreshToken,
+  //         }));
+  //         navigate('/')
+  //       })
+  //   } catch (e:any){
+  //     const errorCode = e.code;
+  //     const errorMessage = e.message;
+  //     alert({errorCode, errorMessage})
+  //   }
+  // }
 
   return (
     <Container maxWidth="xs" sx={{mt:5}}>
@@ -51,8 +47,6 @@ function RegPage() {
         <Grid item xs={12}>          
           <Form 
             title="sign up"
-            handleClick={handlerSignUp}
-            isLoading={isLoading}
           />
         </Grid>
         <Grid item xs={12}>
