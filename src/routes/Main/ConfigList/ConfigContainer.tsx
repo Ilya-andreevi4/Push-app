@@ -1,74 +1,175 @@
-import { Button, Typography} from "@mui/material";
-import React from "react";
-import CreateConfigDialog from "./CreateConfigDialog";
+import { Alert, Button, Container, Dialog, DialogActions, DialogContent, DialogTitle, Grid, TextField} from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { IConfig } from "../../../app/models/IConfig";
-import { configAPI } from "../../../services/ConfigService";
+import ConfigDataServices from "../../../services/FBConfigServices";
 import ConfigItem from "./ConfigItem";
-// import { db } from "../../../firebase";
-// import { collection, onSnapshot} from "firebase/firestore";
 
 const ConfigContainer = () => {
-  // const [configs, setConfigs] = useState<IConfig[]>();
-  // const configsCollectionsRef = collection(db, "configs")
+  const [title, setTitle] = React.useState("");
+  const [system, setSystem] = React.useState("");
+  const [message, setMessage] = useState({error: false, msg:"Введите данные", style:"info"});
+  const [configs, setConfigs] = useState<IConfig[]>([]);
+  const [configId, setConfigId] = React.useState("");
+  const [open, setOpen] = React.useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  // useEffect(() => {
-  //   const getConfigs = async () => {
-  //     try {
-  //       const configList = onSnapshot(configsCollectionsRef, doc => {
-  //         doc.forEach((d:any)=> {
-  //           setConfigs(prev =>[...prev, d.data()])
-  //         })
-  //       })
-  //       console.log(configList());
-  //     } catch(e: any) {
-  //       console.error(e);        
-  //     }
-      
-  //   }
-  //   return()=>{
-  //     getConfigs()
-  //   }
-  // }, [])
+  const handleClickOpen = () => {
+    setOpen(true);
+  }
+  const handleClose = () => {
+    setTitle("");
+    setSystem("");
+    setOpen(false);
+    setMessage({error: false, msg:"Введите данные", style:"info"});
+  }  
 
-  const {data: localConfigs, error, isLoading, refetch} = configAPI.useFetchAllConfigsQuery(10)
-  const [deleteConfig] = configAPI.useDeleteConfigMutation()
-  
-  
-  const handleRemove = (config:IConfig) => {
-    deleteConfig(config)
+  const handleCreate = async (data:any) => {
+    setMessage({error: false, msg:"Введите данные", style:"info"});
+    if (title===""||system==="") {
+      setMessage({error:true, msg:"Нужно заполнить оба поля!", style:"error"});
+      return;
+    };
+    try {
+      setIsLoading(true)
+      if (configId) {
+        const updateConfig:IConfig = {id:configId, title, system};
+        await ConfigDataServices.updateConfig(configId, updateConfig);  
+        setMessage({error:false, msg:"Config update successfully!", style:"success"});
+      } else {    
+        const newConfig ={title, system};
+        await ConfigDataServices.addConfig(newConfig);
+        setMessage({error:false, msg:"New config added successfully!", style:"success"});
+      }
+    } catch (e:any){
+      setMessage({error: true, msg: e.message, style:"error"});
+    } finally{
+      setIsLoading(false);
+      setConfigId("");
+      setTitle("");
+      setSystem("");
+    }
   }
 
+  const getConfigs = async () => {
+    setError("");
+    try{
+      setIsLoading(true);
+      const data = await ConfigDataServices.getAllConfigs();
+      setConfigs(data.docs.map((doc: any) => ({...doc.data(), id: doc.id} as any)));
+    } catch (e:any) {
+      setError(e.message);
+    } finally{
+      setIsLoading(false);
+    }
+  }
+  
+  const handleRemove = async (id:any) => {
+    await ConfigDataServices.deleteConfig(id);
+    getConfigs();
+  }
+
+  const handleUpdate = async (updatedConfig:IConfig) => {
+    console.log(updatedConfig);
+    setOpen(true);
+    setConfigId(updatedConfig.id);
+    setTitle(updatedConfig.title);
+    setSystem(updatedConfig.system);
+    setIsLoading(true);
+    getConfigs();
+  }
+  
+  useEffect(() => {
+    getConfigs();
+  }, [open]);
 
   return (
     <div>
-      {localConfigs && 
-        <CreateConfigDialog />
+      {configs && 
+        <Container>
+          <Button variant="contained" color="secondary" onClick={handleClickOpen}>
+            Добавить
+          </Button>
+          <Dialog open={open} onClose={handleClose}>
+            {configId ? (
+              <DialogTitle>Update config</DialogTitle>
+            ):(
+              <DialogTitle>Create config</DialogTitle>
+            )}
+            {isLoading ? (
+              <Alert severity={message.style as any}>Подождите секунду</Alert>
+            ):message.error?(
+              <Alert severity={message.style as any} onClose={()=> setMessage({error: false, msg: "", style: ""})}>{message.msg}</Alert>
+            ):(
+              <Alert severity={message.style as any}>{message.msg}</Alert>
+            )}
+            <DialogContent>
+              <form
+                id="myform"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  handleCreate({title, system});
+                }}
+              >
+                <TextField
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  fullWidth={true}
+                  defaultValue={title}
+                  label="Title"
+                  variant="filled"
+                />
+                <TextField
+                  value={system}
+                  onChange={(e) => setSystem(e.target.value)}
+                  fullWidth={true}
+                  defaultValue={system}
+                  label="System"
+                  variant="filled"
+                />
+              </form>
+            </DialogContent>
+            <DialogActions>
+              <Grid container justifyContent="space-evenly" mb={1}>
+                <Grid item>
+                  <Button variant="contained" onClick={() => setOpen(false)}>
+                    Cancel
+                  </Button>
+                </Grid>
+                <Grid item>
+                  <Button variant="contained" color="secondary" type="submit" form="myform" disabled={isLoading}>
+                    Create
+                  </Button>
+                </Grid>
+              </Grid>
+            </DialogActions>
+          </Dialog>
+        </Container>
       }
-      
       <div className="config__list">
         <Button 
           color="secondary" 
-          onClick={() => refetch()}
+          onClick={getConfigs}
           sx={{float:"right", mb:1}}
         >
           Refetch
         </Button>
-        {isLoading && 
-          <Typography>
-            Идёт загрузка конфигов...
-          </Typography>
-        }
-        {error && 
-          <Typography>
-            Произошла ошибка при загрузке конфигов.
-          </Typography>
-        }
-        {localConfigs && localConfigs.map(config =>
-          <ConfigItem remove={handleRemove} key={config.id} config={config}/>
+        {configs && configs.map((doc, index) =>
+          <ConfigItem 
+            remove={handleRemove} 
+            update={handleUpdate} 
+            key={doc.id} 
+            index={index + 1} 
+            config={doc}
+          />
         )}
-        {/* {configs.map(config =>
-          <ConfigItem remove={handleRemove} key={config.id} config={config}/>
-        )} */}
+
+        {isLoading && (
+          <Alert severity="warning" sx={{mt:1}}>Идёт загрузка конфигов...</Alert>
+        )}
+        {error && (
+          <Alert severity="error" sx={{mt:1}}>{error}</Alert>
+        )}
       </div>
     </div>
   )

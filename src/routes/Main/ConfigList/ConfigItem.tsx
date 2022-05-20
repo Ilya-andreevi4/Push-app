@@ -4,25 +4,27 @@ import { IConfig } from '../../../app/models/IConfig';
 
 interface ConfigItemProps {
   config: IConfig;
-  remove: (config: IConfig) => void;
-  // update: (config: IConfig) => void;
+  index: number;
+  remove: (id: any) => void;
+  update: (config:IConfig) => void;
 }
 
-const ConfigItem: FC<ConfigItemProps> = ({config, remove}) => {
+const ConfigItem: FC<ConfigItemProps> = ({config, index, remove, update}) => {
 
   const handleRemove = (event: React.MouseEvent) => {
     event.stopPropagation()
-    remove(config)
+    remove(config.id)
   }
-  // const handleUpdate = (event: React.MouseEvent) => {
-  //   event.stopPropagation()
-  //   remove(config)
-  // }
+
+  const handleUpdate = (event: React.MouseEvent) => {
+    event.stopPropagation()
+    update(config)
+  }
   
   return (
-    <Grid container className="config">
+    <Grid container className="config" onClick={handleUpdate}>
       <Grid item xs={12}>
-        {config.id}. {config.title} - {config.system}          
+        {index}. {config.title} - {config.system}          
       </Grid>
       <Grid item xs={12}>
         <Button

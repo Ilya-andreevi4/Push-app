@@ -7,36 +7,8 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Form } from "../Form";
-// import { addUser } from "../../app/store/reducers/UserSlice";
-// import { useAppDispatch } from "../../app/hooks/hooks";
-// import { createUserWithEmailAndPassword, getAuth} from "firebase/auth";
 
 function RegPage() {
-
-  // const dispatch = useAppDispatch();
-  // const navigate = useNavigate(); 
-
-  // const {ga} = useAuth();
-
-  // const handlerSignUp = async (email:string, password:string) => {
-  //   const auth = getAuth();
-    
-  //   try {
-  //     await createUserWithEmailAndPassword(auth, email, password)
-  //       .then(({user}) => {        
-  //         dispatch(addUser({
-  //           email: user.email,
-  //           id: user.uid,
-  //           token: user.refreshToken,
-  //         }));
-  //         navigate('/')
-  //       })
-  //   } catch (e:any){
-  //     const errorCode = e.code;
-  //     const errorMessage = e.message;
-  //     alert({errorCode, errorMessage})
-  //   }
-  // }
 
   return (
     <Container maxWidth="xs" sx={{mt:5}}>

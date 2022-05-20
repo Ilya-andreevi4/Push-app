@@ -1,29 +1,42 @@
 import { Button, Container, Grid, TextField, FormControl, InputLabel, Select, MenuItem, Typography, SelectChangeEvent } from "@mui/material";
-import React, { useState } from "react";
-import { configAPI } from "../../../services/ConfigService";
-import { IPush } from "../../../app/models/IPush";
+import React, { useEffect, useState } from "react";
 import { Box } from "@mui/system";
-import { pushAPI } from "../../../services/PushService";
+import ConfigDataServices from "../../../services/FBConfigServices";
+import PushDataServices from "../../../services/FBPushService";
+import { IConfig } from "../../../app/models/IConfig";
 
 export function PushCreator() {
   
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = React.useState("");
   const [ConfigId, setConfigId] = React.useState("");
-  
-  const {data: configs, error, isLoading:apiLoading} = configAPI.useFetchAllConfigsQuery(10);
-  const [createPush] = pushAPI.useCreatePushMutation();
+  const [error, setError] = useState("");
+  const [configs, setConfigs] = useState<IConfig[]>([]);
 
-  // Mui selector
+ 
   const handleChange = (event: SelectChangeEvent) => {
     setConfigId(event.target.value as any);
   };
-  // Mui selector
+
+  const getConfigs = async () => {
+    setError("");
+    try{
+      setIsLoading(true);
+      const data = await ConfigDataServices.getAllConfigs();
+      setConfigs(data.docs.map((doc: any) => ({...doc.data(), id: doc.id} as any)));
+    } catch (e:any) {
+      setError(e.message);
+    } finally{
+      setIsLoading(false);
+    }
+  }
 
   const handleSubmit = async (idConfigs:any, message:any) => {
       try {
         setIsLoading(true)
-        await createPush({idConfigs, message} as IPush)
+        const pushDate = new Date().toDateString();
+        const newPush ={idConfigs, message, pushDate};
+        await PushDataServices.addPush(newPush)
       } catch (e){
         console.log(e)
       } finally{
@@ -31,13 +44,17 @@ export function PushCreator() {
     }
   }
 
+  useEffect(() => {
+    getConfigs();
+  }, []);
+
   return (
     <Container maxWidth="xs" >
       <div className="push-create-container">
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <Box >
-              {apiLoading && 
+              {isLoading && 
                 <Typography>
                   Идёт загрузка конфигов...
                 </Typography>
@@ -57,8 +74,8 @@ export function PushCreator() {
                   label="Config"
                   onChange={handleChange}
                 >
-                  {configs.map(config =>
-                    <MenuItem key={config.id} value={[config.title, ' - ', config.system].toString().split(',').join('')}>{config.id}. {config.title} - {config.system}</MenuItem>
+                  {configs.map((config, index) =>
+                    <MenuItem key={config.id} value={[config.title, ' - ', config.system].toString().split(',').join('')}>{index + 1}. {config.title} - {config.system}</MenuItem>
                   )}
                 </Select>
               </FormControl>
