@@ -1,7 +1,7 @@
 
 
 export interface IConfig {
-  id: number;
-  title: any;
-  system: any;
+  id: any;
+  title: string;
+  system: string;
 }
