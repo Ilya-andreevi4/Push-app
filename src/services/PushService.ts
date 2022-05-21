@@ -1,38 +1,31 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
-import { IPush } from "../app/models/IPush";
+import { db } from "../firebase";
+import { collection, getDocs, getDoc, addDoc, updateDoc, doc, deleteDoc } from "firebase/firestore";
 
-export const pushAPI = createApi({
-  reducerPath: 'pushAPI',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000'}),
-  tagTypes:['Push'],
-  endpoints: (build) => ({
-    fetchAllPush: build.query<IPush[], number>({
-      query: (limit = 10) => ({
-        url: '/push',
-        params: {
-          _limit: limit
-        }
-      }),
-      providesTags: result => ['Push']
-    }),
-    createPush: build.mutation<IPush, IPush>({
-      query: ({idConfigs, message}) => ({
-        url: '/push',
-        method: 'POST',
-        body: {
-          idConfigs, 
-          message, 
-          date: new Date().toDateString(),
-        }
-      }),
-      invalidatesTags: ['Push']
-    }),
-    deletePush: build.mutation<IPush, IPush>({
-      query: (push) => ({
-        url: `/push/${push.id}`,
-        method: 'DELETE'
-      }),
-      invalidatesTags: ['Push']
-    })
-  })
-})
+const pushCollectionRef = collection(db, "pushs");
+class PushDataService {
+  
+  addPush = (newPush:any) => {
+    return addDoc(pushCollectionRef, newPush);
+  };
+
+  updatePush = (id:any, updatedPush:any) => {
+    const pushDoc = doc(db, "pushs", id);
+    return updateDoc(pushDoc, updatedPush);
+  };
+
+  deletePush = (id:any) => {
+    const pushDoc = doc(db, "pushs", id);
+    return deleteDoc(pushDoc);
+  };
+
+  getAllPushs = () => {
+    return getDocs(pushCollectionRef);
+  }
+
+  getPush = (id:any) => {
+    const pushDoc = doc(db, "pushs", id);
+    return getDoc(pushDoc);
+  }
+}
+
+export default new PushDataService()

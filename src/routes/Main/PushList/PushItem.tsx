@@ -4,13 +4,13 @@ import { IPush } from '../../../app/models/IPush';
 
 interface PushItemProps {
   push: IPush;
-  remove: (push: IPush) => void;
+  remove: (id: number) => void;
 }
 
 const PushItem: FC<PushItemProps> = ({push, remove}) => {
 
   const handleRemove = (event: React.MouseEvent) => {
-    remove(push)
+    remove(push.id)
   }
   
   return (
@@ -26,7 +26,7 @@ const PushItem: FC<PushItemProps> = ({push, remove}) => {
               </Grid>
               <Grid item xs={6}>
                 <Typography variant='caption' sx={{float:"right"}}> 
-                  {push.date} 
+                  {push.pushDate} 
                 </Typography>
               </Grid>
             </Grid>

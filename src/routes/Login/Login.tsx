@@ -1,31 +1,8 @@
-
 import { Form } from "../Form";
 import { Button, Container, Grid, Typography } from "@mui/material";
 import { Link} from "react-router-dom";
 
 const Login = () => {
-  // const dispatch = useAppDispatch();
-  // const navigate = useNavigate();
-  // const {ga} = useAuth();
-
-  // const handleLogin = async (email:any, password:any) => {
-  //   const auth = getAuth();
-  //   try {
-  //     await signInWithEmailAndPassword(auth, email, password)
-  //       .then(({user}) => {
-  //         dispatch(addUser({
-  //           email: user.email,
-  //           id: user.uid,
-  //           token: user.refreshToken,
-  //         }));
-  //         navigate('/');
-  //       })
-  //   }catch(e:any){
-  //     const errorCode = e.code;
-  //     const errorMessage = e.message;
-  //     alert({errorCode, errorMessage})
-  //   }
-  // }
 
   return (
     <Container maxWidth="xs" sx={{mt:"5rem"}}>

@@ -1,8 +1,10 @@
 import { Alert, Button, Container, Dialog, DialogActions, DialogContent, DialogTitle, Grid, TextField} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { IConfig } from "../../../app/models/IConfig";
-import ConfigDataServices from "../../../services/FBConfigServices";
+import ConfigDataServices from "../../../services/ConfigServices";
 import ConfigItem from "./ConfigItem";
+
+
 
 const ConfigContainer = () => {
   const [title, setTitle] = React.useState("");
@@ -17,6 +19,7 @@ const ConfigContainer = () => {
   const handleClickOpen = () => {
     setOpen(true);
   }
+
   const handleClose = () => {
     setTitle("");
     setSystem("");
@@ -146,14 +149,26 @@ const ConfigContainer = () => {
           </Dialog>
         </Container>
       }
-      <div className="config__list">
-        <Button 
-          color="secondary" 
-          onClick={getConfigs}
-          sx={{float:"right", mb:1}}
-        >
-          Refetch
-        </Button>
+      <div className="config__list"> 
+        <Grid container>
+          <Grid item xs={6}>
+            {isLoading && (
+              <Alert severity="warning" sx={{mt:1}}>Идёт загрузка конфигов...</Alert>
+            )}
+            {error && (
+              <Alert severity="error" sx={{mt:1}}>{error}</Alert>
+            )}
+          </Grid>
+          <Grid item xs={6}>
+            <Button 
+              color="secondary" 
+              onClick={getConfigs}
+              sx={{float:"right", mb:1}}
+            >
+              Refetch
+            </Button>
+          </Grid>
+        </Grid>
         {configs && configs.map((doc, index) =>
           <ConfigItem 
             remove={handleRemove} 
@@ -162,13 +177,6 @@ const ConfigContainer = () => {
             index={index + 1} 
             config={doc}
           />
-        )}
-
-        {isLoading && (
-          <Alert severity="warning" sx={{mt:1}}>Идёт загрузка конфигов...</Alert>
-        )}
-        {error && (
-          <Alert severity="error" sx={{mt:1}}>{error}</Alert>
         )}
       </div>
     </div>

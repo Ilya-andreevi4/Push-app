@@ -11,7 +11,6 @@ import { useNavigate } from "react-router-dom";
 interface FormProps {
   title: string;
 }
-
 const Form: FC<FormProps> = ({title}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -49,7 +48,6 @@ const Form: FC<FormProps> = ({title}) => {
       console.error(error);
     }
   }
-
   return (        
     <Grid container spacing={3}>
       <Grid item xs={12}>
@@ -62,9 +60,7 @@ const Form: FC<FormProps> = ({title}) => {
               required
             />
       </Grid>
-
       <Grid item xs={12}>
-        
             <TextField
               value={password}
               onChange={(e) => setPassword(e.target.value)}
