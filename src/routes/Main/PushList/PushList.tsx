@@ -1,15 +1,14 @@
 import { Button, Typography} from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IPush } from "../../../app/models/IPush";
-import { pushAPI } from "../../../services/PushService";
-import PushDataServices from "../../../services/FBPushService";
+import PushDataServices from "../../../services/PushService";
 import PushItem from "./PushItem";
 
 const PushList = () => {
   
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
+  const [push, setPush] = useState<IPush[]>([]);
 
   const getPushs = async () => {
     setError("");
@@ -23,18 +22,21 @@ const PushList = () => {
       setIsLoading(false);
     }
   }
-  const {data: push, error, isLoading, refetch} = pushAPI.useFetchAllPushQuery(10)
-  const [deletePush] = pushAPI.useDeletePushMutation()
   
-  const handleRemove = (push:IPush) => {
-    deletePush(push)
+  const handleRemove = async (id:any) => {
+      await PushDataServices.deletePush(id);
+      getPushs();
   }
+
+  useEffect(() => {
+    getPushs();
+  }, []);
 
   return (
     <div>
         <Button 
           color="secondary" 
-          onClick={() => refetch()}
+          onClick={getPushs}
           sx={{float:"right", mb:1}}
         >
           Refetch
@@ -46,6 +48,7 @@ const PushList = () => {
         }
         {error && 
           <Typography>
+            {error}
             Произошла ошибка при загрузке сообщений.
           </Typography>
         }

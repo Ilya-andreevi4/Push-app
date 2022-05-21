@@ -22,5 +22,5 @@
   },
   "include": [
     "src"
-, "coverage/counter"  ]
+, "coverage/counter", "coverage/test/hooks.ts", "coverage/test/UserSlice.ts", "coverage/test/store.tsx"  ]
 }

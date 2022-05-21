@@ -1,8 +1,8 @@
-import { Button, Container, Grid, TextField, FormControl, InputLabel, Select, MenuItem, Typography, SelectChangeEvent } from "@mui/material";
+import { Button, Container, Grid, TextField, FormControl, InputLabel, Select, MenuItem, SelectChangeEvent, Alert } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Box } from "@mui/system";
-import ConfigDataServices from "../../../services/FBConfigServices";
-import PushDataServices from "../../../services/FBPushService";
+import ConfigDataServices from "../../../services/ConfigServices";
+import PushDataServices from "../../../services/PushService";
 import { IConfig } from "../../../app/models/IConfig";
 
 export function PushCreator() {
@@ -10,8 +10,8 @@ export function PushCreator() {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = React.useState("");
   const [ConfigId, setConfigId] = React.useState("");
-  const [error, setError] = useState("");
   const [configs, setConfigs] = useState<IConfig[]>([]);
+  const [msg, setMsg] = useState({error: false, text:"Введите данные", style:"info"});
 
  
   const handleChange = (event: SelectChangeEvent) => {
@@ -19,15 +19,17 @@ export function PushCreator() {
   };
 
   const getConfigs = async () => {
-    setError("");
+    setMsg({error: false, text:"Введите данные", style:"info"});
     try{
       setIsLoading(true);
+      setMsg({error: false, text:"Идёт загрузка конфигов...", style:"warning"});
       const data = await ConfigDataServices.getAllConfigs();
       setConfigs(data.docs.map((doc: any) => ({...doc.data(), id: doc.id} as any)));
     } catch (e:any) {
-      setError(e.message);
+      setMsg({error: true, text: e.message, style:"error"});
     } finally{
       setIsLoading(false);
+      setMsg({error: false, text:"Введите данные", style:"info"});
     }
   }
 
@@ -54,16 +56,29 @@ export function PushCreator() {
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <Box >
-              {isLoading && 
-                <Typography>
-                  Идёт загрузка конфигов...
-                </Typography>
-              }
-              {error && 
-                <Typography>
-                  Произошла ошибка при загрузке конфигов.
-                </Typography>
-              }
+              <Grid 
+                container 
+                mt={1}
+                mb={2}
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                {isLoading ? (
+                  <Alert severity={msg.style as any}>Идёт загрузка конфигов...</Alert>
+                ):msg.error?(
+                  <Alert severity={msg.style as any} onClose={()=> setMsg({error: false, text: "", style: ""})}>{msg.text}</Alert>
+                ):(
+                  <Alert severity={msg.style as any}>{msg.text}</Alert>
+                )}
+                <Button 
+                  color="secondary" 
+                  onClick={getConfigs}
+                  sx={{float:"right", mb:1}}
+                >
+                  Refetch
+                </Button>
+              </Grid>
+              
               {configs &&
               <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">Config</InputLabel>

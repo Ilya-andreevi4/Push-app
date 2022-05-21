@@ -9,7 +9,6 @@ import { Link } from "react-router-dom";
 import { Form } from "../Form";
 
 function RegPage() {
-
   return (
     <Container maxWidth="xs" sx={{mt:5}}>
       <Grid container spacing={3} >
