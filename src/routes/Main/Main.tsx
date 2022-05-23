@@ -21,7 +21,7 @@ function Main() {
             boxShadow: 3
           }}
         >
-          <Typography variant="h5" gutterBottom align="center">
+          <Typography variant="h5" gutterBottom align="center" mt={1} mb={1}>
               Мои Конфигурации
           </Typography>
           <ConfigContainer />
@@ -29,7 +29,7 @@ function Main() {
         <Grid item xs={5} 
           alignItems="stretch"
           sx={{
-            mt:"2rem",
+            mt:2,
             p:2,
           }}
         >
@@ -48,7 +48,7 @@ function Main() {
             boxShadow: 3
           }}
         >
-          <Typography variant="h5" gutterBottom align="center">
+          <Typography variant="h5" gutterBottom align="center" mt={1} mb={1}>
               История сообщений
           </Typography>
           <PushList />

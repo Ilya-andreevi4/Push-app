@@ -6,7 +6,7 @@ import {
   Typography,
   Grid,
   ButtonGroup} from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import AppRoutes from './routes/Routes';
 import { useUserAuth } from './services/provider/AuthProvider';
 
@@ -39,7 +39,7 @@ function App() {
               </Button>
             </Grid>
               <Grid item xs={7}/>
-              { !user ? (
+                {!user ? (
                   <Grid item xs={2}>
                     <ButtonGroup disableElevation variant="contained">
                       <Button 
