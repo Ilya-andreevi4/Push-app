@@ -23,6 +23,7 @@ const ConfigContainer = () => {
   const handleClose = () => {
     setTitle("");
     setSystem("");
+    setConfigId("");
     setOpen(false);
     setMessage({error: false, msg:"Введите данные", style:"info"});
   }  
@@ -90,9 +91,32 @@ const ConfigContainer = () => {
     <div>
       {configs && 
         <Container>
-          <Button variant="contained" color="secondary" onClick={handleClickOpen}>
-            Добавить
-          </Button>
+          <Grid container  
+            direction="row"
+            justifyContent="space-around"
+            alignItems="center"
+            sx={{m:1}}
+          >
+            <Grid item xs={6}>
+              <Button 
+                variant="contained" 
+                color="secondary" 
+                onClick={handleClickOpen}
+              >
+                Добавить
+              </Button>
+            </Grid>
+            <Grid item xs={6}>
+              <Button 
+                color="secondary" 
+                onClick={getConfigs}
+                
+                sx={{float:"right"}}
+              >
+                Refetch
+              </Button>
+            </Grid>
+          </Grid>
           <Dialog open={open} onClose={handleClose}>
             {configId ? (
               <DialogTitle>Update config</DialogTitle>
@@ -151,22 +175,13 @@ const ConfigContainer = () => {
       }
       <div className="config__list"> 
         <Grid container>
-          <Grid item xs={6}>
+          <Grid item xs={12}>
             {isLoading && (
               <Alert severity="warning" sx={{mt:1}}>Идёт загрузка конфигов...</Alert>
             )}
             {error && (
               <Alert severity="error" sx={{mt:1}}>{error}</Alert>
             )}
-          </Grid>
-          <Grid item xs={6}>
-            <Button 
-              color="secondary" 
-              onClick={getConfigs}
-              sx={{float:"right", mb:1}}
-            >
-              Refetch
-            </Button>
           </Grid>
         </Grid>
         {configs && configs.map((doc, index) =>
