@@ -6,7 +6,7 @@ import PushList from "./PushList/PushList";
 
 function Main() {
   return (
-    <div className="Content">
+    <div className="content">
       <Grid container
         direction="row"
         alignItems="stretch"
@@ -15,11 +15,7 @@ function Main() {
       >
         <Grid item xs={4}
           alignItems="stretch"
-          sx={{
-            justifyContent:"flex-end",
-            pt: 3,
-            pr: 1
-          }}
+          className="configs"
         >
           <Grid container>
             <Grid item xs={12}>
