@@ -52,7 +52,6 @@ export function PushCreator() {
 
   return (
     <Container maxWidth="xs" >
-      <div className="push-create-container">
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <Box >
@@ -117,7 +116,6 @@ export function PushCreator() {
             </Button>
           </Grid>
         </Grid>
-      </div>
     </Container>
   );
 }

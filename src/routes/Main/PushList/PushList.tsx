@@ -33,7 +33,7 @@ const PushList = () => {
   }, []);
 
   return (
-    <div>
+    <div className="message_list">
         <Button 
           color="secondary" 
           onClick={getPushs}

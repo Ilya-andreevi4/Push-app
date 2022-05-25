@@ -8,15 +8,44 @@
   padding: 10px 0;
 }
 
+@media screen and (max-width: 1200px) {
+  .Content {
+    width: 1140px;
+  }  
+}
+@media screen and (max-width: 1199px) {
+  .Content {
+    width: 960px;
+  }  
+}
+@media screen and (max-width: 991px) {
+  .Content {
+    width: 720px;
+  }  
+}
+@media screen and (max-width: 767px) {
+  .Content {
+    width: 540px;
+  }  
+}
+@media screen and (max-width: 575px) {
+  .Content {
+    width: 100%;
+    padding: 0 15px;
+  }  
+}
+
 .Content{
   padding: 0;
   margin: 0;
-  width: 100vw;
 }
 
 .config__list {
-  width: 100%;
-  padding: 20px;
+  padding-top: 24px;
+  padding-left: 12px;
+  height: 80vh;
+  box-shadow: 3;
+  overflow: auto;
 }
 
 .user {
@@ -34,7 +63,7 @@
 
 .config {
   padding: 10px;
-  box-shadow: -1px 1px 3px rgba(0, 0, 0, 0.3);
+  box-shadow: -1px 1px 4px rgba(0, 0, 0, 0.2);
   margin-top: 15px;
   width: 100%;
   border-radius: 5px;
@@ -44,19 +73,13 @@
   transition: box-shadow 0.3s;
 } 
 .config:hover {
-  box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.7);
-}
-
-.push-create-container {
-  box-shadow:"0px 0px 1px rgba(0, 0, 0, 0.712)";
-  margin: 5; 
-  padding: 3;
+  box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.4);
 }
 
 .push {
   background-color: rgb(238, 238, 238);
   padding: 10px;
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  /* box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); */
   margin-top: 15px;
   width: 100%;
   border-radius: 5px;
@@ -66,5 +89,10 @@
   transition: box-shadow 0.3s;
 } 
 .push:hover {
-  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+}
+
+.message_list {
+  height: 80vh;
+  overflow: auto;
 }

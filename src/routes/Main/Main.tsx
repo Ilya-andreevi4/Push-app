@@ -10,27 +10,33 @@ function Main() {
       <Grid container
         direction="row"
         alignItems="stretch"
-        justifyContent="flex-start"
+        justifyContent="baseline"
         sx={{p:0, ml:0}}
       >
         <Grid item xs={4}
           alignItems="stretch"
           sx={{
-            p:2,
-            height: "100vh",
-            boxShadow: 3
+            justifyContent:"flex-end",
+            pt: 3,
+            pr: 1
           }}
         >
-          <Typography variant="h5" gutterBottom align="center" mt={1} mb={1}>
-              Мои Конфигурации
-          </Typography>
-          <ConfigContainer />
+          <Grid container>
+            <Grid item xs={12}>
+              <Typography variant="h5" gutterBottom align="center">
+                Мои Конфигурации
+              </Typography>
+            </Grid>
+            <Grid item xs={12} className="config_list">
+              <ConfigContainer />
+            </Grid>
+          </Grid>
         </Grid>
         <Grid item xs={5} 
           alignItems="stretch"
           sx={{
-            mt:2,
-            p:2,
+            p:1,
+            pt:3
           }}
         >
           <Typography variant="h5" gutterBottom align="center">
@@ -42,13 +48,11 @@ function Main() {
           alignItems="stretch"
           sx={{
             justifyContent:"flex-end",
-            p:2,
-            pr:3,
-            pl:3,
-            boxShadow: 3
+            pt: 3,
+            pr: 1
           }}
         >
-          <Typography variant="h5" gutterBottom align="center" mt={1} mb={1}>
+          <Typography variant="h5" gutterBottom align="center" >
               История сообщений
           </Typography>
           <PushList />
