@@ -25,10 +25,14 @@ function App() {
   return (
     <div className="App">
         <AppBar position='static'>
-          <Grid container className='AppBar' maxWidth="xl" spacing={1}>
-            <Grid item xs={1}>
-            </Grid>
-            <Grid item xs={2}>
+          <Grid 
+            className='AppBar'
+            container
+            direction="row"
+            justifyContent="space-around"
+            alignItems="baseline"
+          >
+            <Grid item>
               <Button 
                 size="small"
                 color="inherit" 
@@ -38,10 +42,14 @@ function App() {
                 <Typography variant="h6">My App</Typography> 
               </Button>
             </Grid>
-              <Grid item xs={7}/>
+              <Grid item />
                 {!user ? (
-                  <Grid item xs={2}>
-                    <ButtonGroup disableElevation variant="contained">
+                  <Grid item>
+                    <ButtonGroup 
+                      disableElevation 
+                      color="secondary" 
+                      variant="contained"
+                    >
                       <Button 
                         component={Link} to="/reg" 
                       >
@@ -55,9 +63,9 @@ function App() {
                     </ButtonGroup>
                   </Grid>
                 ):(
-                  <Grid item xs={2}>
+                  <Grid item>
                     <Button 
-                      color="inherit" 
+                      color="secondary" 
                       onClick={handleLogOut} 
                       sx={{ flexGrow: 1, display: { xs: "flex"} }}
                     >

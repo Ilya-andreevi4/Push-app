@@ -1,4 +1,4 @@
-import { Button, Typography} from "@mui/material";
+import { Button, Grid, Typography} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { IPush } from "../../../app/models/IPush";
 import PushDataServices from "../../../services/PushService";
@@ -33,29 +33,43 @@ const PushList = () => {
   }, []);
 
   return (
-    <div className="message_list">
-        <Button 
-          color="secondary" 
-          onClick={getPushs}
-          sx={{float:"right", mb:1}}
-        >
-          Refetch
-        </Button>
-        {isLoading && 
-          <Typography>
-            Идёт загрузка сообщений...
-          </Typography>
-        }
-        {error && 
-          <Typography>
-            {error}
-            Произошла ошибка при загрузке сообщений.
-          </Typography>
-        }
-        {push && push.map(push =>
-          <PushItem remove={handleRemove} key={push.id} push={push}/>
-        )}
+    <div>
+      <Grid container>
+        <Grid item xs={6}>
+          {isLoading && 
+            <Typography>
+              Идёт загрузка сообщений...
+            </Typography>
+          }
+          {error && 
+            <Typography>
+              {error}
+              Произошла ошибка при загрузке сообщений.
+            </Typography>
+          }
+        </Grid>
+        <Grid item xs={6}>
+          {push &&
+            (<Button 
+              color="secondary" 
+              onClick={getPushs}
+              sx={{float:"right", mb:1}}
+            >
+              Refetch
+            </Button>)
+          }
+
+        </Grid>
+        <Grid item xs={12}>
+          <div className="message_list">
+            {push && push.map(push =>
+              <PushItem remove={handleRemove} key={push.id} push={push}/>
+            )}
+          </div>
+        </Grid>
+      </Grid>
     </div>
+    
   )
 }
 
