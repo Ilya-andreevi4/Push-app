@@ -5,6 +5,7 @@ import ConfigDataServices from "../../../services/ConfigServices";
 import PushDataServices from "../../../services/PushService";
 import { IConfig } from "../../../app/models/IConfig";
 
+
 export function PushCreator() {
   
   const [isLoading, setIsLoading] = useState(false);
@@ -34,7 +35,7 @@ export function PushCreator() {
   }
 
   const handleSubmit = async (idConfigs:any, message:any) => {
-      try {
+        try {
         setIsLoading(true)
         const pushDate = new Date().toDateString();
         const newPush ={idConfigs, message, pushDate};
@@ -107,6 +108,7 @@ export function PushCreator() {
           </Grid>
           <Grid item xs={12}>
             <Button
+              className="mainSubmit"
               variant="contained"
               color="primary"
               disabled={isLoading}

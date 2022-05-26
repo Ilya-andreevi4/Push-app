@@ -10,7 +10,8 @@ interface PushItemProps {
 const PushItem: FC<PushItemProps> = ({push, remove}) => {
 
   const handleRemove = (event: React.MouseEvent) => {
-    remove(push.id)
+    event.stopPropagation();
+    remove(push.id);
   }
   
   return (
