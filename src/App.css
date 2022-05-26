@@ -8,38 +8,7 @@
   padding: 10px 0;
 }
 
-@media screen and (max-width: 1200px) {
-  .content {
-    width: 1140px;
-  }  
-}
-@media screen and (max-width: 1199px) {
-  .content {
-    width: 960px;
-  }  
-}
-@media screen and (max-width: 991px) {
-  .content {
-    width: 720px;
-  }  
-}
-@media screen and (max-width: 767px) {
-  .content {
-    width: 540px;
-  }  
-  .configs {
-    width: 100%;
-  }
-}
-@media screen and (max-width: 575px) {
-  .content {
-    width: 100%;
-    padding: 0 15px;
-  }
-  .configs {
-    width: 100%;
-  }
-}
+
 
 .content{
   padding: 0;
@@ -56,7 +25,15 @@
   padding-top: 24px;
   padding-bottom: 12px;
   padding-right: 12px;
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  /* box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2); */
+}
+
+.configs_mob{
+  justify-content: center;
+  max-height: 90vh;
+  width: 100%;
+  padding: 24px;
+  /* box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2); */
 }
 
 .create_push_form{
@@ -66,6 +43,13 @@
   padding-top: 24px;
   padding-right: 12px;
 }
+
+.create_push_form_mob{
+  justify-content: center;
+  width: 100%;
+  padding: 24px;
+}
+
 .message_history{
   float: right;
   justify-content:"flex-end";
@@ -73,11 +57,17 @@
   padding-top: 24px;
   padding-right: 12px;
 }
+
+.message_history_mob{
+  justify-content: center;
+  width: 100%;
+  padding: 24px;
+}
+
 .config__list {
-  padding-top: 24px;
-  padding-left: 12px;
+  padding: 12px;
   height: 75vh;
-  box-shadow: 3;
+  box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.2);
   overflow: auto;
 }
 
@@ -107,7 +97,8 @@
 } 
 .config:hover {
   cursor: pointer;
-  box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.4);
+  background-color: rgb(252, 252, 253);
+  box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.3);
 }
 
 .push {
@@ -127,6 +118,9 @@
 }
 
 .message_list {
-  height: 80vh;
+  /* height: 80vh; */
+  padding: 12px;
+  height: 75vh;
+  box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.2);
   overflow: auto;
 }
