@@ -29,13 +29,13 @@ const ConfigContainer = () => {
   }  
 
   const handleCreate = async (data:any) => {
+    setIsLoading(true)
     setMessage({error: false, msg:"Введите данные", style:"info"});
     if (title===""||system==="") {
       setMessage({error:true, msg:"Нужно заполнить оба поля!", style:"error"});
       return;
     };
     try {
-      setIsLoading(true)
       if (configId) {
         const updateConfig:IConfig = {id:configId, title, system};
         await ConfigDataServices.updateConfig(configId, updateConfig);  
@@ -48,6 +48,7 @@ const ConfigContainer = () => {
     } catch (e:any){
       setMessage({error: true, msg: e.message, style:"error"});
     } finally{
+      getConfigs();
       setIsLoading(false);
       setConfigId("");
       setTitle("");
@@ -69,8 +70,18 @@ const ConfigContainer = () => {
   }
   
   const handleRemove = async (id:any) => {
-    await ConfigDataServices.deleteConfig(id);
-    getConfigs();
+    setMessage({error: false, msg:"Введите данные", style:"info"});
+    try {
+      await ConfigDataServices.deleteConfig(id);
+    } catch (e:any){
+      setMessage({error: true, msg: e.message, style:"error"});
+    } finally{
+      getConfigs();
+      setIsLoading(false);
+      setConfigId("");
+      setTitle("");
+      setSystem("");
+    }
   }
 
   const handleUpdate = async (updatedConfig:IConfig) => {
@@ -79,13 +90,11 @@ const ConfigContainer = () => {
     setConfigId(updatedConfig.id);
     setTitle(updatedConfig.title);
     setSystem(updatedConfig.system);
-    setIsLoading(true);
-    getConfigs();
   }
   
   useEffect(() => {
     getConfigs();
-  }, [open]);
+  }, []);
 
   return (
     <div>

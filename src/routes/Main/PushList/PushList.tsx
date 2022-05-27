@@ -24,8 +24,15 @@ const PushList = () => {
   }
   
   const handleRemove = async (id:any) => {
+    setError("");
+    try{
       await PushDataServices.deletePush(id);
+    } catch (e:any) {
+      setError(e.message);
+    } finally{
+      setIsLoading(false);
       getPushs();
+    }
   }
 
   useEffect(() => {
@@ -69,7 +76,6 @@ const PushList = () => {
         </Grid>
       </Grid>
     </div>
-    
   )
 }
 

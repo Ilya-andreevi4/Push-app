@@ -7,6 +7,7 @@ import './index.css';
 import './firebase';
 import { UserAuthContextProvider } from './services/provider/AuthProvider';
 
+
 const container = document.getElementById('root')!;
 const root = createRoot(container);
 const theme = createTheme({
@@ -21,14 +22,12 @@ const theme = createTheme({
 });
 
 root.render(
-  <React.StrictMode>
     <UserAuthContextProvider>
-      <ThemeProvider theme={theme}>            
-        <Router>                 
-          <App /> 
-        </Router>
+      <ThemeProvider theme={theme}>
+          <Router>                 
+            <App /> 
+          </Router>
       </ThemeProvider>
     </UserAuthContextProvider>
-  </React.StrictMode>
 );
 

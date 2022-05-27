@@ -6,13 +6,15 @@ import PushDataServices from "../../../services/PushService";
 import { IConfig } from "../../../app/models/IConfig";
 
 export function PushCreator() {
-  
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = React.useState("");
   const [ConfigId, setConfigId] = React.useState("");
   const [configs, setConfigs] = useState<IConfig[]>([]);
-  const [msg, setMsg] = useState({error: false, text:"Введите данные", style:"info"});
-
+  const [msg, setMsg] = useState({
+    error: false,
+    text:"Введите данные",
+    style:"info"
+  });
  
   const handleChange = (event: SelectChangeEvent) => {
     setConfigId(event.target.value as any);
@@ -34,21 +36,44 @@ export function PushCreator() {
   }
 
   const handleSubmit = async (idConfigs:any, message:any) => {
+    setIsLoading(true)
+    if (idConfigs===""||message==="") {
+      setIsLoading(false)
+      setMsg({error:true, text:"Нужно заполнить оба поля!", style:"error"});
+      return;
+    } else{
       try {
-        setIsLoading(true)
         const pushDate = new Date().toDateString();
         const newPush ={idConfigs, message, pushDate};
-        await PushDataServices.addPush(newPush)
+        await PushDataServices.addPush(newPush);
       } catch (e){
-        console.log(e)
+        console.log(e);
       } finally{
-        setIsLoading(false)
+        setIsLoading(false);
+      }
     }
   }
 
   useEffect(() => {
     getConfigs();
   }, []);
+
+  // useEffect(() => {
+  //   if (!isLoading) {
+  //     document.addEventListener('keyup', (event)=>{
+  //       if (event.key==="Enter"){
+  //         handleSubmit(ConfigId, message)
+  //       }
+  //     })
+  //     return () => {
+  //       document.removeEventListener('keyup', (event)=>{
+  //         if (event.key==="Enter"){
+  //           handleSubmit(ConfigId, message)
+  //         }
+  //       })
+  //     }
+  //   }
+  // }, [ConfigId, message, isLoading]);
 
   return (
     <Container maxWidth="xs" >
@@ -65,17 +90,10 @@ export function PushCreator() {
                 {isLoading ? (
                   <Alert severity={msg.style as any}>Идёт загрузка конфигов...</Alert>
                 ):msg.error?(
-                  <Alert severity={msg.style as any} onClose={()=> setMsg({error: false, text: "", style: ""})}>{msg.text}</Alert>
+                  <Alert severity={msg.style as any}>{msg.text}</Alert>
                 ):(
                   <Alert severity={msg.style as any}>{msg.text}</Alert>
                 )}
-                <Button 
-                  color="secondary" 
-                  onClick={getConfigs}
-                  sx={{float:"right", mb:1}}
-                >
-                  Refetch
-                </Button>
               </Grid>
               
               {configs &&
@@ -86,6 +104,7 @@ export function PushCreator() {
                   id="demo-simple-select"
                   value={ConfigId}
                   label="Config"
+                  onMouseDown={getConfigs}
                   onChange={handleChange}
                 >
                   {configs.map((config, index) =>
