@@ -18,7 +18,7 @@ function Main() {
           <Box className="configs_mob">
             <Grid container>
               <Grid item xs={12}>
-                <Typography variant="h5" gutterBottom align="center" mb={2}>
+                <Typography variant="h5" gutterBottom align="center" sx={{mt:"3rem", mb:"1rem"}}>
                   Мои Конфигурации
                 </Typography>
               </Grid>
@@ -28,13 +28,13 @@ function Main() {
             </Grid>
           </Box>
           <Box maxWidth="sm" className="create_push_form_mob">
-            <Typography variant="h5" gutterBottom align="center" mb={2}>
+            <Typography variant="h5"  align="center" sx={{mt:"3rem", mb:"1rem"}}>
               Создание Пуш-уведомлений
             </Typography>
             <PushCreator />
           </Box>
           <Box maxWidth="xs" className="message_history_mob">
-            <Typography variant="h5" gutterBottom align="center" mb={2}>
+            <Typography variant="h5"  align="center" sx={{mt:"3rem", mb:"1rem"}}>
               История сообщений
             </Typography>
             <PushList />
@@ -45,7 +45,7 @@ function Main() {
           <Box className="configs">
             <Grid container>
               <Grid item xs={12}>
-                <Typography variant="h5" gutterBottom align="center" mb={2}>
+                <Typography variant="h5"  align="center" sx={{mt:"3rem", mb:"1rem"}}>
                   Список конфигураций
                 </Typography>
               </Grid>
@@ -55,13 +55,13 @@ function Main() {
             </Grid>
           </Box>
           <Box maxWidth="sm" className="create_push_form">
-            <Typography variant="h5" gutterBottom align="center" mb={2}>
+            <Typography variant="h5"  align="center" sx={{mt:"3rem", mb:"1rem"}}>
               Создание Пуш-уведомлений
             </Typography>
             <PushCreator />
           </Box>
           <Box maxWidth="xs" className="message_history">
-            <Typography variant="h5" gutterBottom align="center" mb={2}>
+            <Typography variant="h5"  align="center" sx={{mt:"3rem", mb:"1rem"}}>
               История сообщений
             </Typography>
             <PushList />

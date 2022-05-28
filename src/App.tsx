@@ -24,7 +24,7 @@ function App() {
   
   return (
     <div className="App">
-      <AppBar position='static'>
+      <AppBar position='fixed'>
         <Grid 
           className='AppBar'
           container
@@ -75,7 +75,7 @@ function App() {
               )}
         </Grid>
       </AppBar>
-      <AppRoutes/>
+      <AppRoutes />
     </div>  
   )
 }
