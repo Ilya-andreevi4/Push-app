@@ -65,7 +65,7 @@ const PushList = () => {
               onClick={getPushs}
               sx={{ float: "right", mb: 1 }}
             >
-              Refetch
+              Обновить
             </Button>
           )}
         </Grid>

@@ -46,16 +46,15 @@ const PushItem: FC<PushItemProps> = ({push, remove}) => {
           <Grid item xs={12}>
             <Button
               onClick={handleRemove}
-              variant="contained"
+              size="small"
+              variant="outlined"
               color="error"
               sx={{
                 float:'right',
-                height:20,
-                width:15,
                 mt:1
               }}
             >
-              Delete
+              Удалить
             </Button>
           </Grid>
         </Grid>      

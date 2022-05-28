@@ -7,6 +7,7 @@ import {
 } from "@mui/material";
 import { useUserAuth } from "../services/provider/AuthProvider";
 import { useNavigate } from "react-router-dom";
+import { Loader } from "./Main/Loader";
 
 interface FormProps {
   title: string;
@@ -23,7 +24,7 @@ const Form: FC<FormProps> = ({title}) => {
     setIsLoading(true);    
     e.preventDefault();
     setError("")
-    if (title==="sign up"){
+    if (title==="Регистрация"){
       try {
         await signUp(email, password);
         navigate('/')
@@ -33,7 +34,7 @@ const Form: FC<FormProps> = ({title}) => {
       } finally{
         setIsLoading(false);
       }
-    } else if (title==="log in"){
+    } else if (title==="Войти"){
       try {
         await logIn(email, password);
         navigate('/')
@@ -83,7 +84,7 @@ const Form: FC<FormProps> = ({title}) => {
       </Grid>
       <Grid item xs={12}>
         {isLoading ? (
-          <Alert severity="warning">Подождите секунду</Alert>
+          <Loader/>
         ):error?(
           <Alert severity="error">{error}</Alert>
         ):(

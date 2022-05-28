@@ -13,11 +13,11 @@ function RegPage() {
     <Container maxWidth="xs" sx={{mt:5}}>
       <Grid container spacing={3} >
         <Grid item xs={12}>
-          <Typography variant="h6">Create new account</Typography>
+          <Typography variant="h6">Создание нового аккаунта</Typography>
         </Grid>
         <Grid item xs={12}>          
           <Form 
-            title="sign up"
+            title="Регистрация"
           />
         </Grid>
         <Grid item xs={12}>
@@ -27,7 +27,7 @@ function RegPage() {
             component={Link}
             to="/log"
           >
-              Already have an account?
+              Войти в существующий аккаунт
           </Button>
         </Grid>
       </Grid>

@@ -8,11 +8,11 @@ const Login = () => {
     <Container maxWidth="xs" sx={{mt:"5rem"}}>
       <Grid container spacing={3} >
         <Grid item xs={12}>
-          <Typography variant="h6">Account login</Typography>
+          <Typography variant="h6">Вход в аккаунт</Typography>
         </Grid>
         <Grid item xs={12}>
           <Form 
-            title="log in"
+            title="Войти"
           />
         </Grid>
         <Grid item xs={12}>
@@ -22,7 +22,7 @@ const Login = () => {
             component={Link}
             to="/reg"
           >
-              Don't have an account?
+              Регистрировать новый аккаунт
           </Button>
         </Grid>        
       </Grid>      

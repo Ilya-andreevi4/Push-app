@@ -133,7 +133,7 @@ export function PushCreator() {
 
             {configs && (
               <FormControl fullWidth>
-                <InputLabel id="select-label">Config</InputLabel>
+                <InputLabel id="select-label">Конфигурация</InputLabel>
                 <Select
                   labelId="select-label"
                   id="select"
@@ -173,7 +173,7 @@ export function PushCreator() {
             disabled={isLoading}
             onClick={() => handleSubmit(ConfigId, message)}
           >
-            Submit
+            Отправить
           </Button>
         </Grid>
       </Grid>

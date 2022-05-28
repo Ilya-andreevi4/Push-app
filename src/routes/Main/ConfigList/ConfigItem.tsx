@@ -29,15 +29,14 @@ const ConfigItem: FC<ConfigItemProps> = ({config, index, remove, update}) => {
       <Grid item xs={12}>
         <Button
           onClick={handleRemove}
-          variant="contained"
+          variant="outlined"
           color="error"
+          size="small"
           sx={{
-            height:20,
-            width:15,
             mt:2,
           }}
         >
-          Delete
+          Удалить
         </Button>        
       </Grid>
     </Grid> 

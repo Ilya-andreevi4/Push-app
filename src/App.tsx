@@ -39,7 +39,7 @@ function App() {
               component={Link} to="/" 
               sx={{ flexGrow: 1, display: { xs: "flex"} }}
             >
-              <Typography variant="h6">My App</Typography> 
+              <Typography variant="h6">Push-Notification App</Typography> 
             </Button>
           </Grid>
             <Grid item />
@@ -53,12 +53,12 @@ function App() {
                     <Button 
                       component={Link} to="/reg" 
                     >
-                      Sign Up
+                      Регистрация
                     </Button>
                     <Button 
                       component={Link} to="/log" 
                     >
-                      Log In
+                      Войти
                     </Button>
                   </ButtonGroup>
                 </Grid>
@@ -69,7 +69,7 @@ function App() {
                     onClick={handleLogOut} 
                     sx={{ flexGrow: 1, display: { xs: "flex"} }}
                   >
-                    Log out from {user.email}
+                    Выйти из аккаунта {user.email}
                   </Button>
                 </Grid>
               )}
