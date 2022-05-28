@@ -2,6 +2,7 @@ import { Alert, Button, Container, Dialog, DialogActions, DialogContent, DialogT
 import React, { useEffect, useState } from "react";
 import { IConfig } from "../../../app/models/IConfig";
 import ConfigDataServices from "../../../services/ConfigServices";
+import { state } from "../PushList/updateState";
 import ConfigItem from "./ConfigItem";
 
 
@@ -15,6 +16,11 @@ const ConfigContainer = () => {
   const [open, setOpen] = React.useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+
+  
+  const updateState = () => {
+    state.config_status=!state.config_status;
+  }
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -49,6 +55,7 @@ const ConfigContainer = () => {
       setMessage({error: true, msg: e.message, style:"error"});
     } finally{
       getConfigs();
+      updateState();
       setIsLoading(false);
       setConfigId("");
       setTitle("");

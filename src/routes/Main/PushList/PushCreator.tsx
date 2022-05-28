@@ -1,9 +1,11 @@
 import { Button, Container, Grid, TextField, FormControl, InputLabel, Select, MenuItem, SelectChangeEvent, Alert } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Box } from "@mui/system";
 import ConfigDataServices from "../../../services/ConfigServices";
 import PushDataServices from "../../../services/PushService";
 import { IConfig } from "../../../app/models/IConfig";
+import { useSnapshot } from "valtio";
+import { state } from "./updateState";
 
 export function PushCreator() {
   const [isLoading, setIsLoading] = useState(false);
@@ -15,6 +17,13 @@ export function PushCreator() {
     text:"Введите данные",
     style:"info"
   });
+
+  const snap:any = useSnapshot(state);
+  
+  const updateState = () => {
+    state.status_push=!state.status_push;
+  }
+
  
   const handleChange = (event: SelectChangeEvent) => {
     setConfigId(event.target.value as any);
@@ -49,31 +58,34 @@ export function PushCreator() {
       } catch (e){
         console.log(e);
       } finally{
+        updateState();
         setIsLoading(false);
+        setConfigId("");
+        setMessage("");
       }
     }
   }
-
+  
+  const handler = useCallback(
+    (event:any) => {
+      if (event.key ==="Enter"){
+        return handleSubmit(ConfigId, message);
+      }
+    },[ConfigId, message],
+  ) 
+  
   useEffect(() => {
     getConfigs();
-  }, []);
+  }, [snap.config_status]);
 
-  // useEffect(() => {
-  //   if (!isLoading) {
-  //     document.addEventListener('keyup', (event)=>{
-  //       if (event.key==="Enter"){
-  //         handleSubmit(ConfigId, message)
-  //       }
-  //     })
-  //     return () => {
-  //       document.removeEventListener('keyup', (event)=>{
-  //         if (event.key==="Enter"){
-  //           handleSubmit(ConfigId, message)
-  //         }
-  //       })
-  //     }
-  //   }
-  // }, [ConfigId, message, isLoading]);
+  useEffect(() => {
+    if (!isLoading) {
+      document.addEventListener('keyup', handler)
+      return () => {
+        document.removeEventListener('keyup', handler)
+      }
+    }
+  }, [isLoading, handler]);
 
   return (
     <Container maxWidth="xs" >
@@ -98,13 +110,12 @@ export function PushCreator() {
               
               {configs &&
               <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Config</InputLabel>
+                <InputLabel id="select-label">Config</InputLabel>
                 <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
+                  labelId="select-label"
+                  id="select"
                   value={ConfigId}
                   label="Config"
-                  onMouseDown={getConfigs}
                   onChange={handleChange}
                 >
                   {configs.map((config, index) =>

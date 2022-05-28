@@ -1,11 +1,15 @@
 import { Button, Grid, Typography} from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { Box } from "@mui/system";
+import { useEffect, useState } from "react";
+import { useSnapshot } from "valtio";
 import { IPush } from "../../../app/models/IPush";
 import PushDataServices from "../../../services/PushService";
 import PushItem from "./PushItem";
+import { state } from "./updateState";
 
 const PushList = () => {
   
+  const snap = useSnapshot(state);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [push, setPush] = useState<IPush[]>([]);
@@ -37,16 +41,14 @@ const PushList = () => {
 
   useEffect(() => {
     getPushs();
-  }, []);
+  }, [snap]);
 
   return (
     <div>
       <Grid container>
         <Grid item xs={6}>
-          {isLoading && 
-            <Typography>
-              Идёт загрузка сообщений...
-            </Typography>
+          {isLoading &&
+              <Box className="preloader__image" sx={{float:"left", mb:1}}></Box>
           }
           {error && 
             <Typography>
