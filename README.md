@@ -1,10 +1,9 @@
 # PushNotification App
-.
 Simple web app for create push-notification.
 
 See demo: https://test.stroygrad66.ru/
 
-![Imgur](https://test.stroygrad66.ru/main_page.jpg)
+![Main_page](./main_page.jpg)
 
 
 
