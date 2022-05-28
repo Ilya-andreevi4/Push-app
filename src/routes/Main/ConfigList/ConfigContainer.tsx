@@ -2,6 +2,7 @@ import { Alert, Button, Container, Dialog, DialogActions, DialogContent, DialogT
 import React, { useEffect, useState } from "react";
 import { IConfig } from "../../../app/models/IConfig";
 import ConfigDataServices from "../../../services/ConfigServices";
+import { Loader } from "../Loader";
 import { state } from "../PushList/updateState";
 import ConfigItem from "./ConfigItem";
 
@@ -140,7 +141,7 @@ const ConfigContainer = () => {
               <DialogTitle>Create config</DialogTitle>
             )}
             {isLoading ? (
-              <Alert severity={message.style as any}>Подождите секунду</Alert>
+              <Loader/>
             ):message.error?(
               <Alert severity={message.style as any} onClose={()=> setMessage({error: false, msg: "", style: ""})}>{message.msg}</Alert>
             ):(
@@ -193,7 +194,7 @@ const ConfigContainer = () => {
         <Grid container>
           <Grid item xs={12}>
             {isLoading && (
-              <Alert severity="warning" sx={{mt:1}}>Идёт загрузка конфигов...</Alert>
+              <Loader/>
             )}
             {error && (
               <Alert severity="error" sx={{mt:1}}>{error}</Alert>
