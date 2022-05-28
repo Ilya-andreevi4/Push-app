@@ -56,7 +56,7 @@ const Form: FC<FormProps> = ({title}) => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               fullWidth={true}
-              label="Email"
+              label="Электронная почта"
               variant="filled"
               required
             />
@@ -66,7 +66,7 @@ const Form: FC<FormProps> = ({title}) => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               fullWidth={true}
-              label="Password"
+              label="Пароль"
               variant="filled"
               required
             />

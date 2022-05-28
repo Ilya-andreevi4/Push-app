@@ -190,7 +190,7 @@ const ConfigContainer = () => {
                   onChange={(e) => setTitle(e.target.value)}
                   fullWidth={true}
                   defaultValue={title}
-                  label="Title"
+                  label="Название"
                   variant="filled"
                 />
                 <TextField
@@ -198,7 +198,7 @@ const ConfigContainer = () => {
                   onChange={(e) => setSystem(e.target.value)}
                   fullWidth={true}
                   defaultValue={system}
-                  label="System"
+                  label="Система"
                   variant="filled"
                 />
               </form>
