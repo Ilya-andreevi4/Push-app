@@ -55,6 +55,7 @@ const ConfigContainer = () => {
         msg: "Нужно заполнить оба поля!",
         style: "error",
       });
+      setIsLoading(false);
       return;
     }
     try {

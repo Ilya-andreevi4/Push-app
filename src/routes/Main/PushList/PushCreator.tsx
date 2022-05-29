@@ -122,8 +122,8 @@ export function PushCreator() {
               alignItems="center"
             >
               {isLoading ? (
-                <Loader/>
-              ) : // <Alert severity={msg.style as any}>Идёт загрузка конфигов...</Alert>
+                <Loader/> // <Alert severity={msg.style as any}>Идёт загрузка конфигов...</Alert>
+              ) : 
               msg.error ? (
                 <Alert severity={msg.style as any}>{msg.text}</Alert>
               ) : (
