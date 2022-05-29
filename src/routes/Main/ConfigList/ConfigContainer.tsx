@@ -6,7 +6,12 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  FormControl,
   Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
   TextField,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
@@ -29,6 +34,12 @@ const ConfigContainer = () => {
   const [open, setOpen] = React.useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+
+  const systems = [
+    {id: 1, systemName: "IOS Push"},
+    {id: 2, systemName: "Android Push"},
+    {id: 3, systemName: "Web Desktop"},
+  ]
 
   const updateState = () => {
     state.config_status = !state.config_status;
@@ -118,6 +129,10 @@ const ConfigContainer = () => {
     }
   };
 
+  const handleChange = (event: SelectChangeEvent) => {
+    setSystem(event.target.value as any);
+  };
+
   const handleUpdate = async (updatedConfig: IConfig) => {
     console.log(updatedConfig);
     setOpen(true);
@@ -194,14 +209,33 @@ const ConfigContainer = () => {
                   label="Название"
                   variant="filled"
                 />
-                <TextField
+                <FormControl fullWidth sx={{mt: 1}}>
+                  <InputLabel id="select-label-system">Система</InputLabel>
+                  <Select
+                    labelId="select-label-system"
+                    id="select-system"
+                    value={system}
+                    label="Система"
+                    onChange={handleChange}
+                  >
+                    {systems.map((system) => (
+                      <MenuItem 
+                        key={system.id}
+                        value={system.systemName}
+                      >
+                        {system.id}: {system.systemName}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+                {/* <TextField
                   value={system}
                   onChange={(e) => setSystem(e.target.value)}
                   fullWidth={true}
                   defaultValue={system}
                   label="Система"
                   variant="filled"
-                />
+                /> */}
               </form>
             </DialogContent>
             <DialogActions>

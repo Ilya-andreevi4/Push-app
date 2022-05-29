@@ -18,6 +18,8 @@ import { IConfig } from "../../../app/models/IConfig";
 import { useSnapshot } from "valtio";
 import { state } from "./updateState";
 import { Loader } from "../Loader";
+// import { messaging } from "../../../firebase";
+// import { getMessaging, getToken } from "firebase/messaging";
 
 export function PushCreator() {
   const [isLoading, setIsLoading] = useState(false);
@@ -30,6 +32,7 @@ export function PushCreator() {
     style: "info",
   });
 
+  
   const snap: any = useSnapshot(state);
 
   const updateState = () => {
@@ -99,6 +102,21 @@ export function PushCreator() {
   useEffect(() => {
     getConfigs();
   }, [snap.config_status]);
+
+
+  // useEffect(() => {
+  //   const messaging = getMessaging();
+  //   getToken(messaging, { vapidKey: 'BMe3lq08yT-UDNxnrAQfnL1nroniS30iZ_uxjf8oSnmvSVbgWW7HacH7Gp3c43AVTGOKxCXnRsN6kY1dX58RiQE'})
+  //   .then((currentToken) => {
+  //     if (currentToken) {
+  //       console.log(currentToken);
+  //     } else {
+  //       console.log('No registration token available. Request permission to generate one.');
+  //     }
+  //   }).catch((err) => {
+  //     console.log('An error occurred while retrieving token. ', err);
+  //   });
+  // },[])
 
   useEffect(() => {
     if (!isLoading) {
