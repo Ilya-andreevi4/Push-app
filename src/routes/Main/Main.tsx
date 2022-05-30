@@ -19,7 +19,7 @@ function Main() {
             <Grid container>
               <Grid item xs={12}>
                 <Typography variant="h5" gutterBottom align="center" sx={{mt:"3rem", mb:"1rem"}}>
-                  Мои Конфигурации
+                  Конфигурации
                 </Typography>
               </Grid>
               <Grid item xs={12} className="config_list">
@@ -45,8 +45,8 @@ function Main() {
           <Box className="configs">
             <Grid container>
               <Grid item xs={12}>
-                <Typography variant="h5"  align="center" sx={{mt:"3rem", mb:"1rem"}}>
-                  Список конфигураций
+                <Typography variant="h5"  align="center" sx={{mt:"1rem", mb:"1rem"}}>
+                  Конфигурации
                 </Typography>
               </Grid>
               <Grid item xs={12} className="config_list">
@@ -55,13 +55,13 @@ function Main() {
             </Grid>
           </Box>
           <Box maxWidth="sm" className="create_push_form" >
-            <Typography variant="h5"  align="center" sx={{mt:"3rem", mb:"1rem"}}>
+            <Typography variant="h5"  align="center" sx={{mt:"1rem", mb:"1rem"}}>
               Создание Пуш-уведомлений
             </Typography>
             <PushCreator />
           </Box>
           <Box maxWidth="xs" className="message_history">
-            <Typography variant="h5"  align="center" sx={{mt:"3rem", mb:"1rem"}}>
+            <Typography variant="h5"  align="center" sx={{mt:"1rem", mb:"1rem"}}>
               История сообщений
             </Typography>
             <PushList />

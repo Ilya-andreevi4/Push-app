@@ -22,5 +22,5 @@
   },
   "include": [
     "src"
-, "coverage/counter", "coverage/test/hooks.ts", "coverage/test/UserSlice.ts", "coverage/test/store.tsx", "coverage/test/Main.tsx"  ]
+, "coverage/counter", "coverage/test/hooks.ts", "coverage/test/UserSlice.ts", "coverage/test/store.tsx", "coverage/test/Main.tsx", "public/firebase-messaging-sw.js"  ]
 }

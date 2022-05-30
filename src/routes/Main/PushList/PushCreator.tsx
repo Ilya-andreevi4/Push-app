@@ -8,7 +8,7 @@ import {
   Select,
   MenuItem,
   SelectChangeEvent,
-  Alert,
+  Alert
 } from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
 import { Box } from "@mui/system";
@@ -18,8 +18,6 @@ import { IConfig } from "../../../app/models/IConfig";
 import { useSnapshot } from "valtio";
 import { state } from "./updateState";
 import { Loader } from "../Loader";
-// import { messaging } from "../../../firebase";
-// import { getMessaging, getToken } from "firebase/messaging";
 
 export function PushCreator() {
   const [isLoading, setIsLoading] = useState(false);
@@ -31,9 +29,26 @@ export function PushCreator() {
     text: "Введите данные",
     style: "info",
   });
-
-  
   const snap: any = useSnapshot(state);
+
+  function requestPermission() {
+    return new Promise(function (resolve, reject) {
+      const permissionResult = Notification.requestPermission(function (
+        result
+      ) {
+        // Поддержка устаревшей версии с функцией обратного вызова.
+        resolve(result);
+      });
+
+      if (permissionResult) {
+        permissionResult.then(resolve, reject);
+      }
+    }).then(function (permissionResult) {
+      if (permissionResult !== "granted") {
+        throw new Error("Permission not granted.");
+      }
+    });
+  }
 
   const updateState = () => {
     state.status_push = !state.status_push;
@@ -76,9 +91,13 @@ export function PushCreator() {
       return;
     } else {
       try {
-        const pushDate = [new Date().toLocaleTimeString(), new Date().toDateString()].toString()
-        .split(",")
-        .join(" ");
+        const pushDate = [
+          new Date().toLocaleTimeString(),
+          new Date().toDateString(),
+        ]
+          .toString()
+          .split(",")
+          .join(" ");
         const timePush = new Date();
         const newPush = { idConfigs, message, pushDate, timePush };
         await PushDataServices.addPush(newPush);
@@ -106,21 +125,6 @@ export function PushCreator() {
     getConfigs();
   }, [snap.config_status]);
 
-
-  // useEffect(() => {
-  //   const messaging = getMessaging();
-  //   getToken(messaging, { vapidKey: 'BMe3lq08yT-UDNxnrAQfnL1nroniS30iZ_uxjf8oSnmvSVbgWW7HacH7Gp3c43AVTGOKxCXnRsN6kY1dX58RiQE'})
-  //   .then((currentToken) => {
-  //     if (currentToken) {
-  //       console.log(currentToken);
-  //     } else {
-  //       console.log('No registration token available. Request permission to generate one.');
-  //     }
-  //   }).catch((err) => {
-  //     console.log('An error occurred while retrieving token. ', err);
-  //   });
-  // },[])
-
   useEffect(() => {
     if (!isLoading) {
       document.addEventListener("keyup", handler);
@@ -142,9 +146,8 @@ export function PushCreator() {
               alignItems="center"
             >
               {isLoading ? (
-                <Loader/> // <Alert severity={msg.style as any}>Идёт загрузка конфигов...</Alert>
-              ) : 
-              msg.error ? (
+                <Loader /> // <Alert severity={msg.style as any}>Идёт загрузка конфигов...</Alert>
+              ) : msg.error ? (
                 <Alert severity={msg.style as any}>{msg.text}</Alert>
               ) : (
                 <Alert severity={msg.style as any}>{msg.text}</Alert>

@@ -17,7 +17,7 @@
 }
 
 .configs {
-  margin-top: 1rem;
+  margin-top: 0;
   float: left;
   justify-content: "flex-end";
   max-height: 90vh;
@@ -38,7 +38,7 @@
 }
 
 .create_push_form {
-  margin-top: 1rem;
+  margin-top: 0;
   float: left;
   justify-content: "flex-end";
   width: 35%;
@@ -54,7 +54,7 @@
 }
 
 .message_history {
-  margin-top: 1rem;
+  margin-top: 0;
   float: right;
   justify-content: "flex-end";
   width: 35%;

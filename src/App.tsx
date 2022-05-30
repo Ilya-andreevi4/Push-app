@@ -1,6 +1,14 @@
 import React from "react";
 import "./App.css";
-import { AppBar, Button, Typography, Grid, ButtonGroup, Stack } from "@mui/material";
+import {
+  AppBar,
+  Button,
+  Typography,
+  Grid,
+  ButtonGroup,
+  Stack,
+  useMediaQuery,
+} from "@mui/material";
 import { Link } from "react-router-dom";
 import AppRoutes from "./routes/Routes";
 import { useUserAuth } from "./services/provider/AuthProvider";
@@ -14,71 +22,128 @@ function App() {
       console.log(err.message);
     }
   };
+  const matches = useMediaQuery("(max-width:767px)");
 
-  // if ("serviceWorker" in navigator) {
-  //   window.addEventListener("load", function () {
-  //     navigator.serviceWorker.register("/sw.js").then(
-  //       function (registration) {
-  //         // Успешная регистрация
-  //         console.log("ServiceWorker registration successful");
-  //       },
-  //       function (err) {
-  //         // При регистрации произошла ошибка
-  //         console.log("ServiceWorker registration failed: ", err);
-  //       }
-  //     );
-  //   });
-  // }
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", function () {
+      navigator.serviceWorker.register("/sw.js").then(
+        function (registration) {
+          // Успешная регистрация
+          console.log("ServiceWorker registration successful");
+        },
+        function (err) {
+          // При регистрации произошла ошибка
+          console.log("ServiceWorker registration failed: ", err);
+        }
+      );
+    });
+  }
 
   return (
     <div className="App">
-      <AppBar position="fixed">
-        <Stack
-          className="AppBar"
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-          spacing={1}
-          pl={3}
-          pr={3}
-        >
-          <Grid item xs={12}>
-            <Button
-              size="small"
-              color="inherit"
-              component={Link}
-              to="/"
-            >
-              <Typography variant="h6">Push-Notification App</Typography>
-            </Button>
-          </Grid>
-          {!user ? (
+      {matches ? (
+        <AppBar position="fixed">
+          <Stack
+            className="AppBar"
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+            spacing={1}
+            pl={1}
+            pr={1}
+          >
             <Grid item xs={12}>
-              <ButtonGroup
-                disableElevation
-                color="secondary"
-                variant="contained"
+              <Typography
+                variant="button"
+                noWrap
+                component={Link}
+                to="/"
+                sx={{
+                  fontWeight: 800,
+                  letterSpacing: ".2rem",
+                  color: "inherit",
+                  textDecoration: "none",
+                }}
               >
-                <Button component={Link} to="/reg">
-                  Регистрация
-                </Button>
-                <Button component={Link} to="/log">
-                  Войти
-                </Button>
-              </ButtonGroup>
+                Push App
+              </Typography>
             </Grid>
-          ) : (
+            {!user ? (
+              <Grid item xs={12}>
+                <ButtonGroup
+                  disableElevation
+                  color="secondary"
+                  variant="contained"
+                >
+                  <Button component={Link} to="/reg">
+                    Регистрация
+                  </Button>
+                  <Button component={Link} to="/log">
+                    Войти
+                  </Button>
+                </ButtonGroup>
+              </Grid>
+            ) : (
+              <Grid item xs={12}>
+                <Button color="secondary" onClick={handleLogOut}>
+                  Выйти из {user.email}
+                </Button>
+              </Grid>
+            )}
+          </Stack>
+        </AppBar>
+      ) : (
+        <AppBar position="static">
+          <Stack
+            className="AppBar"
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+            spacing={1}
+            pl={3}
+            pr={3}
+          >
             <Grid item xs={12}>
-              <Button
-                color="secondary"
-                onClick={handleLogOut}
+              <Typography
+                variant="h6"
+                noWrap
+                component={Link}
+                to="/"
+                sx={{
+                  fontWeight: 600,
+                  letterSpacing: ".1rem",
+                  color: "inherit",
+                  textDecoration: "none",
+                }}
               >
-                Выйти из {user.email}
-              </Button>
+                Push App
+              </Typography>
             </Grid>
-          )}
-        </Stack>
-      </AppBar>
+            {!user ? (
+              <Grid item xs={12}>
+                <ButtonGroup
+                  disableElevation
+                  color="secondary"
+                  variant="contained"
+                >
+                  <Button component={Link} to="/reg">
+                    Регистрация
+                  </Button>
+                  <Button component={Link} to="/log">
+                    Войти
+                  </Button>
+                </ButtonGroup>
+              </Grid>
+            ) : (
+              <Grid item xs={12}>
+                <Button color="secondary" onClick={handleLogOut}>
+                  Выйти из {user.email}
+                </Button>
+              </Grid>
+            )}
+          </Stack>
+        </AppBar>
+      )}
       <AppRoutes />
     </div>
   );
