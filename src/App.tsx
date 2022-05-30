@@ -15,20 +15,20 @@ function App() {
     }
   };
 
-  if ("serviceWorker" in navigator) {
-    window.addEventListener("load", function () {
-      navigator.serviceWorker.register("/sw.js").then(
-        function (registration) {
-          // Успешная регистрация
-          console.log("ServiceWorker registration successful");
-        },
-        function (err) {
-          // При регистрации произошла ошибка
-          console.log("ServiceWorker registration failed: ", err);
-        }
-      );
-    });
-  }
+  // if ("serviceWorker" in navigator) {
+  //   window.addEventListener("load", function () {
+  //     navigator.serviceWorker.register("/sw.js").then(
+  //       function (registration) {
+  //         // Успешная регистрация
+  //         console.log("ServiceWorker registration successful");
+  //       },
+  //       function (err) {
+  //         // При регистрации произошла ошибка
+  //         console.log("ServiceWorker registration failed: ", err);
+  //       }
+  //     );
+  //   });
+  // }
 
   return (
     <div className="App">
@@ -78,14 +78,6 @@ function App() {
             </Grid>
           )}
         </Stack>
-        {/* <Grid
-          container
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-        >
-          
-        </Grid> */}
       </AppBar>
       <AppRoutes />
     </div>

@@ -158,7 +158,7 @@ const ConfigContainer = () => {
             direction="row"
             justifyContent="space-around"
             alignItems="center"
-            sx={{ mb: 1 }}
+            sx={{ mb: 2 }}
           >
             <Grid item xs={6}>
               <Button

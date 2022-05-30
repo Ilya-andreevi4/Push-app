@@ -63,7 +63,7 @@ const PushList = () => {
             <Button
               color="secondary"
               onClick={getPushs}
-              sx={{ float: "right", mb: 1 }}
+              sx={{ float: "right", mb: 2 }}
             >
               Обновить
             </Button>
