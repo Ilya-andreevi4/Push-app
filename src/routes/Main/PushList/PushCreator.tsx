@@ -198,6 +198,14 @@ export function PushCreator() {
           >
             Отправить
           </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            disabled={isLoading}
+            onClick={() => window.Notification.requestPermission()}
+          >
+            Оповещение
+          </Button>
         </Grid>
       </Grid>
     </Container>

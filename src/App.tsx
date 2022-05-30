@@ -72,6 +72,7 @@ function App() {
               <Grid item xs={12}>
                 <ButtonGroup
                   disableElevation
+                  size="small"
                   color="secondary"
                   variant="contained"
                 >
