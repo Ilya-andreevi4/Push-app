@@ -72,7 +72,7 @@ const PushList = () => {
         <Grid item xs={12}>
           <div className="message_list">
             {push &&
-              push.map((push) => (
+              push.sort((a, b) => b.timePush - a.timePush).map((push) => (
                 <PushItem remove={handleRemove} key={push.id} push={push} />
               ))}
           </div>

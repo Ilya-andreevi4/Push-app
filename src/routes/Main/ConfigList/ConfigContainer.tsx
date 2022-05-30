@@ -24,6 +24,7 @@ import ConfigItem from "./ConfigItem";
 const ConfigContainer = () => {
   const [title, setTitle] = React.useState("");
   const [system, setSystem] = React.useState("");
+  const [timeCreate, setTimeCreate] = React.useState<Date>();
   const [message, setMessage] = useState({
     error: false,
     msg: "Введите данные",
@@ -71,7 +72,7 @@ const ConfigContainer = () => {
     }
     try {
       if (configId) {
-        const updateConfig: IConfig = { id: configId, title, system };
+        const updateConfig: IConfig = { id: configId, title, system, timeCreate };
         await ConfigDataServices.updateConfig(configId, updateConfig);
         setMessage({
           error: false,
@@ -79,7 +80,8 @@ const ConfigContainer = () => {
           style: "success",
         });
       } else {
-        const newConfig = { title, system };
+        const time = new Date();
+        const newConfig = { title, system, timeCreate:time };
         await ConfigDataServices.addConfig(newConfig);
         setMessage({
           error: false,
@@ -139,6 +141,8 @@ const ConfigContainer = () => {
     setConfigId(updatedConfig.id);
     setTitle(updatedConfig.title);
     setSystem(updatedConfig.system);
+    setSystem(updatedConfig.system);
+    setTimeCreate (updatedConfig.timeCreate);
   };
 
   useEffect(() => {
@@ -162,7 +166,7 @@ const ConfigContainer = () => {
                 color="secondary"
                 onClick={handleClickOpen}
               >
-                Новая конфигурация
+                Создать
               </Button>
             </Grid>
             <Grid item xs={6}>
@@ -228,14 +232,6 @@ const ConfigContainer = () => {
                     ))}
                   </Select>
                 </FormControl>
-                {/* <TextField
-                  value={system}
-                  onChange={(e) => setSystem(e.target.value)}
-                  fullWidth={true}
-                  defaultValue={system}
-                  label="Система"
-                  variant="filled"
-                /> */}
               </form>
             </DialogContent>
             <DialogActions>
@@ -274,7 +270,7 @@ const ConfigContainer = () => {
           </Grid>
         </Grid>
         {configs &&
-          configs.map((doc, index) => (
+          configs.sort((a, b) => b.timeCreate - a.timeCreate).map((doc, index) => (
             <ConfigItem
               remove={handleRemove}
               update={handleUpdate}

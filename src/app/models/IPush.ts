@@ -3,4 +3,5 @@ export interface IPush {
   idConfigs: any;
   message: any;
   pushDate: any;
+  timePush: any;
 }

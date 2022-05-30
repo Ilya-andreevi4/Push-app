@@ -76,8 +76,11 @@ export function PushCreator() {
       return;
     } else {
       try {
-        const pushDate = new Date().toDateString();
-        const newPush = { idConfigs, message, pushDate };
+        const pushDate = [new Date().toLocaleTimeString(), new Date().toDateString()].toString()
+        .split(",")
+        .join(" ");
+        const timePush = new Date();
+        const newPush = { idConfigs, message, pushDate, timePush };
         await PushDataServices.addPush(newPush);
       } catch (e) {
         console.log(e);
@@ -129,12 +132,11 @@ export function PushCreator() {
 
   return (
     <Container maxWidth="xs">
-      <Grid container spacing={3}>
+      <Grid container spacing={3} mt={1} pb={1}>
         <Grid item xs={12}>
           <Box>
             <Grid
               container
-              mt={1}
               mb={2}
               justifyContent="space-between"
               alignItems="center"

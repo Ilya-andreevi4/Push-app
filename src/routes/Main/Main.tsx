@@ -28,7 +28,7 @@ function Main() {
             </Grid>
           </Box>
           <Box maxWidth="sm" className="create_push_form_mob">
-            <Typography variant="h5"  align="center" sx={{mt:"3rem", mb:"1rem"}}>
+            <Typography variant="h5"  align="center" sx={{mt:"5rem", mb:"1rem"}}>
               Создание Пуш-уведомлений
             </Typography>
             <PushCreator />
@@ -54,7 +54,7 @@ function Main() {
               </Grid>
             </Grid>
           </Box>
-          <Box maxWidth="sm" className="create_push_form">
+          <Box maxWidth="sm" className="create_push_form" >
             <Typography variant="h5"  align="center" sx={{mt:"3rem", mb:"1rem"}}>
               Создание Пуш-уведомлений
             </Typography>
