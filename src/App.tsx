@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { AppBar, Button, Typography, Grid, ButtonGroup } from "@mui/material";
+import { AppBar, Button, Typography, Grid, ButtonGroup, Stack } from "@mui/material";
 import { Link } from "react-router-dom";
 import AppRoutes from "./routes/Routes";
 import { useUserAuth } from "./services/provider/AuthProvider";
@@ -33,14 +33,16 @@ function App() {
   return (
     <div className="App">
       <AppBar position="fixed">
-        <Grid
+        <Stack
           className="AppBar"
-          container
           direction="row"
           justifyContent="space-between"
           alignItems="center"
+          spacing={1}
+          pl={3}
+          pr={3}
         >
-          <Grid item >
+          <Grid item xs={12}>
             <Button
               size="small"
               color="inherit"
@@ -50,9 +52,8 @@ function App() {
               <Typography variant="h6">Push-Notification App</Typography>
             </Button>
           </Grid>
-          <Grid item />
           {!user ? (
-            <Grid item>
+            <Grid item xs={12}>
               <ButtonGroup
                 disableElevation
                 color="secondary"
@@ -67,7 +68,7 @@ function App() {
               </ButtonGroup>
             </Grid>
           ) : (
-            <Grid item>
+            <Grid item xs={12}>
               <Button
                 color="secondary"
                 onClick={handleLogOut}
@@ -76,7 +77,15 @@ function App() {
               </Button>
             </Grid>
           )}
-        </Grid>
+        </Stack>
+        {/* <Grid
+          container
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          
+        </Grid> */}
       </AppBar>
       <AppRoutes />
     </div>
