@@ -136,7 +136,6 @@ const ConfigContainer = () => {
   };
 
   const handleUpdate = async (updatedConfig: IConfig) => {
-    console.log(updatedConfig);
     setOpen(true);
     setConfigId(updatedConfig.id);
     setTitle(updatedConfig.title);

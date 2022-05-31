@@ -1,4 +1,4 @@
-var CACHE_NAME = 'my-web-app-cache';
+var CACHE_NAME = 'push-notification-app-cache';
 var urlsToCache = [
   '/',
   '/styles/main.css',
