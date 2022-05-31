@@ -8,7 +8,8 @@ import {
   Select,
   MenuItem,
   SelectChangeEvent,
-  Alert
+  Alert,
+  ButtonGroup,
 } from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
 import { Box } from "@mui/system";
@@ -189,23 +190,22 @@ export function PushCreator() {
             variant="filled"
           />
         </Grid>
-        <Grid item xs={12}>
-          <Button
+        <Grid item xs={12} >
+          <ButtonGroup
             variant="contained"
             color="primary"
             disabled={isLoading}
-            onClick={() => handleSubmit(ConfigId, message)}
           >
-            Отправить
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            disabled={isLoading}
-            onClick={() => window.Notification.requestPermission()}
-          >
-            Оповещение
-          </Button>
+            <Button onClick={() => requestPermission()}>
+              Разрешение на оповещение
+            </Button>
+            <Button
+              color="secondary"
+              onClick={() => handleSubmit(ConfigId, message)}
+            >
+              Отправить
+            </Button>
+          </ButtonGroup>
         </Grid>
       </Grid>
     </Container>
