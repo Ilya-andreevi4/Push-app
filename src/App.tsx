@@ -24,26 +24,6 @@ function App() {
   };
   const matches = useMediaQuery("(max-width:767px)");
 
-  if ("serviceWorker" in navigator) {
-    window.addEventListener("load", function () {
-      navigator.serviceWorker
-        .register("/sw.js")
-        .then(
-          function (registration) {
-            const subscribeOptions = {
-              userVisibleOnly: true,
-              applicationServerKey:
-                "BMe3lq08yT-UDNxnrAQfnL1nroniS30iZ_uxjf8oSnmvSVbgWW7HacH7Gp3c43AVTGOKxCXnRsN6kY1dX58RiQE",
-            };
-            return registration.pushManager.subscribe(subscribeOptions);
-          }
-        )
-        .then(function (pushSubscription) {
-          console.log("PushSubscription: ", JSON.stringify(pushSubscription));
-          return pushSubscription;
-        });
-    });
-  }
 
   return (
     <div className="App">

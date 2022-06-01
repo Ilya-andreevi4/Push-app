@@ -6,6 +6,7 @@ import App from './App';
 import './index.css';
 import './firebase';
 import { UserAuthContextProvider } from './services/provider/AuthProvider';
+import { getMessaging, getToken } from 'firebase/messaging';
 
 
 const container = document.getElementById('root')!;
@@ -21,7 +22,23 @@ const theme = createTheme({
   }
 });
 
+const messaging = getMessaging();
 
+getToken(messaging, { vapidKey: 'BMe3lq08yT-UDNxnrAQfnL1nroniS30iZ_uxjf8oSnmvSVbgWW7HacH7Gp3c43AVTGOKxCXnRsN6kY1dX58RiQE' }).then((currentToken) => {
+  if (currentToken) {
+    // Send the token to your server and update the UI if necessary
+    console.log('token: ', currentToken);
+    // sendTokenToServer(currentToken);
+    // ...
+  } else {
+    // Show permission request UI
+    console.log('No registration token available. Request permission to generate one.');
+    // ...
+  }
+}).catch((err) => {
+  console.log('An error occurred while retrieving token. ', err);
+  // ...
+});
 
 root.render(
     <UserAuthContextProvider>
