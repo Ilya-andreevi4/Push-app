@@ -212,7 +212,7 @@ const ConfigContainer = () => {
                   label="Название"
                   variant="filled"
                 />
-                <FormControl fullWidth sx={{mt: 1}}>
+                <FormControl fullWidth sx={{mt: 2}}>
                   <InputLabel id="select-label-system">Система</InputLabel>
                   <Select
                     labelId="select-label-system"

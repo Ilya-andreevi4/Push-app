@@ -8,8 +8,7 @@ import {
   Select,
   MenuItem,
   SelectChangeEvent,
-  Alert,
-  ButtonGroup,
+  Alert
 } from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
 import { Box } from "@mui/system";
@@ -140,21 +139,27 @@ export function PushCreator() {
       <Grid container spacing={3} mt={1} pb={1}>
         <Grid item xs={12}>
           <Box>
-            <Grid
-              container
-              mb={2}
-              justifyContent="space-between"
-              alignItems="center"
-            >
-              {isLoading ? (
-                <Loader /> // <Alert severity={msg.style as any}>Идёт загрузка конфигов...</Alert>
-              ) : msg.error ? (
-                <Alert severity={msg.style as any}>{msg.text}</Alert>
-              ) : (
-                <Alert severity={msg.style as any}>{msg.text}</Alert>
-              )}
+            <Grid container mb={2} justifyContent="space-between">
+              <Grid item xs={6}>
+                {isLoading ? (
+                  <Loader /> // <Alert severity={msg.style as any}>Идёт загрузка конфигов...</Alert>
+                ) : msg.error ? (
+                  <Alert severity={msg.style as any}>{msg.text}</Alert>
+                ) : (
+                  <Alert severity={msg.style as any}>{msg.text}</Alert>
+                )}
+              </Grid>
+              <Grid item xs={6}>
+                <Button
+                  size="small"
+                  color="secondary"
+                  disabled={isLoading}
+                  onClick={() => requestPermission()}
+                >
+                  Разрешение на оповещения
+                </Button>
+              </Grid>
             </Grid>
-
             {configs && (
               <FormControl fullWidth>
                 <InputLabel id="select-label">Конфиг</InputLabel>
@@ -191,17 +196,15 @@ export function PushCreator() {
           />
         </Grid>
         <Grid item xs={12}>
-          <ButtonGroup variant="contained" color="primary" disabled={isLoading}>
-            <Button onClick={() => requestPermission()}>
-              Разрешение на оповещение
-            </Button>
             <Button
+              variant="contained"
+              disabled={isLoading}
               color="secondary"
+              sx={{float:"right"}}
               onClick={() => handleSubmit(ConfigId, message)}
             >
               Отправить
             </Button>
-          </ButtonGroup>
         </Grid>
       </Grid>
     </Container>
