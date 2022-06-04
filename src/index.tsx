@@ -39,7 +39,7 @@ function sendTokenToServer(currentToken:any) {
   if (!isTokenSentToServer(currentToken)) {
       console.log('Отправка токена на сервер...');
 
-      var url = 'https://fcm.googleapis.com/v1/projects/test-e97df/messages:send'; // адрес скрипта на сервере который сохраняет ID устройства
+      var url = 'https://fcm.googleapis.com/v1/projects/test-e97df'; // адрес скрипта на сервере который сохраняет ID устройства
       $.post(url, {
           token: currentToken
       });
