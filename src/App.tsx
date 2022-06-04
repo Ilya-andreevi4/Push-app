@@ -41,7 +41,6 @@ function App() {
 
   function sendTokenToServer(currentToken: any) {
     if (!isTokenSentToServer(currentToken)) {
-      console.log("Отправка токена на сервер...");
       var url = "https://fcm.googleapis.com/v1/projects/test-e97df"; // адрес скрипта на сервере который сохраняет ID устройства
       jQuery(function ($) {
         $.post(url, {
@@ -65,9 +64,6 @@ function App() {
         // ...
       } else {
         requestPermission();
-        console.log(
-          "No registration token available. Request permission to generate one."
-        );
         // ...
       }
     })
@@ -99,7 +95,6 @@ function App() {
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/firebase-messaging-sw.js').then(function(reg) {
         // регистрация сработала
-        console.log('Registration succeeded. Scope is ' + reg.scope);
       }).catch(function(error) {
         // регистрация прошла неудачно
         console.log('Registration failed with ' + error);
