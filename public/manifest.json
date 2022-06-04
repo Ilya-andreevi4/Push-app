@@ -1,6 +1,6 @@
 {
-  "short_name": "Push-Notification App",
-  "name": "App for create Push-Notification's",
+  "short_name": "PNA",
+  "name": "Push-Notification App",
   "icons": [
     {
       "src": "favicon.ico",
@@ -20,6 +20,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#666666",
-  "background_color": "#ffffff"
+  "theme_color": "#0175d9",
+  "background_color": "#05ff00"
 }

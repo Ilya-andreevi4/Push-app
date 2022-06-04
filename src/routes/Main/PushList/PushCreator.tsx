@@ -31,24 +31,6 @@ export function PushCreator() {
   });
   const snap: any = useSnapshot(state);
 
-  function requestPermission() {
-    return new Promise(function (resolve, reject) {
-      const permissionResult = Notification.requestPermission(function (
-        result
-      ) {
-        // Поддержка устаревшей версии с функцией обратного вызова.
-        resolve(result);
-      });
-
-      if (permissionResult) {
-        permissionResult.then(resolve, reject);
-      }
-    }).then(function (permissionResult) {
-      if (permissionResult !== "granted") {
-        throw new Error("Permission not granted.");
-      }
-    });
-  }
 
   const updateState = () => {
     state.status_push = !state.status_push;
@@ -112,7 +94,7 @@ export function PushCreator() {
     }
   };
 
-  const handler = useCallback(
+  const handlerEnter = useCallback(
     (event: any) => {
       if (event.key === "Enter") {
         return handleSubmit(ConfigId, message);
@@ -127,12 +109,12 @@ export function PushCreator() {
 
   useEffect(() => {
     if (!isLoading) {
-      document.addEventListener("keyup", handler);
+      document.addEventListener("keyup", handlerEnter);
       return () => {
-        document.removeEventListener("keyup", handler);
+        document.removeEventListener("keyup", handlerEnter);
       };
     }
-  }, [isLoading, handler]);
+  }, [isLoading, handlerEnter]);
 
   return (
     <Container maxWidth="xs">
@@ -150,14 +132,6 @@ export function PushCreator() {
                 )}
               </Grid>
               <Grid item xs={6}>
-                <Button
-                  size="small"
-                  color="secondary"
-                  disabled={isLoading}
-                  onClick={() => requestPermission()}
-                >
-                  Разрешение на оповещения
-                </Button>
               </Grid>
             </Grid>
             {configs && (

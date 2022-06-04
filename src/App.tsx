@@ -12,6 +12,7 @@ import {
 import { Link } from "react-router-dom";
 import AppRoutes from "./routes/Routes";
 import { useUserAuth } from "./services/provider/AuthProvider";
+import { getMessaging, getToken } from "firebase/messaging";
 
 function App() {
   const { user, logOut } = useUserAuth();
@@ -22,8 +23,91 @@ function App() {
       console.log(err.message);
     }
   };
-  const matches = useMediaQuery("(max-width:767px)");
 
+  const messaging = getMessaging();
+
+  function isTokenSentToServer(currentToken: any) {
+    return (
+      window.localStorage.getItem("sentFirebaseMessagingToken") === currentToken
+    );
+  }
+
+  function setTokenSentToServer(currentToken: any) {
+    window.localStorage.setItem(
+      "sentFirebaseMessagingToken",
+      currentToken ? currentToken : ""
+    );
+  }
+
+  function sendTokenToServer(currentToken: any) {
+    if (!isTokenSentToServer(currentToken)) {
+      console.log("Отправка токена на сервер...");
+      var url = "https://fcm.googleapis.com/v1/projects/test-e97df"; // адрес скрипта на сервере который сохраняет ID устройства
+      jQuery(function ($) {
+        $.post(url, {
+          token: currentToken,
+        });
+      });
+      setTokenSentToServer(currentToken);
+    } else {
+      console.log("Токен уже отправлен на сервер.");
+    }
+  }
+  getToken(messaging, {
+    vapidKey:
+      "BMe3lq08yT-UDNxnrAQfnL1nroniS30iZ_uxjf8oSnmvSVbgWW7HacH7Gp3c43AVTGOKxCXnRsN6kY1dX58RiQE",
+  })
+    .then((currentToken) => {
+      if (currentToken) {
+        // Send the token to your server and update the UI if necessary
+        console.log("token: ", currentToken);
+        sendTokenToServer(currentToken);
+        // ...
+      } else {
+        requestPermission();
+        console.log(
+          "No registration token available. Request permission to generate one."
+        );
+        // ...
+      }
+    })
+    .catch((err) => {
+      console.log("An error occurred while retrieving token. ", err);
+      // ...
+    });
+
+  function requestPermission() {
+    return new Promise(function (resolve, reject) {
+      const permissionResult = Notification.requestPermission(function (
+        result
+      ) {
+        // Поддержка устаревшей версии с функцией обратного вызова.
+        resolve(result);
+      });
+
+      if (permissionResult) {
+        permissionResult.then(resolve, reject);
+      }
+    }).then(function (permissionResult) {
+      if (permissionResult !== "granted") {
+        throw new Error("Permission not granted.");
+      }
+    });
+  }
+
+  window.addEventListener('load', async ()=> {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/firebase-messaging-sw.js').then(function(reg) {
+        // регистрация сработала
+        console.log('Registration succeeded. Scope is ' + reg.scope);
+      }).catch(function(error) {
+        // регистрация прошла неудачно
+        console.log('Registration failed with ' + error);
+      });
+    };
+  })
+  
+  const matches = useMediaQuery("(max-width:767px)");
 
   return (
     <div className="App">
