@@ -122,7 +122,7 @@ export function PushCreator() {
         <Grid item xs={12}>
           <Box>
             <Grid container mb={2} justifyContent="space-between">
-              <Grid item xs={6}>
+              <Grid item xs={12}>
                 {isLoading ? (
                   <Loader /> // <Alert severity={msg.style as any}>Идёт загрузка конфигов...</Alert>
                 ) : msg.error ? (
@@ -130,8 +130,6 @@ export function PushCreator() {
                 ) : (
                   <Alert severity={msg.style as any}>{msg.text}</Alert>
                 )}
-              </Grid>
-              <Grid item xs={6}>
               </Grid>
             </Grid>
             {configs && (
