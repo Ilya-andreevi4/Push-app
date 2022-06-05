@@ -30,7 +30,7 @@ export function PushCreator() {
     style: "info",
   });
   const snap: any = useSnapshot(state);
-
+  // const tokenSnap: any = useSnapshot(userToken);
 
   const updateState = () => {
     state.status_push = !state.status_push;
@@ -178,6 +178,11 @@ export function PushCreator() {
               Отправить
             </Button>
         </Grid>
+        {/* <Grid item xs={12}>
+            <Typography>
+              {tokenSnap}
+            </Typography>
+        </Grid> */}
       </Grid>
     </Container>
   );

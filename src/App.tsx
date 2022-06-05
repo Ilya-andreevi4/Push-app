@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 import {
   AppBar,
@@ -13,9 +13,13 @@ import { Link } from "react-router-dom";
 import AppRoutes from "./routes/Routes";
 import { useUserAuth } from "./services/provider/AuthProvider";
 import { getMessaging, getToken } from "firebase/messaging";
+// import { userToken } from "./routes/Main/PushList/updateState";
+// import { useSnapshot } from "valtio";
 
 function App() {
   const { user, logOut } = useUserAuth();
+  // const tokenSnap: any = useSnapshot(userToken);
+  const [token, setToken] = useState("");
   const handleLogOut = async () => {
     try {
       await logOut();
@@ -25,6 +29,10 @@ function App() {
   };
 
   const messaging = getMessaging();
+  // const updateToken = () => {
+  //   userToken.token = token;
+  //   return userToken;
+  // };
 
   function isTokenSentToServer(currentToken: any) {
     return (
@@ -41,12 +49,12 @@ function App() {
 
   function sendTokenToServer(currentToken: any) {
     if (!isTokenSentToServer(currentToken)) {
-      var url = "https://fcm.googleapis.com/v1/projects/test-e97df"; // адрес скрипта на сервере который сохраняет ID устройства
-      jQuery(function ($) {
-        $.post(url, {
-          token: currentToken,
-        });
-      });
+      // TODO
+      // Use Fetch or Axios
+      // var url = "https://fcm.googleapis.com/v1/projects/test-e97df"; // адрес скрипта на сервере который сохраняет ID устройства
+      // //.post(url, {
+      //     token: currentToken,
+      //   });
       setTokenSentToServer(currentToken);
     } else {
       console.log("Токен уже отправлен на сервер.");
@@ -56,11 +64,16 @@ function App() {
     vapidKey:
       "BMe3lq08yT-UDNxnrAQfnL1nroniS30iZ_uxjf8oSnmvSVbgWW7HacH7Gp3c43AVTGOKxCXnRsN6kY1dX58RiQE",
   })
-    .then((currentToken) => {
+    .then(async (currentToken) => {
       if (currentToken) {
         // Send the token to your server and update the UI if necessary
-        console.log("token: ", currentToken);
-        sendTokenToServer(currentToken);
+        try {
+          console.log("token: ", currentToken);
+          setToken(currentToken);
+          sendTokenToServer(currentToken);
+        } catch (e) {
+          console.log("An error occurred while retrieving token. ", e);
+        }
         // ...
       } else {
         requestPermission();
@@ -80,7 +93,6 @@ function App() {
         // Поддержка устаревшей версии с функцией обратного вызова.
         resolve(result);
       });
-
       if (permissionResult) {
         permissionResult.then(resolve, reject);
       }
@@ -91,18 +103,24 @@ function App() {
     });
   }
 
-  window.addEventListener('load', async ()=> {
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/firebase-messaging-sw.js').then(function(reg) {
-        // регистрация сработала
-      }).catch(function(error) {
-        // регистрация прошла неудачно
-        console.log('Registration failed with ' + error);
-      });
-    };
-  })
-  
+  window.addEventListener("load", async () => {
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker
+        .register("/firebase-messaging-sw.js")
+        .then(function (reg) {
+          // регистрация сработала
+        })
+        .catch(function (error) {
+          // регистрация прошла неудачно
+          console.log("SW registration failed with: " + error);
+        });
+    }
+  });
+
   const matches = useMediaQuery("(max-width:767px)");
+  // useEffect(() => {
+  //   setToken();
+  // }, [userToken.token]);
 
   return (
     <div className="App">
@@ -133,6 +151,7 @@ function App() {
                 Push App
               </Typography>
             </Grid>
+            <Grid item xs={12}>{token && <Typography noWrap variant="caption">Токен твоего девайса: {token}</Typography>}</Grid>
             {!user ? (
               <Grid item xs={12}>
                 <ButtonGroup
@@ -185,6 +204,7 @@ function App() {
                 Push App
               </Typography>
             </Grid>
+            <Grid item xs={12}>{token && <Typography noWrap variant="caption">Токен твоего девайса: {token}</Typography>}</Grid>
             {!user ? (
               <Grid item xs={12}>
                 <ButtonGroup

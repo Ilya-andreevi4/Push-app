@@ -52,3 +52,28 @@ self.addEventListener("fetch", (event) => {
   const { request } = event;
   event.respondWith(cacheFirst(request));
 });
+// eslint-disable-next-line no-restricted-globals
+self?.addEventListener?.("push", (event) => {
+  console.log("push", event);
+  const payload = event.data.json();
+  const {
+    notification,
+    collapse_key,
+    data,
+    fcmMessageId,
+    from,
+    priority
+  } = payload;
+  
+  console.log("payload", payload);
+  console.log("notification", notification);
+// eslint-disable-next-line no-restricted-globals
+  var promise = self.registration.showNotification(notification.title, {
+    body: notification.body,
+    icon: notification.icon || notification.image || 'https://test.stroygrad66.ru/favicon.svg',
+    tag: notification.tag,
+    data: data
+  })
+
+  event.waitUntil(promise)
+});
