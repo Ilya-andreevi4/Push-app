@@ -54,7 +54,7 @@ function Main() {
               </Grid>
             </Grid>
           </Box>
-          <Box maxWidth="sm" className="create_push_form" >
+          <Box maxWidth="sm" className="create_push_form">
             <Typography variant="h5"  align="center" sx={{mt:"1rem", mb:"1rem"}}>
               Создание Пуш-уведомлений
             </Typography>

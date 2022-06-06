@@ -6,6 +6,51 @@
 
 .AppBar {
   padding: 10px 0;
+  background: rgb(131, 58, 180);
+  background: -moz-linear-gradient(
+    90deg,
+    rgba(131, 58, 180, 1) 0%,
+    rgba(253, 29, 29, 1) 20%,
+    rgba(252, 176, 69, 1) 40%,
+    rgba(253, 29, 29, 1) 60%,
+    rgba(131, 58, 180, 1) 80%,
+    rgba(253, 29, 29, 1) 100%,
+    rgba(252, 176, 69, 1) 120%
+  );
+  background: -webkit-linear-gradient(
+    90deg,
+    rgba(131, 58, 180, 1) 0%,
+    rgba(253, 29, 29, 1) 20%,
+    rgba(252, 176, 69, 1) 40%,
+    rgba(253, 29, 29, 1) 60%,
+    rgba(131, 58, 180, 1) 80%,
+    rgba(253, 29, 29, 1) 100%,
+    rgba(252, 176, 69, 1) 120%
+  );
+  background: linear-gradient(
+    90deg,
+    rgba(131, 58, 180, 1) 0%,
+    rgba(253, 29, 29, 1) 20%,
+    rgba(252, 176, 69, 1) 40%,
+    rgba(253, 29, 29, 1) 60%,
+    rgba(131, 58, 180, 1) 80%,
+    rgba(253, 29, 29, 1) 100%,
+    rgba(252, 176, 69, 1) 120%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#833ab4",endColorstr="#fcb045",GradientType=1);
+  background-size: 400%;
+  animation: gradient 20s infinite linear;
+}
+@keyframes gradient {
+  0% {
+    background-position: 100% 0%;
+  }
+  50% {
+    background-position: 0% 100%;
+  }
+  100% {
+    background-position: 100% 0%;
+  }
 }
 
 .content {
@@ -38,12 +83,16 @@
 }
 
 .create_push_form {
+  /* border-radius: 10px; */
+  height: 90vh;
   margin-top: 0;
   float: left;
   justify-content: "flex-end";
   width: 35%;
   padding-top: 24px;
   padding-right: 12px;
+
+  /* box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.5); */
 }
 
 .create_push_form_mob {
@@ -130,11 +179,13 @@
   overflow: auto;
 }
 
-.push__form {
-  border-radius: 20px;
-  background: rgba(255, 150, 222, 1);
-  background: radial-gradient(circle, rgba(255, 150, 221, 1) 0%, rgba(153, 148, 233, 1) 100%);
-  box-shadow: 0px 0px 15px #b3b3b3;
+.message_input {
+  border-radius: 5px 5px 0px 0px;
+  background: #f0f0f3;
+}
+/* config_select */
+#select {
+  background: #f0f0f3;
 }
 
 /* LOADER */

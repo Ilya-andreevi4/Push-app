@@ -133,7 +133,7 @@ export function PushCreator() {
               </Grid>
             </Grid>
             {configs && (
-              <FormControl fullWidth>
+              <FormControl fullWidth color="secondary" className="config_select">
                 <InputLabel id="select-label">Конфиг</InputLabel>
                 <Select
                   labelId="select-label"
@@ -164,6 +164,8 @@ export function PushCreator() {
             onChange={(e) => setMessage(e.target.value)}
             fullWidth={true}
             label="Сообщение"
+            className="message_input"
+            color="secondary"
             variant="filled"
           />
         </Grid>

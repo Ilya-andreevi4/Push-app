@@ -125,9 +125,8 @@ function App() {
   return (
     <div className="App">
       {matches ? (
-        <AppBar position="fixed">
+        <AppBar position="fixed" className="AppBar">
           <Stack
-            className="AppBar"
             direction="row"
             justifyContent="space-between"
             alignItems="center"
@@ -151,7 +150,13 @@ function App() {
                 Push App
               </Typography>
             </Grid>
-            <Grid item xs={12}>{token && <Typography noWrap variant="caption">Токен твоего девайса: {token}</Typography>}</Grid>
+            <Grid item xs={12}>
+              {token && (
+                <Typography variant="caption">
+                  Токен твоего девайса: {token}
+                </Typography>
+              )}
+            </Grid>
             {!user ? (
               <Grid item xs={12}>
                 <ButtonGroup
@@ -178,9 +183,8 @@ function App() {
           </Stack>
         </AppBar>
       ) : (
-        <AppBar position="static">
+        <AppBar position="static" className="AppBar">
           <Stack
-            className="AppBar"
             direction="row"
             justifyContent="space-between"
             alignItems="center"
@@ -204,7 +208,13 @@ function App() {
                 Push App
               </Typography>
             </Grid>
-            <Grid item xs={12}>{token && <Typography noWrap variant="caption">Токен твоего девайса: {token}</Typography>}</Grid>
+            <Grid item xs={12}>
+              {token && (
+                <Typography variant="caption">
+                  Токен твоего девайса: {token}
+                </Typography>
+              )}
+            </Grid>
             {!user ? (
               <Grid item xs={12}>
                 <ButtonGroup
@@ -222,7 +232,7 @@ function App() {
               </Grid>
             ) : (
               <Grid item xs={12}>
-                <Button color="secondary" onClick={handleLogOut}>
+                <Button color="secondary" variant="contained" onClick={handleLogOut}>
                   Выйти из {user.email}
                 </Button>
               </Grid>
