@@ -8,18 +8,25 @@ import {
   ButtonGroup,
   Stack,
   useMediaQuery,
+  Dialog,
+  Box,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import AppRoutes from "./routes/Routes";
 import { useUserAuth } from "./services/provider/AuthProvider";
 import { getMessaging, getToken } from "firebase/messaging";
-// import { userToken } from "./routes/Main/PushList/updateState";
-// import { useSnapshot } from "valtio";
 
 function App() {
   const { user, logOut } = useUserAuth();
-  // const tokenSnap: any = useSnapshot(userToken);
   const [token, setToken] = useState("");
+  const [open, setOpen] = useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const handleLogOut = async () => {
     try {
       await logOut();
@@ -29,10 +36,6 @@ function App() {
   };
 
   const messaging = getMessaging();
-  // const updateToken = () => {
-  //   userToken.token = token;
-  //   return userToken;
-  // };
 
   function isTokenSentToServer(currentToken: any) {
     return (
@@ -118,9 +121,6 @@ function App() {
   });
 
   const matches = useMediaQuery("(max-width:767px)");
-  // useEffect(() => {
-  //   setToken();
-  // }, [userToken.token]);
 
   return (
     <div className="App">
@@ -134,7 +134,7 @@ function App() {
             pl={1}
             pr={1}
           >
-            <Grid item xs={12}>
+            <Grid>
               <Typography
                 variant="button"
                 noWrap
@@ -150,15 +150,8 @@ function App() {
                 Push App
               </Typography>
             </Grid>
-            <Grid item xs={12}>
-              {token && (
-                <Typography variant="caption">
-                  Токен твоего девайса: {token}
-                </Typography>
-              )}
-            </Grid>
             {!user ? (
-              <Grid item xs={12}>
+              <Grid>
                 <ButtonGroup
                   disableElevation
                   size="small"
@@ -174,7 +167,7 @@ function App() {
                 </ButtonGroup>
               </Grid>
             ) : (
-              <Grid item xs={12}>
+              <Grid>
                 <Button color="secondary" onClick={handleLogOut}>
                   Выйти из {user.email}
                 </Button>
@@ -192,7 +185,7 @@ function App() {
             pl={3}
             pr={3}
           >
-            <Grid item xs={12}>
+            <Grid>
               <Typography
                 variant="h6"
                 noWrap
@@ -208,15 +201,8 @@ function App() {
                 Push App
               </Typography>
             </Grid>
-            <Grid item xs={12}>
-              {token && (
-                <Typography variant="caption">
-                  Токен твоего девайса: {token}
-                </Typography>
-              )}
-            </Grid>
             {!user ? (
-              <Grid item xs={12}>
+              <Grid>
                 <ButtonGroup
                   disableElevation
                   color="secondary"
@@ -231,8 +217,12 @@ function App() {
                 </ButtonGroup>
               </Grid>
             ) : (
-              <Grid item xs={12}>
-                <Button color="secondary" variant="contained" onClick={handleLogOut}>
+              <Grid>
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  onClick={handleLogOut}
+                >
                   Выйти из {user.email}
                 </Button>
               </Grid>
@@ -240,7 +230,17 @@ function App() {
           </Stack>
         </AppBar>
       )}
+      <Dialog open={open} onClose={handleClose}>
+        <Typography variant="subtitle1">
+          Токен твоего девайса: {token}
+        </Typography>
+      </Dialog>
       <AppRoutes />
+      {token && (
+        <Box m={0.5}>
+          <Button onClick={handleClickOpen} variant='outlined'>Токен твоего девайса</Button>
+        </Box>
+      )}
     </div>
   );
 }
