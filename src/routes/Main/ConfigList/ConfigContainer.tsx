@@ -1,7 +1,7 @@
 import {
   Alert,
+  Box,
   Button,
-  Container,
   Dialog,
   DialogActions,
   DialogContent,
@@ -13,6 +13,7 @@ import {
   Select,
   SelectChangeEvent,
   TextField,
+  Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { IConfig } from "../../../app/models/IConfig";
@@ -37,10 +38,10 @@ const ConfigContainer = () => {
   const [error, setError] = useState("");
 
   const systems = [
-    {id: 1, systemName: "IOS Push"},
-    {id: 2, systemName: "Android Push"},
-    {id: 3, systemName: "Web Desktop"},
-  ]
+    { id: 1, systemName: "IOS Push" },
+    { id: 2, systemName: "Android Push" },
+    { id: 3, systemName: "Web Desktop" },
+  ];
 
   const updateState = () => {
     state.config_status = !state.config_status;
@@ -72,7 +73,12 @@ const ConfigContainer = () => {
     }
     try {
       if (configId) {
-        const updateConfig: IConfig = { id: configId, title, system, timeCreate };
+        const updateConfig: IConfig = {
+          id: configId,
+          title,
+          system,
+          timeCreate,
+        };
         await ConfigDataServices.updateConfig(configId, updateConfig);
         setMessage({
           error: false,
@@ -81,7 +87,7 @@ const ConfigContainer = () => {
         });
       } else {
         const time = new Date();
-        const newConfig = { title, system, timeCreate:time };
+        const newConfig = { title, system, timeCreate: time };
         await ConfigDataServices.addConfig(newConfig);
         setMessage({
           error: false,
@@ -141,7 +147,7 @@ const ConfigContainer = () => {
     setTitle(updatedConfig.title);
     setSystem(updatedConfig.system);
     setSystem(updatedConfig.system);
-    setTimeCreate (updatedConfig.timeCreate);
+    setTimeCreate(updatedConfig.timeCreate);
   };
 
   useEffect(() => {
@@ -149,18 +155,29 @@ const ConfigContainer = () => {
   }, []);
 
   return (
-    <div>
+    <div className="ConfigContainer">
       {configs && (
-        <Container>
+        <Box>
           <Grid
             container
             direction="row"
-            justifyContent="space-around"
+            justifyContent="space-between"
             alignItems="center"
-            sx={{ mb: 2 }}
+            sx={{ mb: 3 }}
           >
+            <Grid item xs={12}>
+              <Typography
+                variant="h5"
+                gutterBottom
+                align="center"
+                sx={{ mt: "2rem", mb: "1rem" }}
+              >
+                Конфигурации
+              </Typography>
+            </Grid>
             <Grid item xs={6}>
               <Button
+                disableElevation
                 variant="contained"
                 color="secondary"
                 onClick={handleClickOpen}
@@ -170,7 +187,9 @@ const ConfigContainer = () => {
             </Grid>
             <Grid item xs={6}>
               <Button
-                color="secondary"
+                disableElevation
+                variant="contained"
+                color="primary"
                 onClick={getConfigs}
                 sx={{ float: "right" }}
               >
@@ -212,7 +231,7 @@ const ConfigContainer = () => {
                   label="Название"
                   variant="filled"
                 />
-                <FormControl fullWidth sx={{mt: 2}}>
+                <FormControl fullWidth sx={{ mt: 2 }}>
                   <InputLabel id="select-label-system">Система</InputLabel>
                   <Select
                     labelId="select-label-system"
@@ -222,10 +241,7 @@ const ConfigContainer = () => {
                     onChange={handleChange}
                   >
                     {systems.map((system) => (
-                      <MenuItem 
-                        key={system.id}
-                        value={system.systemName}
-                      >
+                      <MenuItem key={system.id} value={system.systemName}>
                         {system.id}: {system.systemName}
                       </MenuItem>
                     ))}
@@ -234,9 +250,9 @@ const ConfigContainer = () => {
               </form>
             </DialogContent>
             <DialogActions>
-              <Grid container justifyContent="space-evenly" mb={1}>
+              <Grid container justifyContent="space-between" m={[0,2,1,2]}>
                 <Grid item>
-                  <Button variant="contained" onClick={() => setOpen(false)}>
+                  <Button variant="outlined" onClick={() => setOpen(false)}>
                     Назад
                   </Button>
                 </Grid>
@@ -255,7 +271,7 @@ const ConfigContainer = () => {
               </Grid>
             </DialogActions>
           </Dialog>
-        </Container>
+        </Box>
       )}
       <div className="config__list">
         <Grid container>
@@ -269,15 +285,17 @@ const ConfigContainer = () => {
           </Grid>
         </Grid>
         {configs &&
-          configs.sort((a, b) => b.timeCreate - a.timeCreate).map((doc, index) => (
-            <ConfigItem
-              remove={handleRemove}
-              update={handleUpdate}
-              key={doc.id}
-              index={index + 1}
-              config={doc}
-            />
-          ))}
+          configs
+            .sort((a, b) => b.timeCreate - a.timeCreate)
+            .map((doc, index) => (
+              <ConfigItem
+                remove={handleRemove}
+                update={handleUpdate}
+                key={doc.id}
+                index={index + 1}
+                config={doc}
+              />
+            ))}
       </div>
     </div>
   );

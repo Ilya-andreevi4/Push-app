@@ -38,8 +38,8 @@
     rgba(252, 176, 69, 1) 120%
   );
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#833ab4",endColorstr="#fcb045",GradientType=1);
-  background-size: 400%;
-  animation: gradient 20s infinite linear;
+  background-size: 800%;
+  animation: gradient 60s infinite linear;
 }
 @keyframes gradient {
   0% {
@@ -60,6 +60,17 @@
   height: 100%;
   width: 100%;
 }
+.ConfigContainer {
+  border-radius: 10px;
+  color: #f7f7f7;
+  background: rgb(101, 8, 163);
+  background: -moz-linear-gradient(200deg, rgb(132, 11, 172) 0%, rgb(101, 8, 163) 100%);
+  background: -webkit-linear-gradient(200deg, rgb(132, 11, 172) 0%, rgb(101, 8, 163) 100%);
+  background: linear-gradient(200deg, rgb(132, 11, 172) 0%, rgb(101, 8, 163) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#833ab4",endColorstr="#fcb045",GradientType=1);
+  padding: 0px 36px 36px 36px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4);
+}
 
 .configs {
   margin-top: 0;
@@ -69,8 +80,8 @@
   width: 35%;
   padding-top: 24px;
   padding-bottom: 12px;
-  padding-right: 12px;
-  /* box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2); */
+  padding-left: 12px;
+
 }
 
 .configs_mob {
@@ -79,24 +90,18 @@
   max-height: 90vh;
   width: 100%;
   padding: 24px;
-  /* box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2); */
 }
 
 .create_push_form {
-  /* border-radius: 10px; */
   height: 90vh;
-  margin-top: 0;
+  margin-top: 24px;
   float: left;
   justify-content: "flex-end";
   width: 35%;
-  padding-top: 24px;
-  padding-right: 12px;
-
-  /* box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.5); */
 }
 
 .create_push_form_mob {
-  margin-top: 2rem;
+  margin-top: 24px;
   justify-content: center;
   width: 100%;
   padding: 24px;
@@ -119,8 +124,13 @@
 }
 
 .config__list {
-  padding: 12px;
-  height: 75vh;
+  background: rgb(101, 8, 163);
+  background: -moz-linear-gradient(200deg, rgb(111, 6, 146) 0%, rgb(89, 5, 144) 100%);
+  background: -webkit-linear-gradient(200deg, rgb(111, 6, 146) 0%, rgb(89, 5, 144) 100%);
+  background: linear-gradient(200deg, rgb(111, 6, 146) 0%, rgb(89, 5, 144) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#833ab4",endColorstr="#fcb045",GradientType=1);
+  padding: 12px 24px;
+  height: 70vh;
   box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.2);
   overflow: auto;
 }
@@ -139,7 +149,9 @@
 }
 
 .config {
-  padding: 10px;
+  color: rgb(0, 0, 0);
+  background: #eeeef1;
+  padding: 12px;
   box-shadow: -1px 1px 4px rgba(0, 0, 0, 0.2);
   margin-top: 15px;
   width: 90%;
@@ -151,7 +163,7 @@
 }
 .config:hover {
   cursor: pointer;
-  background-color: rgb(252, 252, 253);
+  background-color: rgb(248, 248, 248);
   box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.3);
 }
 
@@ -172,9 +184,8 @@
 }
 
 .message_list {
-  /* height: 80vh; */
   padding: 12px;
-  height: 75vh;
+  height: 70vh;
   box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.2);
   overflow: auto;
 }

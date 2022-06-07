@@ -28,6 +28,7 @@ const ConfigItem: FC<ConfigItemProps> = ({config, index, remove, update}) => {
       </Grid>
       <Grid item xs={12}>
         <Button
+          disableElevation
           onClick={handleRemove}
           variant="outlined"
           color="error"

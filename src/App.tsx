@@ -153,9 +153,8 @@ function App() {
             {!user ? (
               <Grid>
                 <ButtonGroup
-                  disableElevation
                   size="small"
-                  color="secondary"
+                  color="primary"
                   variant="contained"
                 >
                   <Button component={Link} to="/reg">
@@ -168,7 +167,11 @@ function App() {
               </Grid>
             ) : (
               <Grid>
-                <Button color="secondary" onClick={handleLogOut}>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  onClick={handleLogOut}
+                >
                   Выйти из {user.email}
                 </Button>
               </Grid>
@@ -204,8 +207,7 @@ function App() {
             {!user ? (
               <Grid>
                 <ButtonGroup
-                  disableElevation
-                  color="secondary"
+                  color="primary"
                   variant="contained"
                 >
                   <Button component={Link} to="/reg">
@@ -219,7 +221,7 @@ function App() {
             ) : (
               <Grid>
                 <Button
-                  color="secondary"
+                  color="primary"
                   variant="contained"
                   onClick={handleLogOut}
                 >
@@ -237,8 +239,10 @@ function App() {
       </Dialog>
       <AppRoutes />
       {token && (
-        <Box m={0.5}>
-          <Button onClick={handleClickOpen} variant='outlined'>Токен твоего девайса</Button>
+        <Box m={1}>
+          <Button onClick={handleClickOpen} variant="outlined">
+            Токен твоего девайса
+          </Button>
         </Box>
       )}
     </div>

@@ -46,11 +46,12 @@ const PushList = () => {
 
   return (
     <div>
+      <Typography variant="h5" align="center" sx={{ mt: "3rem", mb: "1rem" }}>
+        История сообщений
+      </Typography>
       <Grid container>
         <Grid item xs={6}>
-          {isLoading && (
-            <Loader/>
-          )}
+          {isLoading && <Loader />}
           {error && (
             <Typography>
               {error}
@@ -72,9 +73,11 @@ const PushList = () => {
         <Grid item xs={12}>
           <div className="message_list">
             {push &&
-              push.sort((a, b) => b.timePush - a.timePush).map((push) => (
-                <PushItem remove={handleRemove} key={push.id} push={push} />
-              ))}
+              push
+                .sort((a, b) => b.timePush - a.timePush)
+                .map((push) => (
+                  <PushItem remove={handleRemove} key={push.id} push={push} />
+                ))}
           </div>
         </Grid>
       </Grid>

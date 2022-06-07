@@ -8,7 +8,8 @@ import {
   Select,
   MenuItem,
   SelectChangeEvent,
-  Alert
+  Alert,
+  Typography,
 } from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
 import { Box } from "@mui/system";
@@ -118,6 +119,9 @@ export function PushCreator() {
 
   return (
     <Container maxWidth="xs">
+      <Typography variant="h5" align="center" sx={{ mt: "1rem", mb: "1rem" }}>
+        Создание Пуш-уведомлений
+      </Typography>
       <Grid container spacing={3} mt={1} pb={1}>
         <Grid item xs={12}>
           <Box>
@@ -133,7 +137,11 @@ export function PushCreator() {
               </Grid>
             </Grid>
             {configs && (
-              <FormControl fullWidth color="secondary" className="config_select">
+              <FormControl
+                fullWidth
+                color="secondary"
+                className="config_select"
+              >
                 <InputLabel id="select-label">Конфиг</InputLabel>
                 <Select
                   labelId="select-label"
@@ -170,15 +178,15 @@ export function PushCreator() {
           />
         </Grid>
         <Grid item xs={12}>
-            <Button
-              variant="contained"
-              disabled={isLoading}
-              color="secondary"
-              sx={{float:"right"}}
-              onClick={() => handleSubmit(ConfigId, message)}
-            >
-              Отправить
-            </Button>
+          <Button
+            variant="contained"
+            disabled={isLoading}
+            color="secondary"
+            sx={{ float: "right" }}
+            onClick={() => handleSubmit(ConfigId, message)}
+          >
+            Отправить
+          </Button>
         </Grid>
         {/* <Grid item xs={12}>
             <Typography>
