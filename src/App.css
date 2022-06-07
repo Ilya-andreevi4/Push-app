@@ -71,6 +71,29 @@
   padding: 0px 36px 36px 36px;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4);
 }
+.PushCreator {
+  border-radius: 10px;
+  color: #f7f7f7;
+  background: rgb(101, 8, 163);
+  background: -moz-linear-gradient(110deg, rgb(132, 11, 172) 0%, rgb(101, 8, 163) 100%);
+  background: -webkit-linear-gradient(110deg, rgb(132, 11, 172) 0%, rgb(101, 8, 163) 100%);
+  background: linear-gradient(110deg, rgb(132, 11, 172) 0%, rgb(101, 8, 163) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#833ab4",endColorstr="#fcb045",GradientType=1);
+  margin-top: 24px;
+  padding: 24px 24px 36px 24px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4);
+}
+.PushList {
+  border-radius: 10px;
+  color: #f7f7f7;
+  background: rgb(101, 8, 163);
+  background: -moz-linear-gradient(290deg, rgb(132, 11, 172) 0%, rgb(101, 8, 163) 100%);
+  background: -webkit-linear-gradient(290deg, rgb(132, 11, 172) 0%, rgb(101, 8, 163) 100%);
+  background: linear-gradient(290deg, rgb(132, 11, 172) 0%, rgb(101, 8, 163) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#833ab4",endColorstr="#fcb045",GradientType=1);
+  padding: 12px 36px 36px 36px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4);
+}
 
 .configs {
   margin-top: 0;
@@ -169,8 +192,8 @@
 
 .push {
   background-color: rgb(238, 238, 238);
+  color: #000;
   padding: 10px;
-  /* box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); */
   margin-top: 15px;
   width: 100%;
   border-radius: 5px;

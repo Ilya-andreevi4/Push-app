@@ -6,7 +6,7 @@ import App from "./App";
 import "./index.css";
 import "./firebase";
 import { UserAuthContextProvider } from "./services/provider/AuthProvider";
-import { blue, green, orange } from "@mui/material/colors";
+import { blue, green} from "@mui/material/colors";
 
 const container = document.getElementById("root")!;
 const root = createRoot(container);

@@ -45,8 +45,8 @@ const PushList = () => {
   }, [snap]);
 
   return (
-    <div>
-      <Typography variant="h5" align="center" sx={{ mt: "3rem", mb: "1rem" }}>
+    <div className="PushList">
+      <Typography variant="h5" align="center" sx={{ mt: "2rem", mb: "1rem" }}>
         История сообщений
       </Typography>
       <Grid container>
@@ -62,7 +62,9 @@ const PushList = () => {
         <Grid item xs={6}>
           {push && (
             <Button
-              color="secondary"
+              disableElevation
+              color="primary"
+              variant="contained"
               onClick={getPushs}
               sx={{ float: "right", mb: 2 }}
             >

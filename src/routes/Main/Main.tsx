@@ -32,7 +32,7 @@ function Main() {
           direction="row"
           justifyContent="space-evenly"
           alignItems="stretch"
-          spacing={0}
+          spacing={2}
         >
           <Box className="configs">
             <Grid className="config_list">

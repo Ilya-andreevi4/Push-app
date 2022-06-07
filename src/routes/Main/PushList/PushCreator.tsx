@@ -1,6 +1,5 @@
 import {
   Button,
-  Container,
   Grid,
   TextField,
   FormControl,
@@ -118,7 +117,7 @@ export function PushCreator() {
   }, [isLoading, handlerEnter]);
 
   return (
-    <Container maxWidth="xs">
+    <div className="PushCreator">
       <Typography variant="h5" align="center" sx={{ mt: "1rem", mb: "1rem" }}>
         Создание Пуш-уведомлений
       </Typography>
@@ -179,6 +178,7 @@ export function PushCreator() {
         </Grid>
         <Grid item xs={12}>
           <Button
+            disableElevation
             variant="contained"
             disabled={isLoading}
             color="secondary"
@@ -194,7 +194,7 @@ export function PushCreator() {
             </Typography>
         </Grid> */}
       </Grid>
-    </Container>
+    </div>
   );
 }
 export default PushCreator;
