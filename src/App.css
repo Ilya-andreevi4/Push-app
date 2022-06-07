@@ -63,10 +63,10 @@
 .ConfigContainer {
   border-radius: 10px;
   color: #f7f7f7;
-  background: rgb(101, 8, 163);
-  background: -moz-linear-gradient(200deg, rgb(132, 11, 172) 0%, rgb(101, 8, 163) 100%);
-  background: -webkit-linear-gradient(200deg, rgb(132, 11, 172) 0%, rgb(101, 8, 163) 100%);
-  background: linear-gradient(200deg, rgb(132, 11, 172) 0%, rgb(101, 8, 163) 100%);
+  background: rgb(82, 4, 151);
+  background: -moz-linear-gradient(200deg, rgb(132, 11, 172) 0%, rgb(82, 4, 151) 100%);
+  background: -webkit-linear-gradient(200deg, rgb(132, 11, 172) 0%, rgb(82, 4, 151) 100%);
+  background: linear-gradient(200deg, rgb(132, 11, 172) 0%, rgb(82, 4, 151) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#833ab4",endColorstr="#fcb045",GradientType=1);
   padding: 0px 36px 36px 36px;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4);
@@ -74,10 +74,10 @@
 .PushCreator {
   border-radius: 10px;
   color: #f7f7f7;
-  background: rgb(101, 8, 163);
-  background: -moz-linear-gradient(110deg, rgb(132, 11, 172) 0%, rgb(101, 8, 163) 100%);
-  background: -webkit-linear-gradient(110deg, rgb(132, 11, 172) 0%, rgb(101, 8, 163) 100%);
-  background: linear-gradient(110deg, rgb(132, 11, 172) 0%, rgb(101, 8, 163) 100%);
+  background: rgb(163, 8, 104);
+  background: -moz-linear-gradient(110deg, rgb(132, 11, 172) 0%, rgb(163, 8, 104) 100%);
+  background: -webkit-linear-gradient(110deg, rgb(132, 11, 172) 0%, rgb(163, 8, 104) 100%);
+  background: linear-gradient(110deg, rgb(132, 11, 172) 0%, rgb(163, 8, 104) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#833ab4",endColorstr="#fcb045",GradientType=1);
   margin-top: 24px;
   padding: 24px 24px 36px 24px;
@@ -86,10 +86,10 @@
 .PushList {
   border-radius: 10px;
   color: #f7f7f7;
-  background: rgb(101, 8, 163);
-  background: -moz-linear-gradient(290deg, rgb(132, 11, 172) 0%, rgb(101, 8, 163) 100%);
-  background: -webkit-linear-gradient(290deg, rgb(132, 11, 172) 0%, rgb(101, 8, 163) 100%);
-  background: linear-gradient(290deg, rgb(132, 11, 172) 0%, rgb(101, 8, 163) 100%);
+  background: rgb(201, 90, 6);
+  background: -moz-linear-gradient(290deg, rgb(201, 90, 6) 0%, rgb(163, 8, 104) 100%);
+  background: -webkit-linear-gradient(290deg, rgb(201, 90, 6) 0%, rgb(163, 8, 104) 100%);
+  background: linear-gradient(290deg, rgb(201, 90, 6) 0%, rgb(163, 8, 104) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#833ab4",endColorstr="#fcb045",GradientType=1);
   padding: 12px 36px 36px 36px;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4);
@@ -148,9 +148,9 @@
 
 .config__list {
   background: rgb(101, 8, 163);
-  background: -moz-linear-gradient(200deg, rgb(111, 6, 146) 0%, rgb(89, 5, 144) 100%);
-  background: -webkit-linear-gradient(200deg, rgb(111, 6, 146) 0%, rgb(89, 5, 144) 100%);
-  background: linear-gradient(200deg, rgb(111, 6, 146) 0%, rgb(89, 5, 144) 100%);
+  background: -moz-linear-gradient(200deg, rgb(111, 6, 146) 0%, rgb(74, 3, 121) 100%);
+  background: -webkit-linear-gradient(200deg, rgb(111, 6, 146) 0%, rgb(74, 3, 121) 100%);
+  background: linear-gradient(200deg, rgb(111, 6, 146) 0%, rgb(74, 3, 121) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#833ab4",endColorstr="#fcb045",GradientType=1);
   padding: 12px 24px;
   height: 70vh;
@@ -210,6 +210,10 @@
   padding: 12px;
   height: 70vh;
   box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.2);
+  background: rgb(182, 79, 1);
+  background: -moz-linear-gradient(290deg, rgb(182, 79, 1) 0%, rgb(142, 3, 89) 100%);
+  background: -webkit-linear-gradient(290deg, rgb(182, 79, 1) 0%, rgb(142, 3, 89) 100%);
+  background: linear-gradient(290deg, rgb(182, 79, 1) 0%, rgb(142, 3, 89) 100%);
   overflow: auto;
 }
 
