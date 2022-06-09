@@ -12,17 +12,19 @@ function Main() {
       {mobIfc ? (
         <Stack
           direction="column"
-          justifyContent="flex-start"
-          alignItems="flex-start"
-          spacing={0}
+          justifyContent="center"
+          alignItems="center"
+          spacing={2}
         >
           <Box className="configs_mob">
             <Grid className="config_list">
               <ConfigContainer />
             </Grid>
           </Box>
-          <Box maxWidth="sm" className="create_push_form_mob">
-            <PushCreator />
+          <Box sx={{width:"100%"}}>
+            <Grid className="create_push_form mob">
+              <PushCreator />
+            </Grid>
           </Box>
           <Box maxWidth="xs" className="message_history_mob">
             <PushList />
@@ -40,8 +42,11 @@ function Main() {
               <ConfigContainer />
             </Grid>
           </Box>
-          <Box maxWidth="sm" className="create_push_form">
-            <PushCreator />
+
+          <Box>
+            <Grid className="create_push_form">
+              <PushCreator />
+            </Grid>
           </Box>
           <Box maxWidth="xs" className="message_history">
             <PushList />

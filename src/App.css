@@ -54,7 +54,7 @@
 }
 
 .content {
-  background-color: #ffffff;
+  background: #fff;
   padding: 0;
   margin: 0;
   height: 100%;
@@ -69,22 +69,23 @@
 }
 .ConfigContainer {
   border-radius: 10px;
-  color: #ffffff;
+  color: #fff;
   background: rgb(117, 49, 175);
   padding: 0px 36px 36px 36px;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4);
 }
 .PushCreator {
-  border-radius: 10px;
-  color: #ffffff;
+  /* color: #ffffff;
   background: rgb(163, 8, 104);
   background: -moz-linear-gradient(135deg, rgb(117, 49, 175) 50%, #C12A97 50%);
   background: -webkit-linear-gradient(135deg, rgb(117, 49, 175) 50%, #C12A97 50%);
-  background: linear-gradient(135deg, rgb(117, 49, 175) 50%, #C12A97 50%);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#833ab4",endColorstr="#fcb045",GradientType=1);
-  margin-top: 24px;
+  background: linear-gradient(135deg, rgb(117, 49, 175) 50%, #C12A97 50%); */
+  /* filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#833ab4",endColorstr="#fcb045",GradientType=1); */
   padding: 24px 24px 36px 24px;
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4);
+  margin-top: 36px;
+  display: block;
+  align-content: center;
+  /* box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4); */
 }
 .PushList {
   border-radius: 10px;
@@ -114,18 +115,24 @@
 }
 
 .create_push_form {
-  height: 90vh;
-  margin-top: 24px;
-  float: left;
-  justify-content: "flex-end";
-  width: 35%;
+  color: #ffffff;
+  background: rgb(163, 8, 104);
+  background: -moz-linear-gradient(135deg, rgb(117, 49, 175) 50%, #C12A97 50%);
+  background: -webkit-linear-gradient(135deg, rgb(117, 49, 175) 50%, #C12A97 50%);
+  background: linear-gradient(135deg, rgb(117, 49, 175) 50%, #C12A97 50%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#833ab4",endColorstr="#fcb045",GradientType=1);
+  margin-top: 60px;
+  padding: 24px 12px 24px 12px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
 }
 
-.create_push_form_mob {
-  margin-top: 36px;
+.create_push_form.mob {
+  border-radius: 0px;
+  margin-top: 60px;
   justify-content: center;
-  width: 100%;
   padding: 24px;
+  width: 100%;
 }
 
 .message_history {
@@ -141,14 +148,18 @@
   margin-top: 0px;
   justify-content: center;
   width: 100%;
-  padding: 24px;
+  padding: 12px;
 }
 
 .tableMode{
   margin: 0px;
 }
-#cpf_tm {
+.create_push_form.tableMode{
+  padding: 12px 0px 12px 0px;
+  z-index: 6000;
+  margin-top: 15vh;
   border-radius: 0px;
+  box-shadow: none;
 }
 
 .config__list {

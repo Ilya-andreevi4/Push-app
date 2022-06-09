@@ -116,7 +116,7 @@ function App() {
     }
   });
 
-  const mobIfc = useMediaQuery("(max-width:640px)");
+  const mobIfc = useMediaQuery("(max-width:745px)");
 
   return (
     <div className="App">

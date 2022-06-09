@@ -50,7 +50,7 @@ const ConfigContainer = () => {
   };
 
   const matches = useMediaQuery("(max-width:377px)");
-  const desctopIfc = useMediaQuery("(min-width:930px)");
+  const desctopIfc = useMediaQuery("(min-width:1150px)");
 
   const handleClickOpen = () => {
     setOpen(true);
