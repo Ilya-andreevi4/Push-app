@@ -30,7 +30,6 @@ export function PushCreator() {
     style: "info",
   });
   const snap: any = useSnapshot(state);
-  // const tokenSnap: any = useSnapshot(userToken);
 
   const updateState = () => {
     state.status_push = !state.status_push;
@@ -138,7 +137,7 @@ export function PushCreator() {
             {configs && (
               <FormControl
                 fullWidth
-                color="secondary"
+                color="info"
                 className="config_select"
               >
                 <InputLabel id="select-label">Конфиг</InputLabel>
@@ -172,7 +171,7 @@ export function PushCreator() {
             fullWidth={true}
             label="Сообщение"
             className="message_input"
-            color="secondary"
+            color="info"
             variant="filled"
           />
         </Grid>
@@ -188,11 +187,6 @@ export function PushCreator() {
             Отправить
           </Button>
         </Grid>
-        {/* <Grid item xs={12}>
-            <Typography>
-              {tokenSnap}
-            </Typography>
-        </Grid> */}
       </Grid>
     </div>
   );

@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import AppRoutes from "./routes/Routes";
 import { useUserAuth } from "./services/provider/AuthProvider";
 import { getMessaging, getToken } from "firebase/messaging";
+import axios from "axios";
 
 function App() {
   const { user, logOut } = useUserAuth();
@@ -52,12 +53,10 @@ function App() {
 
   function sendTokenToServer(currentToken: any) {
     if (!isTokenSentToServer(currentToken)) {
-      // TODO
-      // Use Fetch or Axios
-      // var url = "https://fcm.googleapis.com/v1/projects/test-e97df"; // адрес скрипта на сервере который сохраняет ID устройства
-      // //.post(url, {
-      //     token: currentToken,
-      //   });
+      axios.post(
+        `https://firestore.googleapis.com/v1/projects/test-e97df/databases/userTokens`,
+        { Authorization: `Bearer ${currentToken}` }
+      ); // адрес скрипта на сервере который сохраняет ID устройства
       setTokenSentToServer(currentToken);
     } else {
       console.log("Токен уже отправлен на сервер.");
@@ -71,16 +70,13 @@ function App() {
       if (currentToken) {
         // Send the token to your server and update the UI if necessary
         try {
-          console.log("token: ", currentToken);
           setToken(currentToken);
           sendTokenToServer(currentToken);
         } catch (e) {
           console.log("An error occurred while retrieving token. ", e);
         }
-        // ...
       } else {
         requestPermission();
-        // ...
       }
     })
     .catch((err) => {
@@ -120,11 +116,11 @@ function App() {
     }
   });
 
-  const matches = useMediaQuery("(max-width:767px)");
+  const mobIfc = useMediaQuery("(max-width:640px)");
 
   return (
     <div className="App">
-      {matches ? (
+      {mobIfc ? (
         <AppBar position="fixed" className="AppBar">
           <Stack
             direction="row"
@@ -136,14 +132,14 @@ function App() {
           >
             <Grid>
               <Typography
-                variant="button"
+                variant="h6"
                 noWrap
                 component={Link}
                 to="/"
                 sx={{
-                  fontWeight: 800,
+                  fontWeight: 700,
                   letterSpacing: ".2rem",
-                  color: "inherit",
+                  color: "#fff",
                   textDecoration: "none",
                 }}
               >
@@ -152,11 +148,7 @@ function App() {
             </Grid>
             {!user ? (
               <Grid>
-                <ButtonGroup
-                  size="small"
-                  color="primary"
-                  variant="contained"
-                >
+                <ButtonGroup size="small" color="primary" variant="contained">
                   <Button component={Link} to="/reg">
                     Регистрация
                   </Button>
@@ -195,9 +187,9 @@ function App() {
                 component={Link}
                 to="/"
                 sx={{
-                  fontWeight: 600,
-                  letterSpacing: ".1rem",
-                  color: "inherit",
+                  fontWeight: 700,
+                  letterSpacing: ".2rem",
+                  color: "#fff",
                   textDecoration: "none",
                 }}
               >
@@ -206,10 +198,7 @@ function App() {
             </Grid>
             {!user ? (
               <Grid>
-                <ButtonGroup
-                  color="primary"
-                  variant="contained"
-                >
+                <ButtonGroup color="primary" variant="contained">
                   <Button component={Link} to="/reg">
                     Регистрация
                   </Button>
@@ -232,17 +221,21 @@ function App() {
           </Stack>
         </AppBar>
       )}
-      <Dialog open={open} onClose={handleClose}>
-        <Typography variant="subtitle1">
-          Токен твоего девайса: {token}
-        </Typography>
-      </Dialog>
       <AppRoutes />
-      {token && (
+      {token && user && (
         <Box m={1}>
-          <Button onClick={handleClickOpen} variant="outlined">
+          <Button
+            onClick={handleClickOpen}
+            variant="outlined"
+            color="secondary"
+          >
             Токен твоего девайса
           </Button>
+          <Dialog open={open} onClose={handleClose}>
+            <Typography variant="subtitle1">
+              Токен твоего девайса: {token}
+            </Typography>
+          </Dialog>
         </Box>
       )}
     </div>

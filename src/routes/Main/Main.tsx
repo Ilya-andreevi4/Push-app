@@ -4,16 +4,17 @@ import PushCreator from "./PushList/PushCreator";
 import PushList from "./PushList/PushList";
 
 function Main() {
-  const matches = useMediaQuery("(max-width:900px)");
+  const mobIfc = useMediaQuery("(max-width:745px)");
+  const desctopIfc = useMediaQuery("(min-width:930px)");
 
   return (
     <div>
-      {matches ? (
+      {mobIfc ? (
         <Stack
           direction="column"
           justifyContent="flex-start"
           alignItems="flex-start"
-          spacing={2}
+          spacing={0}
         >
           <Box className="configs_mob">
             <Grid className="config_list">
@@ -27,12 +28,12 @@ function Main() {
             <PushList />
           </Box>
         </Stack>
-      ) : (
+      ) : desctopIfc ? (
         <Stack
           direction="row"
           justifyContent="space-evenly"
-          alignItems="stretch"
-          spacing={2}
+          alignItems="flex-start"
+          spacing={3}
         >
           <Box className="configs">
             <Grid className="config_list">
@@ -43,6 +44,25 @@ function Main() {
             <PushCreator />
           </Box>
           <Box maxWidth="xs" className="message_history">
+            <PushList />
+          </Box>
+        </Stack>
+      ) : (
+        <Stack
+          direction="row"
+          justifyContent="center"
+          alignItems="flex-start"
+          spacing={0}
+        >
+          <Box className="configs tableMode">
+            <Grid className="config_list">
+              <ConfigContainer />
+            </Grid>
+          </Box>
+          <Box maxWidth="sm" className="create_push_form tableMode">
+            <PushCreator />
+          </Box>
+          <Box maxWidth="xs" className="message_history tableMode">
             <PushList />
           </Box>
         </Stack>

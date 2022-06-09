@@ -13,12 +13,6 @@ const firebaseConfig = {
   messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
   appId: process.env.REACT_APP_FIREBASE_APP_ID
 };
-// const admin = require("firebase-admin");
-// const serviceAccount = require("./serviceAccountKey.json");
-
-// admin.initializeApp({
-//   credential: admin.credential.cert(serviceAccount)
-// });
 
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);

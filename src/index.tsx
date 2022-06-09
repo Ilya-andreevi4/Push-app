@@ -6,14 +6,13 @@ import App from "./App";
 import "./index.css";
 import "./firebase";
 import { UserAuthContextProvider } from "./services/provider/AuthProvider";
-import { blue, green} from "@mui/material/colors";
 
 const container = document.getElementById("root")!;
 const root = createRoot(container);
 const theme = createTheme({
   palette: {
-    primary: blue,
-    secondary: {main:green[600]},
+    secondary: {main: "#C2F235"},
+    primary: {main: "#FFF638"},
   },
 });
 

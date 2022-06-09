@@ -27,53 +27,53 @@ const urlsToCache = [
 ];
 
 // eslint-disable-next-line no-restricted-globals
-self.addEventListener("install", async (event) => {
-  const cache = await caches.open(staticCacheName);
-  await cache.addAll(urlsToCache);
-});
+// self.addEventListener("install", async (event) => {
+//   const cache = await caches.open(staticCacheName);
+//   await cache.addAll(urlsToCache);
+// });
 
-// eslint-disable-next-line no-restricted-globals
-self.addEventListener("activate", async (event) => {
-  const cacheNames = await caches.keys();
-  await Promise.all(
-    cacheNames
-      .filter((name) => name !== staticCacheName)
-      .map((name) => caches.delete(name))
-  );
-});
+// // eslint-disable-next-line no-restricted-globals
+// self.addEventListener("activate", async (event) => {
+//   const cacheNames = await caches.keys();
+//   await Promise.all(
+//     cacheNames
+//       .filter((name) => name !== staticCacheName)
+//       .map((name) => caches.delete(name))
+//   );
+// });
 
-async function cacheFirst(request) {
-  const cached = await caches.match(request);
-  return cached ?? (await fetch(request));
-}
+// async function cacheFirst(request) {
+//   const cached = await caches.match(request);
+//   return cached ?? (await fetch(request));
+// }
 
-// eslint-disable-next-line no-restricted-globals
-self.addEventListener("fetch", (event) => {
-  const { request } = event;
-  event.respondWith(cacheFirst(request));
-});
-// eslint-disable-next-line no-restricted-globals
-self?.addEventListener?.("push", (event) => {
-  console.log("push", event);
-  const payload = event.data.json();
-  const {
-    notification,
-    collapse_key,
-    data,
-    fcmMessageId,
-    from,
-    priority
-  } = payload;
+// // eslint-disable-next-line no-restricted-globals
+// self.addEventListener("fetch", (event) => {
+//   const { request } = event;
+//   event.respondWith(cacheFirst(request));
+// });
+// // eslint-disable-next-line no-restricted-globals
+// self?.addEventListener?.("push", (event) => {
+//   // console.log("push", event);
+//   const payload = event.data.json();
+//   const {
+//     notification,
+//     collapse_key,
+//     data,
+//     fcmMessageId,
+//     from,
+//     priority
+//   } = payload;
   
-  console.log("payload", payload);
-  console.log("notification", notification);
-// eslint-disable-next-line no-restricted-globals
-  var promise = self.registration.showNotification(notification.title, {
-    body: notification.body,
-    icon: notification.icon || notification.image || 'https://test.stroygrad66.ru/favicon.svg',
-    tag: notification.tag,
-    data: data
-  })
+//   // console.log("payload", payload);
+//   // console.log("notification", notification);
+// // eslint-disable-next-line no-restricted-globals
+//   var promise = self.registration.showNotification(notification.title, {
+//     body: notification.body,
+//     icon: notification.icon || notification.image || 'https://test.stroygrad66.ru/favicon.svg',
+//     tag: notification.tag,
+//     data: data
+//   })
 
-  event.waitUntil(promise)
-});
+//   event.waitUntil(promise)
+// });

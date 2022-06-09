@@ -64,7 +64,7 @@ const PushList = () => {
             <Button
               disableElevation
               color="primary"
-              variant="contained"
+              variant="outlined"
               onClick={getPushs}
               sx={{ float: "right", mb: 2 }}
             >

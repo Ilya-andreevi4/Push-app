@@ -2,6 +2,7 @@ import {
   Alert,
   Box,
   Button,
+  ButtonGroup,
   Dialog,
   DialogActions,
   DialogContent,
@@ -14,6 +15,7 @@ import {
   SelectChangeEvent,
   TextField,
   Typography,
+  useMediaQuery,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { IConfig } from "../../../app/models/IConfig";
@@ -46,6 +48,9 @@ const ConfigContainer = () => {
   const updateState = () => {
     state.config_status = !state.config_status;
   };
+
+  const matches = useMediaQuery("(max-width:377px)");
+  const desctopIfc = useMediaQuery("(min-width:930px)");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -175,27 +180,79 @@ const ConfigContainer = () => {
                 Конфигурации
               </Typography>
             </Grid>
-            <Grid item xs={6}>
-              <Button
-                disableElevation
-                variant="contained"
-                color="secondary"
-                onClick={handleClickOpen}
+            {matches ? (
+              <Grid item xs={12} justifyContent="center">
+                <ButtonGroup size="small">
+                  <Button
+                    disableElevation
+                    variant="contained"
+                    color="secondary"
+                    onClick={handleClickOpen}
+                  >
+                    Создать
+                  </Button>
+                  <Button
+                    disableElevation
+                    variant="outlined"
+                    color="primary"
+                    onClick={getConfigs}
+                    sx={{ float: "right" }}
+                  >
+                    Обновить
+                  </Button>
+                </ButtonGroup>
+              </Grid>
+            ) : desctopIfc ? (
+              <Grid
+                container
+                alignItems="flex-start"
+                justifyContent="space-between"
               >
-                Создать
-              </Button>
-            </Grid>
-            <Grid item xs={6}>
-              <Button
-                disableElevation
-                variant="contained"
-                color="primary"
-                onClick={getConfigs}
-                sx={{ float: "right" }}
-              >
-                Обновить
-              </Button>
-            </Grid>
+                <Grid item xs={6} sx={{ float: "left" }}>
+                  <Button
+                    disableElevation
+                    variant="contained"
+                    color="secondary"
+                    onClick={handleClickOpen}
+                  >
+                    Создать
+                  </Button>
+                </Grid>
+                <Grid item xs={6} sx={{ float: "right" }}>
+                  <Button
+                    disableElevation
+                    variant="outlined"
+                    color="primary"
+                    onClick={getConfigs}
+                    sx={{ float: "right" }}
+                  >
+                    Обновить
+                  </Button>
+                </Grid>
+              </Grid>
+            ) : (
+              <Grid item xs={12} justifyContent="center">
+                <ButtonGroup>
+                  <Button
+                    disableElevation
+                    variant="contained"
+                    color="secondary"
+                    onClick={handleClickOpen}
+                  >
+                    Создать
+                  </Button>
+                  <Button
+                    disableElevation
+                    variant="outlined"
+                    color="primary"
+                    onClick={getConfigs}
+                    sx={{ float: "right" }}
+                  >
+                    Обновить
+                  </Button>
+                </ButtonGroup>
+              </Grid>
+            )}
           </Grid>
           <Dialog open={open} onClose={handleClose}>
             {configId ? (
@@ -228,13 +285,17 @@ const ConfigContainer = () => {
                   onChange={(e) => setTitle(e.target.value)}
                   fullWidth={true}
                   defaultValue={title}
+                  color="info"
                   label="Название"
                   variant="filled"
                 />
                 <FormControl fullWidth sx={{ mt: 2 }}>
-                  <InputLabel id="select-label-system">Система</InputLabel>
+                  <InputLabel id="select-label-system" color="info">
+                    Система
+                  </InputLabel>
                   <Select
                     labelId="select-label-system"
+                    color="info"
                     id="select-system"
                     value={system}
                     label="Система"
@@ -250,9 +311,9 @@ const ConfigContainer = () => {
               </form>
             </DialogContent>
             <DialogActions>
-              <Grid container justifyContent="space-between" m={[0,2,1,2]}>
+              <Grid container justifyContent="space-between" m={[0, 2, 1, 2]}>
                 <Grid item>
-                  <Button variant="outlined" onClick={() => setOpen(false)}>
+                  <Button variant="contained" onClick={() => setOpen(false)}>
                     Назад
                   </Button>
                 </Grid>

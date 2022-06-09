@@ -13,7 +13,7 @@ function RegPage() {
     <Container maxWidth="xs" sx={{mt:"5rem"}}>
       <Grid container spacing={3} >
         <Grid item xs={12}>
-          <Typography variant="h6">Создание нового аккаунта</Typography>
+          <Typography variant="h6" mb={2}>Создание нового аккаунта</Typography>
         </Grid>
         <Grid item xs={12}>          
           <Form 
