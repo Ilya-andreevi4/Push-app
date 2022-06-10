@@ -13,6 +13,7 @@ import {
   MenuItem,
   Select,
   SelectChangeEvent,
+  Skeleton,
   TextField,
   Typography,
   useMediaQuery,
@@ -337,7 +338,19 @@ const ConfigContainer = () => {
       <div className="config__list">
         <Grid container>
           <Grid item xs={12}>
-            {isLoading && <Loader />}
+            {isLoading && (
+              <div>
+                <Typography variant="h1">
+                  <Skeleton sx={{ bgcolor: "#eee" }} />
+                </Typography>
+                <Typography variant="h3">
+                  <Skeleton sx={{ bgcolor: "#e3e3e3" }} />
+                </Typography>
+                <Typography variant="h2">
+                  <Skeleton sx={{ bgcolor: "#ececec" }} />
+                </Typography>
+              </div>
+            )}
             {error && (
               <Alert severity="error" sx={{ mt: 1 }}>
                 {error}

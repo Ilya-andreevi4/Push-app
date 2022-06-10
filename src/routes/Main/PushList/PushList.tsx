@@ -1,4 +1,4 @@
-import { Button, Grid, Typography } from "@mui/material";
+import { Button, Grid, Skeleton, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSnapshot } from "valtio";
 import { IPush } from "../../../app/models/IPush";
@@ -51,7 +51,6 @@ const PushList = () => {
       </Typography>
       <Grid container>
         <Grid item xs={6}>
-          {isLoading && <Loader />}
           {error && (
             <Typography>
               {error}
@@ -74,6 +73,19 @@ const PushList = () => {
         </Grid>
         <Grid item xs={12}>
           <div className="message_list">
+            {isLoading && (
+              <div>
+                <Typography variant="h1">
+                  <Skeleton sx={{ bgcolor: "#eee" }} />
+                </Typography>
+                <Typography variant="h3">
+                  <Skeleton sx={{ bgcolor: "#e3e3e3" }} />
+                </Typography>
+                <Typography variant="h2">
+                  <Skeleton sx={{ bgcolor: "#ececec" }} />
+                </Typography>
+              </div>
+            )}
             {push &&
               push
                 .sort((a, b) => b.timePush - a.timePush)

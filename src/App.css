@@ -10,31 +10,31 @@
   background: -moz-linear-gradient(
     90deg,
     rgba(131, 58, 180, 1) 0%,
-    #C12A97 20%,
+    #c12a97 20%,
     rgba(252, 176, 69, 1) 40%,
-    #C12A97 60%,
+    #c12a97 60%,
     rgba(131, 58, 180, 1) 80%,
-    #C12A97 100%,
+    #c12a97 100%,
     rgba(252, 176, 69, 1) 120%
   );
   background: -webkit-linear-gradient(
     90deg,
     rgba(131, 58, 180, 1) 0%,
-    #C12A97 20%,
+    #c12a97 20%,
     rgba(252, 176, 69, 1) 40%,
-    #C12A97 60%,
+    #c12a97 60%,
     rgba(131, 58, 180, 1) 80%,
-    #C12A97 100%,
+    #c12a97 100%,
     rgba(252, 176, 69, 1) 120%
   );
   background: linear-gradient(
     90deg,
     rgba(131, 58, 180, 1) 0%,
-    #C12A97 20%,
+    #c12a97 20%,
     rgba(252, 176, 69, 1) 40%,
-    #C12A97 60%,
+    #c12a97 60%,
     rgba(131, 58, 180, 1) 80%,
-    #C12A97 100%,
+    #c12a97 100%,
     rgba(252, 176, 69, 1) 120%
   );
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#833ab4",endColorstr="#fcb045",GradientType=1);
@@ -60,13 +60,17 @@
   height: 100%;
   width: 100%;
 }
-.auth__form{
+
+/* Reg/Log Form */
+.auth__form {
   border-radius: 10px;
   background: rgb(117, 49, 175);
   margin-top: 24px;
   padding: 24px 24px 24px 0px;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4);
 }
+/* Reg/Log Form */
+
 .ConfigContainer {
   border-radius: 10px;
   color: #fff;
@@ -74,31 +78,20 @@
   padding: 0px 36px 36px 36px;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4);
 }
+
 .PushCreator {
-  /* color: #ffffff;
-  background: rgb(163, 8, 104);
-  background: -moz-linear-gradient(135deg, rgb(117, 49, 175) 50%, #C12A97 50%);
-  background: -webkit-linear-gradient(135deg, rgb(117, 49, 175) 50%, #C12A97 50%);
-  background: linear-gradient(135deg, rgb(117, 49, 175) 50%, #C12A97 50%); */
-  /* filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#833ab4",endColorstr="#fcb045",GradientType=1); */
-  padding: 24px 24px 36px 24px;
-  margin-top: 36px;
-  display: block;
-  align-content: center;
-  /* box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4); */
+  padding: 12px 24px 12px 24px;
 }
 .PushList {
   border-radius: 10px;
   color: #ffffff;
-  background: #C12A97;
+  background: #c12a97;
   padding: 12px 36px 36px 36px;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4);
 }
 
 .configs {
   margin-top: 0;
-  float: left;
-  justify-content: "flex-end";
   max-height: 90vh;
   width: 35%;
   padding-top: 24px;
@@ -106,10 +99,11 @@
   padding-left: 12px;
 }
 
-.configs_mob {
+.configs.mob {
   margin-top: 2.5rem;
+  margin-bottom: 1rem;
   justify-content: center;
-  max-height: 90vh;
+  max-height: 100vh;
   width: 100%;
   padding: 24px;
 }
@@ -117,9 +111,9 @@
 .create_push_form {
   color: #ffffff;
   background: rgb(163, 8, 104);
-  background: -moz-linear-gradient(135deg, rgb(117, 49, 175) 50%, #C12A97 50%);
-  background: -webkit-linear-gradient(135deg, rgb(117, 49, 175) 50%, #C12A97 50%);
-  background: linear-gradient(135deg, rgb(117, 49, 175) 50%, #C12A97 50%);
+  background: -moz-linear-gradient(135deg, rgb(117, 49, 175) 50%, #c12a97 50%);
+  background: -webkit-linear-gradient(135deg, rgb(117, 49, 175) 50%, #c12a97 50%);
+  background: linear-gradient(135deg, rgb(117, 49, 175) 50%, #c12a97 50%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#833ab4",endColorstr="#fcb045",GradientType=1);
   margin-top: 60px;
   padding: 24px 12px 24px 12px;
@@ -129,8 +123,7 @@
 
 .create_push_form.mob {
   border-radius: 0px;
-  margin-top: 60px;
-  justify-content: center;
+  margin-top: 12px;
   padding: 24px;
   width: 100%;
 }
@@ -144,20 +137,21 @@
   padding-right: 12px;
 }
 
-.message_history_mob {
-  margin-top: 0px;
+.message_history.mob {
+  margin-top: 36px;
   justify-content: center;
   width: 100%;
   padding: 12px;
 }
 
-.tableMode{
+.tableMode {
   margin: 0px;
 }
-.create_push_form.tableMode{
-  padding: 12px 0px 12px 0px;
-  z-index: 6000;
+.create_push_form.tableMode {
+  padding: 0px;
+  z-index: 2000;
   margin-top: 15vh;
+  height: 20%;
   border-radius: 0px;
   box-shadow: none;
 }
@@ -189,7 +183,7 @@
 
 .config {
   color: rgb(0, 0, 0);
-  background: #ffffff;
+  background: #fefefe;
   padding: 12px;
   box-shadow: -1px 1px 4px rgba(0, 0, 0, 0.2);
   margin-top: 15px;
@@ -197,17 +191,20 @@
   border-radius: 5px;
   display: flex;
   justify-content: center;
-  -webkit-transition: box-shadow 0.3s;
-  transition: box-shadow 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
 }
 .config:hover {
   cursor: pointer;
-  background-color: rgb(248, 248, 248);
-  box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.3);
+  transform: translate(-3px, -3px);
+  -webkit-transform: translate(-3px, -3px);
+  -o-transform: translate(-3px, -3px);
+  -moz-transform: translate(-3px, -3px);
+  box-shadow: 5px 5px 0px #c12a97;
 }
 
 .push {
-  background-color: rgb(255, 255, 255);
+  background: #fefefe;
   color: #000;
   padding: 10px;
   margin-top: 15px;
@@ -215,21 +212,26 @@
   border-radius: 5px;
   display: flex;
   justify-content: center;
-  -webkit-transition: box-shadow 0.3s;
-  transition: box-shadow 0.3s;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
 }
 .push:hover {
-  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transform: translate(-3px, -3px);
+  -webkit-transform: translate(-3px, -3px);
+  -o-transform: translate(-3px, -3px);
+  -moz-transform: translate(-3px, -3px);
+  box-shadow: 5px 5px 0px rgb(117, 49, 175);
 }
 
 .message_list {
   padding: 12px;
   height: 70vh;
   box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.2);
-  background: #7D0E5F;
-  background: -moz-linear-gradient(120deg, #9f1e7c 0%, #7D0E5F 100%);
-  background: -webkit-linear-gradient(120deg, #9f1e7c 0%, #7D0E5F 100%);
-  background: linear-gradient(120deg, #9f1e7c 0%, #7D0E5F 100%);
+  background: #7d0e5f;
+  background: -moz-linear-gradient(120deg, #9f1e7c 0%, #7d0e5f 100%);
+  background: -webkit-linear-gradient(120deg, #9f1e7c 0%, #7d0e5f 100%);
+  background: linear-gradient(120deg, #9f1e7c 0%, #7d0e5f 100%);
   overflow: auto;
 }
 
@@ -260,7 +262,7 @@
   width: 13px;
   height: 13px;
   border-radius: 50%;
-  background:#C2F235;
+  background: #c2f235;
   animation-timing-function: cubic-bezier(0, 1, 1, 0);
 }
 .loader div:nth-child(1) {

@@ -13,20 +13,18 @@ function Main() {
         <Stack
           direction="column"
           justifyContent="center"
-          alignItems="center"
-          spacing={2}
+          alignItems="flex-end"
+          spacing={3}
         >
-          <Box className="configs_mob">
-            <Grid className="config_list">
-              <ConfigContainer />
-            </Grid>
-          </Box>
-          <Box sx={{width:"100%"}}>
+          <Grid className="configs mob">
+            <ConfigContainer />
+          </Grid>
+          <Box sx={{ width: "100%" }}>
             <Grid className="create_push_form mob">
               <PushCreator />
             </Grid>
           </Box>
-          <Box maxWidth="xs" className="message_history_mob">
+          <Box maxWidth="xs" className="message_history mob">
             <PushList />
           </Box>
         </Stack>
