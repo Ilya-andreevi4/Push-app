@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useSnapshot } from "valtio";
 import { IPush } from "../../../app/models/IPush";
 import PushDataServices from "../../../services/PushService";
-import { Loader } from "../Loader";
 import PushItem from "./PushItem";
 import { state } from "./updateState";
 

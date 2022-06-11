@@ -23,6 +23,7 @@ export function PushCreator() {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = React.useState("");
   const [ConfigId, setConfigId] = React.useState("");
+  const [image, setImage] = useState("");
   const [configs, setConfigs] = useState<IConfig[]>([]);
   const [msg, setMsg] = useState({
     error: false,
@@ -135,11 +136,7 @@ export function PushCreator() {
               </Grid>
             </Grid>
             {configs && (
-              <FormControl
-                fullWidth
-                color="info"
-                className="config_select"
-              >
+              <FormControl fullWidth color="info" className="config_select">
                 <InputLabel id="select-label">Конфиг</InputLabel>
                 <Select
                   labelId="select-label"
@@ -170,6 +167,17 @@ export function PushCreator() {
             onChange={(e) => setMessage(e.target.value)}
             fullWidth={true}
             label="Сообщение"
+            className="message_input"
+            color="info"
+            variant="filled"
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            value={image}
+            onChange={(e) => setImage(e.target.value)}
+            fullWidth={true}
+            label="Ссылка на картинку"
             className="message_input"
             color="info"
             variant="filled"

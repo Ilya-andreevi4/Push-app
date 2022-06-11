@@ -149,7 +149,7 @@
 }
 .create_push_form.tableMode {
   padding: 0px;
-  z-index: 2000;
+  z-index: 1000;
   margin-top: 15vh;
   height: 20%;
   border-radius: 0px;
@@ -307,3 +307,12 @@
 }
 
 /* LOADER */
+
+input[type="token"]{
+  width:auto;
+  margin: 0.5rem;
+  padding: 0.5rem 0px 0.5rem 0.5rem;
+  box-shadow: 0px 0px 2px 1px rgb(49, 78, 175);
+  font-size: medium;
+  border: none;
+}

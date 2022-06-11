@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./App.css";
 import {
   AppBar,
@@ -8,25 +8,13 @@ import {
   ButtonGroup,
   Stack,
   useMediaQuery,
-  Dialog,
-  Box,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import AppRoutes from "./routes/Routes";
 import { useUserAuth } from "./services/provider/AuthProvider";
-import { getMessaging, getToken } from "firebase/messaging";
-import axios from "axios";
 
-function App() {
+const App: React.FC = () => {
   const { user, logOut } = useUserAuth();
-  const [token, setToken] = useState("");
-  const [open, setOpen] = useState(false);
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const handleLogOut = async () => {
     try {
@@ -35,86 +23,6 @@ function App() {
       console.log(err.message);
     }
   };
-
-  const messaging = getMessaging();
-
-  function isTokenSentToServer(currentToken: any) {
-    return (
-      window.localStorage.getItem("sentFirebaseMessagingToken") === currentToken
-    );
-  }
-
-  function setTokenSentToServer(currentToken: any) {
-    window.localStorage.setItem(
-      "sentFirebaseMessagingToken",
-      currentToken ? currentToken : ""
-    );
-  }
-
-  function sendTokenToServer(currentToken: any) {
-    if (!isTokenSentToServer(currentToken)) {
-      axios.post(
-        `https://firestore.googleapis.com/v1/projects/test-e97df/databases/userTokens`,
-        { Authorization: `Bearer ${currentToken}` }
-      ); // адрес скрипта на сервере который сохраняет ID устройства
-      setTokenSentToServer(currentToken);
-    } else {
-      console.log("Токен уже отправлен на сервер.");
-    }
-  }
-  getToken(messaging, {
-    vapidKey:
-      "BMe3lq08yT-UDNxnrAQfnL1nroniS30iZ_uxjf8oSnmvSVbgWW7HacH7Gp3c43AVTGOKxCXnRsN6kY1dX58RiQE",
-  })
-    .then(async (currentToken) => {
-      if (currentToken) {
-        // Send the token to your server and update the UI if necessary
-        try {
-          setToken(currentToken);
-          sendTokenToServer(currentToken);
-        } catch (e) {
-          console.log("An error occurred while retrieving token. ", e);
-        }
-      } else {
-        requestPermission();
-      }
-    })
-    .catch((err) => {
-      console.log("An error occurred while retrieving token. ", err);
-      // ...
-    });
-
-  function requestPermission() {
-    return new Promise(function (resolve, reject) {
-      const permissionResult = Notification.requestPermission(function (
-        result
-      ) {
-        // Поддержка устаревшей версии с функцией обратного вызова.
-        resolve(result);
-      });
-      if (permissionResult) {
-        permissionResult.then(resolve, reject);
-      }
-    }).then(function (permissionResult) {
-      if (permissionResult !== "granted") {
-        throw new Error("Permission not granted.");
-      }
-    });
-  }
-
-  window.addEventListener("load", async () => {
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker
-        .register("/firebase-messaging-sw.js")
-        .then(function (reg) {
-          // регистрация сработала
-        })
-        .catch(function (error) {
-          // регистрация прошла неудачно
-          console.log("SW registration failed with: " + error);
-        });
-    }
-  });
 
   const mobIfc = useMediaQuery("(max-width:745px)");
 
@@ -222,22 +130,6 @@ function App() {
         </AppBar>
       )}
       <AppRoutes />
-      {token && user && (
-        <Box m={1}>
-          <Button
-            onClick={handleClickOpen}
-            variant="outlined"
-            color="secondary"
-          >
-            Токен твоего девайса
-          </Button>
-          <Dialog open={open} onClose={handleClose}>
-            <Typography variant="subtitle1">
-              Токен твоего девайса: {token}
-            </Typography>
-          </Dialog>
-        </Box>
-      )}
     </div>
   );
 }
