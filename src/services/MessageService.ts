@@ -93,7 +93,6 @@ function MessageService() {
         .register("/firebase-messaging-sw.js")
         .then(function (reg) {
           // регистрация сработала
-          console.log("SW registration successed: " + reg);
         })
         .catch(function (error) {
           // регистрация прошла неудачно

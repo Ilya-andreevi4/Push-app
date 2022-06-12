@@ -73,20 +73,19 @@ const Main = () => {
           direction="row"
           justifyContent="space-evenly"
           alignItems="flex-start"
-          spacing={3}
+          spacing={1}
         >
           <Box className="configs">
             <Grid className="config_list">
               <ConfigContainer />
             </Grid>
           </Box>
-
-          <Box>
+          <Box maxWidth="30%">
             <Grid className="create_push_form">
               <PushCreator />
             </Grid>
           </Box>
-          <Box maxWidth="xs" className="message_history">
+          <Box className="message_history">
             <PushList />
           </Box>
         </Stack>

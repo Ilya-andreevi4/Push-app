@@ -1,7 +1,9 @@
 export interface IPush {
   id: number;
   idConfigs: any;
-  message: any;
+  title: string;
+  message: string;
+  image:string;
   pushDate: any;
   timePush: any;
 }
