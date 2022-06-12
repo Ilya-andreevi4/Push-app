@@ -18,7 +18,7 @@ import MessageService from "../../services/MessageService";
 import ConfigContainer from "./ConfigList/ConfigContainer";
 import PushCreator from "./PushList/PushCreator";
 import PushList from "./PushList/PushList";
-import { userToken } from "./PushList/updateState";
+import { userToken } from "../../services/provider/updateState";
 
 const Main = () => {
   const mobIfc = useMediaQuery("(max-width:745px)");

@@ -19,29 +19,28 @@ import ConfigDataServices from "../../../services/ConfigServices";
 import PushDataServices from "../../../services/PushService";
 import { IConfig } from "../../../app/models/IConfig";
 import { useSnapshot } from "valtio";
-import { state } from "./updateState";
+import { pushStatus, state } from "../../../services/provider/updateState";
 import { Loader } from "../Loader";
 
 export function PushCreator() {
+  const snap: any = useSnapshot(state);
+  const snapPush: any = useSnapshot(pushStatus);
   const [isLoading, setIsLoading] = useState(false);
-  const [title, setTitle] = React.useState("");
-  const [message, setMessage] = React.useState("");
-  const [ConfigId, setConfigId] = React.useState("");
-  const [image, setImage] = useState("");
   const [configs, setConfigs] = useState<IConfig[]>([]);
   const [msg, setMsg] = useState({
     error: false,
     text: "Введите данные",
     style: "info",
   });
-  const snap: any = useSnapshot(state);
 
   const updateState = () => {
     state.status_push = !state.status_push;
-  };
+    setIsLoading(false);
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setConfigId(event.target.value as any);
+    pushStatus.configPush = "";
+    pushStatus.titleStatus = "";
+    pushStatus.messageStatus = "";
+    pushStatus.imageStatus = null;
   };
 
   const getConfigs = async () => {
@@ -65,9 +64,13 @@ export function PushCreator() {
     }
   };
 
-  const handleSubmit = async (idConfigs: any, message: any) => {
+  const handleSubmit = async () => {
     setIsLoading(true);
-    if (idConfigs === "" || message === "" || title === "") {
+    if (
+      pushStatus.configPush === "" ||
+      pushStatus.messageStatus === "" ||
+      pushStatus.titleStatus === ""
+    ) {
       setIsLoading(false);
       setMsg({
         error: true,
@@ -85,16 +88,19 @@ export function PushCreator() {
           .split(",")
           .join(" ");
         const timePush = new Date();
-        const newPush = { idConfigs, title, message, image, pushDate, timePush };
+        const newPush = {
+          idConfigs: pushStatus.configPush,
+          title: pushStatus.titleStatus,
+          message: pushStatus.messageStatus,
+          image: pushStatus.imageStatus,
+          pushDate,
+          timePush,
+        };
         await PushDataServices.addPush(newPush);
       } catch (e) {
         console.log(e);
       } finally {
         updateState();
-        setIsLoading(false);
-        setConfigId("");
-        setTitle("");
-        setMessage("");
       }
     }
   };
@@ -102,10 +108,10 @@ export function PushCreator() {
   const handlerEnter = useCallback(
     (event: any) => {
       if (event.key === "Enter") {
-        return handleSubmit(ConfigId, message);
+        return handleSubmit();
       }
     },
-    [ConfigId, message]
+    [pushStatus.messageStatus]
   );
 
   useEffect(() => {
@@ -142,14 +148,19 @@ export function PushCreator() {
                 </Grid>
               </Grid>
               {configs && (
-                <FormControl fullWidth color="info" className="config_select">
+                <FormControl
+                  fullWidth
+                  color="info"
+                  className="config_select"
+                  size="small"
+                >
                   <InputLabel id="select-label">Конфиг</InputLabel>
                   <Select
                     labelId="select-label"
                     id="select"
-                    value={ConfigId}
+                    value={snapPush.configPush}
                     label="Config"
-                    onChange={handleChange}
+                    onChange={(e) => (pushStatus.configPush = e.target.value)}
                   >
                     {configs.map((config, index) => (
                       <MenuItem
@@ -169,35 +180,38 @@ export function PushCreator() {
           </Grid>
           <Grid item xs={12}>
             <TextField
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              value={snapPush.titleStatus}
+              onChange={(e) => (pushStatus.titleStatus = e.target.value)}
               fullWidth={true}
               label="Заголовок"
               className="message_input"
               color="info"
               variant="filled"
+              size="small"
             />
           </Grid>
           <Grid item xs={12}>
             <TextField
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
+              value={snapPush.messageStatus}
+              onChange={(e) => (pushStatus.messageStatus = e.target.value)}
               fullWidth={true}
               label="Сообщение"
               className="message_input"
               color="info"
               variant="filled"
+              size="small"
             />
           </Grid>
           <Grid item xs={12}>
             <TextField
-              value={image}
-              onChange={(e) => setImage(e.target.value)}
+              value={snapPush.imageStatus}
+              onChange={(e) => (pushStatus.imageStatus = e.target.value)}
               fullWidth={true}
               label="Ссылка на картинку (необязательно)"
               className="message_input"
               color="info"
               variant="filled"
+              size="small"
             />
           </Grid>
           <Grid item xs={12}>
@@ -207,7 +221,7 @@ export function PushCreator() {
               disabled={isLoading}
               color="secondary"
               sx={{ float: "right" }}
-              onClick={() => handleSubmit(ConfigId, message)}
+              onClick={() => handleSubmit()}
             >
               Отправить
             </Button>
@@ -215,20 +229,26 @@ export function PushCreator() {
         </Grid>
       </div>
       <Card className="prototypeMsg">
-        <CardContent sx={{ display:"inline-block", maxWidth:"60%"}}>
-          <Typography gutterBottom variant="h5" component="div">
-            {title ? title : "Пример заголовка"}
+        <CardContent sx={{ display: "inline-block", maxWidth: "60%" }}>
+          <Typography gutterBottom variant="h6" component="div">
+            {pushStatus.titleStatus
+              ? pushStatus.titleStatus
+              : "Пример заголовка"}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-          {message ? message : "Пример сообщения"}
-           </Typography>
+          <Typography variant="body2">
+            {pushStatus.messageStatus
+              ? pushStatus.messageStatus
+              : "Пример сообщения"}
+          </Typography>
         </CardContent>
-        <CardMedia
-          component="img"
-          className="post_img prev"
-          image={image}
-          alt="Изображение поста"
-        />
+        {pushStatus.imageStatus && (
+          <CardMedia
+            component="img"
+            className="post_img prev"
+            image={pushStatus.imageStatus}
+            alt="Изображение поста"
+          />
+        )}
       </Card>
     </div>
   );

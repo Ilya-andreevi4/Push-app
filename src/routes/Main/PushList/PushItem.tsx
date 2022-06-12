@@ -1,5 +1,4 @@
 import { Button, Grid, Typography } from "@mui/material";
-import { post } from "jquery";
 import React, { FC } from "react";
 import { IPush } from "../../../app/models/IPush";
 

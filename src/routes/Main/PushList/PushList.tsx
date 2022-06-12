@@ -4,7 +4,7 @@ import { useSnapshot } from "valtio";
 import { IPush } from "../../../app/models/IPush";
 import PushDataServices from "../../../services/PushService";
 import PushItem from "./PushItem";
-import { state } from "./updateState";
+import { state } from "../../../services/provider/updateState";
 
 const PushList = () => {
   const snap = useSnapshot(state);

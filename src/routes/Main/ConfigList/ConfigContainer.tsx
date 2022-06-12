@@ -22,7 +22,7 @@ import React, { useEffect, useState } from "react";
 import { IConfig } from "../../../app/models/IConfig";
 import ConfigDataServices from "../../../services/ConfigServices";
 import { Loader } from "../Loader";
-import { state } from "../PushList/updateState";
+import { state } from "../../../services/provider/updateState";
 import ConfigItem from "./ConfigItem";
 
 const ConfigContainer = () => {

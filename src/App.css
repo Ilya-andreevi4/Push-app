@@ -80,7 +80,7 @@
 }
 
 .PushCreator {
-  padding: 12px 24px 12px 24px;
+  padding: 6px 6px 6px 6px;
 }
 .PushList {
   border-radius: 10px;
@@ -120,10 +120,6 @@
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4);
   border-radius: 10px;
 }
-.create_push_form.tableMode {
-  padding: 12px 12px 12px 12px;
-  border-radius: 5px;
-}
 
 .create_push_form.mob {
   border-radius: 0px;
@@ -135,8 +131,8 @@
 .create_push_form.tableMode {
   padding: 0px;
   z-index: 1000;
-  margin-top: 15vh;
-  height: 20%;
+  margin-top: 5%;
+  max-height: 100vh;
   border-radius: 0px;
   box-shadow: none;
 }
@@ -146,6 +142,7 @@
   float: right;
   justify-content: "flex-end";
   width: 35%;
+  min-width: 300px;
   padding-top: 24px;
   padding-right: 12px;
 }

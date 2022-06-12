@@ -3,7 +3,7 @@ import axios from 'axios';
 import { getMessaging, getToken } from 'firebase/messaging';
 import { useEffect } from 'react';
 import { useSnapshot } from 'valtio';
-import { userToken } from '../routes/Main/PushList/updateState';
+import { userToken } from './provider/updateState';
 
 function MessageService() {
   const messaging = getMessaging();

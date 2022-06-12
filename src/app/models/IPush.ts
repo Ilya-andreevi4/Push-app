@@ -3,7 +3,7 @@ export interface IPush {
   idConfigs: any;
   title: string;
   message: string;
-  image:string;
+  image:any|null;
   pushDate: any;
   timePush: any;
 }
