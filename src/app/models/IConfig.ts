@@ -2,8 +2,8 @@
 export interface IConfig {
   id: any;
   title: string;
-  userToken?:any;
-  serviceToken?:string;
-  system: string;
+  deviceToken?:any;
+  APIKey?:string;
+  system: any;
   timeCreate: any;
 }

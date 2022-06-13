@@ -12,6 +12,7 @@ import {
   Card,
   CardMedia,
   CardContent,
+  OutlinedInput,
 } from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
 import { Box } from "@mui/system";
@@ -36,7 +37,6 @@ export function PushCreator() {
   const updateState = () => {
     state.status_push = !state.status_push;
     setIsLoading(false);
-
     pushStatus.configPush = "";
     pushStatus.titleStatus = "";
     pushStatus.messageStatus = "";
@@ -130,10 +130,10 @@ export function PushCreator() {
   return (
     <div>
       <div className="PushCreator">
-        <Typography variant="h5" align="center" sx={{ mt: "1rem", mb: "1rem" }}>
+        <Typography variant="h5" align="center" sx={{ mt: "1rem", mb: 0 }}>
           Создание Пуш-уведомлений
         </Typography>
-        <Grid container spacing={3} mt={1} pb={1}>
+        <Grid container spacing={0.5} mt={0} pb={1}>
           <Grid item xs={12}>
             <Box>
               <Grid container mb={2} justifyContent="space-between">

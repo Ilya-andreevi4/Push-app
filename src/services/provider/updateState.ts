@@ -11,7 +11,14 @@ interface pushCreateProxy {
   messageStatus: string,
   imageStatus: any|null,
 }
-
+interface configCreateProxy {
+  id: any;
+  title: string;
+  deviceToken:any;
+  APIKey:any;
+  system: any;
+  timeCreate: any;
+}
 interface tokenProxy {
   token:string,
 }
@@ -22,7 +29,7 @@ const state:stateProxy = proxy({
 });
 
 const userToken:tokenProxy = proxy({
-  token:'',
+  token:"",
 });
 const pushStatus:pushCreateProxy = proxy({
   configPush: "",
@@ -30,8 +37,17 @@ const pushStatus:pushCreateProxy = proxy({
   messageStatus: "",
   imageStatus: null,
 });
+const configStatus:configCreateProxy = proxy({
+  id: "",
+  title: "",
+  deviceToken:"",
+  APIKey:"",
+  system: "",
+  timeCreate: "",
+});
 
 export {state};
 export {userToken};
 export {pushStatus};
+export {configStatus};
 

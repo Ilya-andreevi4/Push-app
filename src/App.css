@@ -238,16 +238,13 @@
 }
 
 .message_input {
-  border-radius: 5px 5px 0px 0px;
+  border-radius: 0px;
   background: #ffffff;
 }
 /* config_select */
 .config_select {
   background: #ffffff;
   border-radius: 5px;
-}
-#select_label {
-  background: #ffffff;
 }
 .prototypeMsg{
   display: 'flex';

@@ -22,20 +22,21 @@ import React, { useEffect, useState } from "react";
 import { IConfig } from "../../../app/models/IConfig";
 import ConfigDataServices from "../../../services/ConfigServices";
 import { Loader } from "../Loader";
-import { state } from "../../../services/provider/updateState";
+import { configStatus, state } from "../../../services/provider/updateState";
 import ConfigItem from "./ConfigItem";
+import { snapshot, useSnapshot } from "valtio";
 
 const ConfigContainer = () => {
-  const [title, setTitle] = React.useState("");
-  const [system, setSystem] = React.useState("");
-  const [timeCreate, setTimeCreate] = React.useState<Date>();
+  // const [title, setTitle] = React.useState("");
+  // const [system, setSystem] = React.useState("");
+  // const [timeCreate, setTimeCreate] = React.useState<Date>();
   const [message, setMessage] = useState({
     error: false,
     msg: "Введите данные",
     style: "info",
   });
   const [configs, setConfigs] = useState<IConfig[]>([]);
-  const [configId, setConfigId] = React.useState("");
+  // const [configId, setConfigId] = React.useState("");
   const [open, setOpen] = React.useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -48,8 +49,16 @@ const ConfigContainer = () => {
 
   const updateState = () => {
     state.config_status = !state.config_status;
+    getConfigs();
+    setIsLoading(false);
+    configStatus.id = "";
+    configStatus.title = "";
+    configStatus.system = "";
+    configStatus.deviceToken = "";
+    configStatus.APIKey = "";
+    configStatus.timeCreate = "";
   };
-
+  const snapConf = useSnapshot(configStatus);
   const matches = useMediaQuery("(max-width:377px)");
   const desctopIfc = useMediaQuery("(min-width:1150px)");
 
@@ -58,34 +67,44 @@ const ConfigContainer = () => {
   };
 
   const handleClose = () => {
-    setTitle("");
-    setSystem("");
-    setConfigId("");
     setOpen(false);
+    configStatus.id = "";
+    configStatus.title = "";
+    configStatus.system = "";
+    configStatus.deviceToken = "";
+    configStatus.APIKey = "";
+    configStatus.timeCreate = "";
     setMessage({ error: false, msg: "Введите данные", style: "info" });
   };
 
-  const handleCreate = async (data: any) => {
+  const handleCreate = async () => {
     setIsLoading(true);
     setMessage({ error: false, msg: "Введите данные", style: "info" });
-    if (title === "" || system === "") {
+    if (
+      configStatus.title === "" ||
+      configStatus.system === "" ||
+      configStatus.deviceToken === "" ||
+      configStatus.APIKey === ""
+    ) {
       setMessage({
         error: true,
-        msg: "Нужно заполнить оба поля!",
+        msg: "Заполните необходимые поля!",
         style: "error",
       });
       setIsLoading(false);
       return;
     }
     try {
-      if (configId) {
+      if (configStatus.id) {
         const updateConfig: IConfig = {
-          id: configId,
-          title,
-          system,
-          timeCreate,
+          id: configStatus.id,
+          title: configStatus.title,
+          system: configStatus.system,
+          deviceToken: configStatus.deviceToken,
+          APIKey: configStatus.APIKey,
+          timeCreate: configStatus.timeCreate,
         };
-        await ConfigDataServices.updateConfig(configId, updateConfig);
+        await ConfigDataServices.updateConfig(configStatus.id, updateConfig);
         setMessage({
           error: false,
           msg: "Конфигурация изменена успешно!",
@@ -93,7 +112,13 @@ const ConfigContainer = () => {
         });
       } else {
         const time = new Date();
-        const newConfig = { title, system, timeCreate: time };
+        const newConfig = {
+          title: configStatus.title,
+          system: configStatus.system,
+          deviceToken: configStatus.deviceToken,
+          APIKey: configStatus.APIKey,
+          timeCreate: time,
+        };
         await ConfigDataServices.addConfig(newConfig);
         setMessage({
           error: false,
@@ -104,12 +129,7 @@ const ConfigContainer = () => {
     } catch (e: any) {
       setMessage({ error: true, msg: e.message, style: "error" });
     } finally {
-      getConfigs();
       updateState();
-      setIsLoading(false);
-      setConfigId("");
-      setTitle("");
-      setSystem("");
     }
   };
 
@@ -135,25 +155,22 @@ const ConfigContainer = () => {
     } catch (e: any) {
       setMessage({ error: true, msg: e.message, style: "error" });
     } finally {
-      getConfigs();
-      setIsLoading(false);
-      setConfigId("");
-      setTitle("");
-      setSystem("");
+      updateState();
     }
   };
 
   const handleChange = (event: SelectChangeEvent) => {
-    setSystem(event.target.value as any);
+    configStatus.system = event.target.value as any;
   };
 
   const handleUpdate = async (updatedConfig: IConfig) => {
     setOpen(true);
-    setConfigId(updatedConfig.id);
-    setTitle(updatedConfig.title);
-    setSystem(updatedConfig.system);
-    setSystem(updatedConfig.system);
-    setTimeCreate(updatedConfig.timeCreate);
+    configStatus.id = updatedConfig.id;
+    configStatus.title = updatedConfig.title;
+    configStatus.system = updatedConfig.system;
+    configStatus.APIKey = updatedConfig.APIKey;
+    configStatus.deviceToken = updatedConfig.deviceToken;
+    configStatus.timeCreate = updatedConfig.timeCreate;
   };
 
   useEffect(() => {
@@ -255,8 +272,10 @@ const ConfigContainer = () => {
               </Grid>
             )}
           </Grid>
+
+          {/* Окно с редактированием конфигурации */}
           <Dialog open={open} onClose={handleClose}>
-            {configId ? (
+            {configStatus.id ? (
               <DialogTitle>Изменение конфигурации</DialogTitle>
             ) : (
               <DialogTitle>Создание конфигурации</DialogTitle>
@@ -278,18 +297,39 @@ const ConfigContainer = () => {
                 id="myform"
                 onSubmit={(e) => {
                   e.preventDefault();
-                  handleCreate({ title, system });
+                  handleCreate();
                 }}
               >
+
                 <TextField
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
+                  value={snapConf.title}
+                  onChange={(e) => (configStatus.title = e.target.value)}
                   fullWidth={true}
-                  defaultValue={title}
-                  color="info"
+                  defaultValue={snapConf.title}
                   label="Название"
+                  color="info"
                   variant="filled"
                 />
+
+                <TextField
+                  value={snapConf.APIKey}
+                  onChange={(e) => (configStatus.APIKey = e.target.value)}
+                  fullWidth={true}
+                  defaultValue={snapConf.APIKey}
+                  label="Api ключ"
+                  color="info"
+                  variant="filled"
+                />
+                <TextField
+                  value={snapConf.deviceToken}
+                  onChange={(e) => (configStatus.deviceToken = e.target.value)}
+                  fullWidth={true}
+                  defaultValue={snapConf.deviceToken}
+                  label="Токен девайса"
+                  color="info"
+                  variant="filled"
+                />
+
                 <FormControl fullWidth sx={{ mt: 2 }}>
                   <InputLabel id="select-label-system" color="info">
                     Система
@@ -298,7 +338,7 @@ const ConfigContainer = () => {
                     labelId="select-label-system"
                     color="info"
                     id="select-system"
-                    value={system}
+                    value={snapConf.system}
                     label="Система"
                     onChange={handleChange}
                   >
@@ -318,7 +358,6 @@ const ConfigContainer = () => {
                     Назад
                   </Button>
                 </Grid>
-
                 <Grid item>
                   <Button
                     variant="contained"
@@ -327,12 +366,13 @@ const ConfigContainer = () => {
                     form="myform"
                     disabled={isLoading}
                   >
-                    {configId ? "Изменить" : "Создать"}
+                    {configStatus.id ? "Изменить" : "Создать"}
                   </Button>
                 </Grid>
               </Grid>
             </DialogActions>
           </Dialog>
+          {/* Окно с редактированием конфигурации */}
         </Box>
       )}
       <div className="config__list">
