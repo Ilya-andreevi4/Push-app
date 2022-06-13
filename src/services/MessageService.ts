@@ -1,39 +1,40 @@
-
-import axios from 'axios';
-import { getMessaging, getToken } from 'firebase/messaging';
-import { useEffect } from 'react';
-import { useSnapshot } from 'valtio';
-import { userToken } from './provider/updateState';
+import axios from "axios";
+import { addDoc, collection } from "firebase/firestore";
+import { getMessaging, getToken } from "firebase/messaging";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { db } from "../firebase";
+import { userToken } from "./provider/updateState";
 
 function MessageService() {
   const messaging = getMessaging();
-  const snap: any = useSnapshot(userToken);
-  const isTokenSentToServer=(currentToken: any) => {
+  const isTokenSentToServer = (currentToken: any) => {
     return (
       window.localStorage.getItem("sentFirebaseMessagingToken") === currentToken
     );
-  }
+  };
 
-  const setTokenSentToServer=(currentToken: any)=> {
+  const setTokenSentToServer = (currentToken: any) => {
     window.localStorage.setItem(
       "sentFirebaseMessagingToken",
       currentToken ? currentToken : ""
     );
-  }
+  };
 
- const sendTokenToServer= async(currentToken: any) => {
+  const sendTokenToServer = async (currentToken: any) => {
     if (!isTokenSentToServer(currentToken)) {
       try {
-        const formData = new FormData();
-        formData.append('token', currentToken)
-        const response = await axios.post(
-          `https://firestore.googleapis.com/v1/projects/test-e97df/databases/(default)/documents/userTokens`,
-          formData,
-          { headers: { Authorization: `Bearer 104246255864963682409` } }
-        );
-        
-        console.log("token success sended");
-        sendTokenToServer(response.data)
+        const formData = {
+          token: {currentToken}
+        };
+        const configCollectionRef = collection(db, "userTokens");
+        addDoc(configCollectionRef, formData)
+          .then((response) => {
+            console.log("token success sended", response);
+          })
+          .catch((err) => {
+            console.error("err with send token", err);
+          });
         setTokenSentToServer(currentToken);
       } catch (e) {
         console.log("Error with send token. ", e);
@@ -41,8 +42,8 @@ function MessageService() {
     } else {
       console.log("Токен уже отправлен на сервер.");
     }
-  }
-  
+  };
+
   function requestPermission() {
     return new Promise(function (resolve, reject) {
       const permissionResult = Notification.requestPermission(function (
@@ -66,16 +67,15 @@ function MessageService() {
       vapidKey:
         "BMe3lq08yT-UDNxnrAQfnL1nroniS30iZ_uxjf8oSnmvSVbgWW7HacH7Gp3c43AVTGOKxCXnRsN6kY1dX58RiQE",
     })
-      .then( async (currentToken) => {
+      .then(async (currentToken) => {
         if (currentToken) {
-          console.log("try to send token:", currentToken);
           // Send the token to your server and update the UI if necessary
           try {
-            userToken.token=currentToken;
-            sendTokenToServer(currentToken);
+            userToken.token = currentToken;
             console.log("try to send token:", currentToken);
+            sendTokenToServer(currentToken);
           } catch (e) {
-            console.log("Error occurred while retrieving token. ", e);
+            console.log("Error while retrieving token. ", e);
           }
         } else {
           requestPermission();
@@ -85,7 +85,7 @@ function MessageService() {
         console.log("An error occurred while retrieving token. ", err);
         // ...
       });
-  }, [])
+  }, []);
 
   window.addEventListener("load", async () => {
     if ("serviceWorker" in navigator) {
@@ -101,5 +101,4 @@ function MessageService() {
     }
   });
 }
-export default MessageService
-  
+export default MessageService;

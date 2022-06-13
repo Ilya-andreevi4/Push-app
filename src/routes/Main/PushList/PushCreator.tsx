@@ -40,7 +40,7 @@ export function PushCreator() {
     pushStatus.configPush = "";
     pushStatus.titleStatus = "";
     pushStatus.messageStatus = "";
-    pushStatus.imageStatus = null;
+    pushStatus.imageStatus = "";
   };
 
   const getConfigs = async () => {
@@ -220,7 +220,7 @@ export function PushCreator() {
               variant="contained"
               disabled={isLoading}
               color="secondary"
-              sx={{ float: "right" }}
+              sx={{ float: "right", mt:1}}
               onClick={() => handleSubmit()}
             >
               Отправить

@@ -9,7 +9,7 @@ interface pushCreateProxy {
   configPush: any,
   titleStatus: string,
   messageStatus: string,
-  imageStatus: any|null,
+  imageStatus: any,
 }
 interface configCreateProxy {
   id: any;
@@ -35,7 +35,7 @@ const pushStatus:pushCreateProxy = proxy({
   configPush: "",
   titleStatus: "",
   messageStatus: "",
-  imageStatus: null,
+  imageStatus: "",
 });
 const configStatus:configCreateProxy = proxy({
   id: "",

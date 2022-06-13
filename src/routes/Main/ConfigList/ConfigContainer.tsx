@@ -24,19 +24,15 @@ import ConfigDataServices from "../../../services/ConfigServices";
 import { Loader } from "../Loader";
 import { configStatus, state } from "../../../services/provider/updateState";
 import ConfigItem from "./ConfigItem";
-import { snapshot, useSnapshot } from "valtio";
+import { useSnapshot } from "valtio";
 
 const ConfigContainer = () => {
-  // const [title, setTitle] = React.useState("");
-  // const [system, setSystem] = React.useState("");
-  // const [timeCreate, setTimeCreate] = React.useState<Date>();
   const [message, setMessage] = useState({
     error: false,
     msg: "Введите данные",
     style: "info",
   });
   const [configs, setConfigs] = useState<IConfig[]>([]);
-  // const [configId, setConfigId] = React.useState("");
   const [open, setOpen] = React.useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -305,7 +301,7 @@ const ConfigContainer = () => {
                   value={snapConf.title}
                   onChange={(e) => (configStatus.title = e.target.value)}
                   fullWidth={true}
-                  defaultValue={snapConf.title}
+                  // defaultValue={snapConf.title}
                   label="Название"
                   color="info"
                   variant="filled"
@@ -315,7 +311,7 @@ const ConfigContainer = () => {
                   value={snapConf.APIKey}
                   onChange={(e) => (configStatus.APIKey = e.target.value)}
                   fullWidth={true}
-                  defaultValue={snapConf.APIKey}
+                  // defaultValue={snapConf.APIKey}
                   label="Api ключ"
                   color="info"
                   variant="filled"
@@ -324,7 +320,7 @@ const ConfigContainer = () => {
                   value={snapConf.deviceToken}
                   onChange={(e) => (configStatus.deviceToken = e.target.value)}
                   fullWidth={true}
-                  defaultValue={snapConf.deviceToken}
+                  // defaultValue={snapConf.deviceToken}
                   label="Токен девайса"
                   color="info"
                   variant="filled"
