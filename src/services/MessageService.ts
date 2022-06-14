@@ -1,8 +1,6 @@
-import axios from "axios";
 import { addDoc, collection } from "firebase/firestore";
 import { getMessaging, getToken } from "firebase/messaging";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { db } from "../firebase";
 import { userToken } from "./provider/updateState";
 
@@ -24,11 +22,8 @@ function MessageService() {
   const sendTokenToServer = async (currentToken: any) => {
     if (!isTokenSentToServer(currentToken)) {
       try {
-        const formData = {
-          token: {currentToken}
-        };
         const configCollectionRef = collection(db, "userTokens");
-        addDoc(configCollectionRef, formData)
+        addDoc(configCollectionRef, currentToken)
           .then((response) => {
             console.log("token success sended", response);
           })

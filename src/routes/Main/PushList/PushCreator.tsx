@@ -6,13 +6,11 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  SelectChangeEvent,
   Alert,
   Typography,
   Card,
   CardMedia,
   CardContent,
-  OutlinedInput,
 } from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
 import { Box } from "@mui/system";
@@ -80,6 +78,8 @@ export function PushCreator() {
       return;
     } else {
       try {
+        // await sendPushNotification;
+
         const pushDate = [
           new Date().toLocaleTimeString(),
           new Date().toDateString(),
@@ -220,7 +220,7 @@ export function PushCreator() {
               variant="contained"
               disabled={isLoading}
               color="secondary"
-              sx={{ float: "right", mt:1}}
+              sx={{ float: "right", mt: 1 }}
               onClick={() => handleSubmit()}
             >
               Отправить

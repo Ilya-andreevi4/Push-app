@@ -21,6 +21,7 @@ interface configCreateProxy {
 }
 interface tokenProxy {
   token:string,
+  id: string,
 }
 
 const state:stateProxy = proxy({
@@ -30,6 +31,7 @@ const state:stateProxy = proxy({
 
 const userToken:tokenProxy = proxy({
   token:"",
+  id:"",
 });
 const pushStatus:pushCreateProxy = proxy({
   configPush: "",

@@ -187,6 +187,7 @@ const ConfigContainer = () => {
             <Grid item xs={12}>
               <Typography
                 variant="h5"
+                noWrap
                 gutterBottom
                 align="center"
                 sx={{ mt: "2rem", mb: "1rem" }}

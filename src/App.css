@@ -92,7 +92,6 @@
 
 .configs {
   margin-top: 0;
-  max-height: 90vh;
   width: 35%;
   padding-top: 24px;
   padding-bottom: 12px;
@@ -100,7 +99,7 @@
 }
 
 .configs.mob {
-  margin-top: 3rem;
+  margin-top: 4rem;
   margin-bottom: 1rem;
   justify-content: center;
   max-height: 250vh;
@@ -131,8 +130,9 @@
 .create_push_form.tableMode {
   padding: 0px;
   z-index: 1000;
-  margin-top: 5%;
+  margin-top: 8%;
   max-height: 100vh;
+  min-height: 630px;
   border-radius: 0px;
   box-shadow: none;
 }
@@ -156,6 +156,7 @@
 
 .tableMode {
   margin: 0px;
+  padding: 24px 0px 0px 0px;
 }
 
 .config__list {
@@ -166,6 +167,7 @@
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#833ab4",endColorstr="#fcb045",GradientType=1);
   padding: 12px 24px;
   height: 70vh;
+  min-height: 500px;
   box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.2);
   overflow: auto;
 }
@@ -229,6 +231,7 @@
 .message_list {
   padding: 12px;
   height: 70vh;
+  min-height: 463px;
   box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.2);
   background: #7d0e5f;
   background: -moz-linear-gradient(120deg, #9f1e7c 0%, #7d0e5f 100%);

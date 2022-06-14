@@ -54,7 +54,7 @@ self.addEventListener("fetch", (event) => {
 });
 // eslint-disable-next-line no-restricted-globals
 self?.addEventListener?.("push", (event) => {
-  // console.log("push", event);
+  console.log("push", event);
   const payload = event.data.json();
   const {
     notification,
@@ -64,9 +64,8 @@ self?.addEventListener?.("push", (event) => {
     from,
     priority
   } = payload;
-  
-  // console.log("payload", payload);
-  // console.log("notification", notification);
+  console.log("payload", payload);
+  console.log("notification", notification);
 // eslint-disable-next-line no-restricted-globals
   var promise = self.registration.showNotification(notification.title, {
     body: notification.body,
