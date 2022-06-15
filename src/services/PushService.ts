@@ -16,10 +16,7 @@ class PushDataService {
   addPush = (newPush: any) => {
     function spawnNotification() {
       var options = {
-        body:
-          pushStatus.messageStatus +
-          "\r\n" +
-          "Это сообщение самоликвидируется через 10 секунд.",
+        body: "Вы отправили сообщение:" + "\r\n" + pushStatus.messageStatus,
         icon: "/logo192.png",
         image: pushStatus.imageStatus || null,
       };
@@ -31,7 +28,7 @@ class PushDataService {
     const serverKey =
       "AAAAC2hIGTU:APA91bHe6DmQgfd45dWKMhWwX4lb0M4pAMZu18Tml5rlwyMzPQ10y-qXPaZlCUQUaxxF8vk3ndqfrpJ4AmvJgl23ZpGitXXO4xAkZKagQwl0yTr6JV0t47EsTNUgVMM0mCR6xwG1AdN5";
     const message = {
-      token: userToken.token,
+      to: userToken.token,
       notification: {
         title: pushStatus.titleStatus,
         body: pushStatus.messageStatus,
@@ -52,13 +49,14 @@ class PushDataService {
     };
     const headers = {
       Authorization: `Bearer ${serverKey}`,
-      Accept: "application/json",
       "Content-Type": "application/json",
     };
+
+    // ToDo
     const push = async () => {
       await axios({
         method: "post",
-        url: `https://fcm.googleapis.com/v1/test-e97df/messages:send?key=${serverKey}`,
+        url: `https://fcm.googleapis.com/fcm/send`,
         data: message,
         headers: headers,
       })
@@ -71,7 +69,7 @@ class PushDataService {
     };
     const sendPushNotification = () => {
       addDoc(pushCollectionRef, newPush);
-      // spawnNotification();
+      spawnNotification();
       push();
     };
     return sendPushNotification();
