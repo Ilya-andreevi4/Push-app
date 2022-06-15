@@ -1,6 +1,13 @@
 export interface IPush {
   id: number;
-  idConfigs: any;
+  configPush: {
+    id: any;
+    title: string;
+    deviceToken:any;
+    APIKey:string;
+    system: any;
+    timeCreateConfig: any;
+  };
   title: string;
   message: string;
   image?:any;

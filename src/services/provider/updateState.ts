@@ -3,6 +3,7 @@ import { proxy } from "valtio";
 interface stateProxy {
   status_push: boolean,
   config_status: boolean,
+  open: boolean,
 }
 
 interface pushCreateProxy {
@@ -17,7 +18,7 @@ interface configCreateProxy {
   deviceToken:any;
   APIKey:any;
   system: any;
-  timeCreate: any;
+  timeCreateConfig: any;
 }
 interface tokenProxy {
   token:string,
@@ -27,6 +28,7 @@ interface tokenProxy {
 const state:stateProxy = proxy({
   status_push:false,
   config_status: false,
+  open: false,
 });
 
 const userToken:tokenProxy = proxy({
@@ -45,7 +47,7 @@ const configStatus:configCreateProxy = proxy({
   deviceToken:"",
   APIKey:"",
   system: "",
-  timeCreate: "",
+  timeCreateConfig: "",
 });
 
 export {state};

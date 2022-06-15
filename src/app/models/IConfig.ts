@@ -5,5 +5,5 @@ export interface IConfig {
   deviceToken:any;
   APIKey:string;
   system: any;
-  timeCreate: any;
+  timeCreateConfig: any;
 }

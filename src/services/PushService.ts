@@ -8,7 +8,7 @@ import {
   doc,
   deleteDoc,
 } from "firebase/firestore";
-import { pushStatus, userToken } from "./provider/updateState";
+import { pushStatus } from "./provider/updateState";
 import axios from "axios";
 
 const pushCollectionRef = collection(db, "pushs");
@@ -16,7 +16,8 @@ class PushDataService {
   addPush = (newPush: any) => {
     function spawnNotification() {
       var options = {
-        body: "Вы отправили сообщение:" + "\r\n" + pushStatus.messageStatus,
+        title:pushStatus.titleStatus,
+        body: "Вы отправили сообщение: \r\n" + pushStatus.messageStatus,
         icon: "/logo192.png",
         image: pushStatus.imageStatus || null,
       };
@@ -25,13 +26,13 @@ class PushDataService {
 
       setTimeout(n.close.bind(n), 10000);
     }
-    const serverKey =
-      "AAAAC2hIGTU:APA91bHe6DmQgfd45dWKMhWwX4lb0M4pAMZu18Tml5rlwyMzPQ10y-qXPaZlCUQUaxxF8vk3ndqfrpJ4AmvJgl23ZpGitXXO4xAkZKagQwl0yTr6JV0t47EsTNUgVMM0mCR6xwG1AdN5";
+    const serverKey = pushStatus.configPush.APIKey;
     const message = {
-      to: userToken.token,
+      to: pushStatus.configPush.deviceToken,
       notification: {
         title: pushStatus.titleStatus,
         body: pushStatus.messageStatus,
+        icon: "/logo192.png",
         image: pushStatus.imageStatus || null,
       },
       data: {
@@ -45,10 +46,9 @@ class PushDataService {
       },
       from: serverKey,
       collapseKey: "green",
-      messageId: userToken.id,
     };
     const headers = {
-      Authorization: `Bearer ${serverKey}`,
+      Authorization: `Bearer ${pushStatus.configPush.APIKey}`,
       "Content-Type": "application/json",
     };
 

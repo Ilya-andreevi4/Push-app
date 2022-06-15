@@ -33,7 +33,6 @@ const ConfigContainer = () => {
     style: "info",
   });
   const [configs, setConfigs] = useState<IConfig[]>([]);
-  const [open, setOpen] = React.useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -52,24 +51,25 @@ const ConfigContainer = () => {
     configStatus.system = "";
     configStatus.deviceToken = "";
     configStatus.APIKey = "";
-    configStatus.timeCreate = "";
+    configStatus.timeCreateConfig = "";
   };
   const snapConf = useSnapshot(configStatus);
+  const snapState = useSnapshot(state);
   const matches = useMediaQuery("(max-width:377px)");
   const desctopIfc = useMediaQuery("(min-width:1150px)");
 
   const handleClickOpen = () => {
-    setOpen(true);
+    state.open = true;
   };
 
   const handleClose = () => {
-    setOpen(false);
+    state.open = false;
     configStatus.id = "";
     configStatus.title = "";
     configStatus.system = "";
     configStatus.deviceToken = "";
     configStatus.APIKey = "";
-    configStatus.timeCreate = "";
+    configStatus.timeCreateConfig = "";
     setMessage({ error: false, msg: "Введите данные", style: "info" });
   };
 
@@ -98,7 +98,7 @@ const ConfigContainer = () => {
           system: configStatus.system,
           deviceToken: configStatus.deviceToken,
           APIKey: configStatus.APIKey,
-          timeCreate: configStatus.timeCreate,
+          timeCreateConfig: configStatus.timeCreateConfig,
         };
         await ConfigDataServices.updateConfig(configStatus.id, updateConfig);
         setMessage({
@@ -160,13 +160,13 @@ const ConfigContainer = () => {
   };
 
   const handleUpdate = async (updatedConfig: IConfig) => {
-    setOpen(true);
+    state.open = true;
     configStatus.id = updatedConfig.id;
     configStatus.title = updatedConfig.title;
     configStatus.system = updatedConfig.system;
     configStatus.APIKey = updatedConfig.APIKey;
     configStatus.deviceToken = updatedConfig.deviceToken;
-    configStatus.timeCreate = updatedConfig.timeCreate;
+    configStatus.timeCreateConfig = updatedConfig.timeCreateConfig;
   };
 
   useEffect(() => {
@@ -271,7 +271,7 @@ const ConfigContainer = () => {
           </Grid>
 
           {/* Окно с редактированием конфигурации */}
-          <Dialog open={open} onClose={handleClose}>
+          <Dialog open={snapState.open} onClose={handleClose}>
             {configStatus.id ? (
               <DialogTitle>Изменение конфигурации</DialogTitle>
             ) : (
@@ -351,7 +351,7 @@ const ConfigContainer = () => {
             <DialogActions>
               <Grid container justifyContent="space-between" m={[0, 2, 1, 2]}>
                 <Grid item>
-                  <Button variant="contained" onClick={() => setOpen(false)}>
+                  <Button variant="contained" onClick={() => state.open = false}>
                     Назад
                   </Button>
                 </Grid>
@@ -397,7 +397,7 @@ const ConfigContainer = () => {
         </Grid>
         {configs &&
           configs
-            .sort((a, b) => b.timeCreate - a.timeCreate)
+            .sort((a, b) => b.timeCreateConfig - a.timeCreateConfig)
             .map((doc, index) => (
               <ConfigItem
                 remove={handleRemove}

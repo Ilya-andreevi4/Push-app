@@ -80,7 +80,7 @@
 }
 
 .PushCreator {
-  padding: 6px 6px 6px 6px;
+  padding: 0px 6px 6px 6px;
 }
 .PushList {
   border-radius: 10px;
@@ -114,8 +114,8 @@
   background: -webkit-linear-gradient(135deg, rgb(117, 49, 175) 50%, #c12a97 50%);
   background: linear-gradient(135deg, rgb(117, 49, 175) 50%, #c12a97 50%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#833ab4",endColorstr="#fcb045",GradientType=1);
-  margin-top: 60px;
-  padding: 24px 12px 24px 12px;
+  margin-top: 40px;
+  padding: 24px 12px 12px 12px;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4);
   border-radius: 10px;
 }
@@ -131,8 +131,8 @@
   padding: 0px;
   z-index: 1000;
   margin-top: 8%;
-  max-height: 100vh;
-  min-height: 630px;
+  max-height: 1000px;
+  min-height: 586px;
   border-radius: 0px;
   box-shadow: none;
 }
@@ -166,7 +166,7 @@
   background: linear-gradient(200deg, #5c1a95 0%, #441072 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#833ab4",endColorstr="#fcb045",GradientType=1);
   padding: 12px 24px;
-  height: 70vh;
+  max-height: 700px;
   min-height: 500px;
   box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.2);
   overflow: auto;
@@ -230,8 +230,8 @@
 
 .message_list {
   padding: 12px;
-  height: 70vh;
-  min-height: 463px;
+  max-height: 700px;
+  min-height: 513px;
   box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.2);
   background: #7d0e5f;
   background: -moz-linear-gradient(120deg, #9f1e7c 0%, #7d0e5f 100%);
@@ -251,8 +251,9 @@
 }
 .prototypeMsg{
   display: 'flex';
-  flex-direction: 'column' ;
-  padding: 0px 12px 12px 12px;
+  flex-direction: 'column';
+  min-width: 200px;
+  padding: 0px 0px 0px 0px;
 }
 .post_img{
   display:"inline-block";
@@ -262,9 +263,11 @@
   max-width: 90%;
 }
 .post_img.prev{
-  margin: 6px 6px 6px 0px;
-  max-width: 38%;
+  margin: 12px 12px 12px 0px;
+  max-width: 36%;
+  max-width: 36%;
 }
+
 /* LOADER */
 
 .loader {

@@ -25,7 +25,11 @@ const PushItem: FC<PushItemProps> = ({ push, remove }) => {
             >
               <Grid item xs={6}>
                 <Typography variant="caption" gutterBottom>
-                  {push.idConfigs}
+                  {/* {JSON.stringify(push.configPush.title)} */}
+                  {/* {[push.configPush.title, " - ", push.configPush.system]
+                          .toString()
+                          .split(",")
+                          .join("")} */}
                 </Typography>
               </Grid>
               <Grid item xs={6}>

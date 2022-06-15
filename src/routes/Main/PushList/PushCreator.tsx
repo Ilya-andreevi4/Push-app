@@ -24,6 +24,7 @@ import { Loader } from "../Loader";
 export function PushCreator() {
   const snap: any = useSnapshot(state);
   const snapPush: any = useSnapshot(pushStatus);
+  const snapState: any = useSnapshot(state);
   const [isLoading, setIsLoading] = useState(false);
   const [configs, setConfigs] = useState<IConfig[]>([]);
   const [msg, setMsg] = useState({
@@ -35,7 +36,13 @@ export function PushCreator() {
   const updateState = () => {
     state.status_push = !state.status_push;
     setIsLoading(false);
-    pushStatus.configPush = "";
+    pushStatus.configPush = {
+      id: "",
+      title: "",
+      deviceToken: "",
+      APIKey: "",
+      system: "",
+    };
     pushStatus.titleStatus = "";
     pushStatus.messageStatus = "";
     pushStatus.imageStatus = "";
@@ -65,7 +72,7 @@ export function PushCreator() {
   const handleSubmit = async () => {
     setIsLoading(true);
     if (
-      pushStatus.configPush === "" ||
+      pushStatus.configPush === null ||
       pushStatus.messageStatus === "" ||
       pushStatus.titleStatus === ""
     ) {
@@ -89,7 +96,7 @@ export function PushCreator() {
           .join(" ");
         const timePush = new Date();
         const newPush = {
-          idConfigs: pushStatus.configPush,
+          configsSetting: JSON.parse(pushStatus.configPush),
           title: pushStatus.titleStatus,
           message: pushStatus.messageStatus,
           image: pushStatus.imageStatus,
@@ -105,14 +112,15 @@ export function PushCreator() {
     }
   };
 
-  const handlerEnter = useCallback(
-    (event: any) => {
-      if (event.key === "Enter") {
-        return handleSubmit();
+  const handlerEnter = useCallback((event: any) => {
+    if (event.key === "Enter") {
+      if (state.open) {
+        return;
+      } else {
+        handleSubmit();
       }
-    },
-    [pushStatus.messageStatus]
-  );
+    }
+  }, []);
 
   useEffect(() => {
     getConfigs();
@@ -165,10 +173,8 @@ export function PushCreator() {
                     {configs.map((config, index) => (
                       <MenuItem
                         key={config.id}
-                        value={[config.title, " - ", config.system]
-                          .toString()
-                          .split(",")
-                          .join("")}
+                        value={JSON.stringify(config)}
+                        defaultValue=""
                       >
                         {index + 1}. {config.title} - {config.system}
                       </MenuItem>
@@ -229,8 +235,8 @@ export function PushCreator() {
         </Grid>
       </div>
       <Card className="prototypeMsg">
-        <CardContent sx={{ display: "inline-block", maxWidth: "60%" }}>
-          <Typography gutterBottom variant="h6" component="div">
+        <CardContent sx={{ display: "inline-block", maxWidth: "50%" }}>
+          <Typography gutterBottom variant="h6" >
             {pushStatus.titleStatus
               ? pushStatus.titleStatus
               : "Пример заголовка"}
@@ -241,14 +247,19 @@ export function PushCreator() {
               : "Пример сообщения"}
           </Typography>
         </CardContent>
-        {pushStatus.imageStatus && (
+        {pushStatus.imageStatus ? (
           <CardMedia
             component="img"
             className="post_img prev"
             image={pushStatus.imageStatus}
-            alt="Изображение поста"
+            alt="Изображение поста не найдено"
           />
-        )}
+        ):(<CardMedia
+          component="img"
+          className="post_img prev"
+          image="/image.jpg"
+          alt="Изображение поста"
+        />)}
       </Card>
     </div>
   );
