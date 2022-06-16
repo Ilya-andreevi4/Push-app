@@ -32,7 +32,6 @@ class PushDataService {
       notification: {
         title: newPush.title,
         body: newPush.message,
-        // icon: ,
         image: newPush.image||"/logo192.png",
       },
       data: {

@@ -23,7 +23,17 @@ function MessageService() {
     if (!isTokenSentToServer(currentToken)) {
       try {
         const configCollectionRef = collection(db, "userTokens");
-        addDoc(configCollectionRef, currentToken)
+        const token = {
+          token: currentToken,
+          time: [
+            new Date().toLocaleTimeString(),
+            new Date().toDateString(),
+          ]
+            .toString()
+            .split(",")
+            .join(" "),
+        };
+        addDoc(configCollectionRef, token)
           .then((response) => {
             console.log("token success sended", response);
           })

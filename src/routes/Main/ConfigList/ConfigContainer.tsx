@@ -11,6 +11,7 @@ import {
   Grid,
   InputLabel,
   MenuItem,
+  Popover,
   Select,
   SelectChangeEvent,
   Skeleton,
@@ -22,9 +23,10 @@ import React, { useEffect, useState } from "react";
 import { IConfig } from "../../../app/models/IConfig";
 import ConfigDataServices from "../../../services/ConfigServices";
 import { Loader } from "../Loader";
-import { configStatus, state } from "../../../services/provider/updateState";
+import { configStatus, state, userToken } from "../../../services/provider/updateState";
 import ConfigItem from "./ConfigItem";
 import { useSnapshot } from "valtio";
+import { useClipboard } from "use-clipboard-copy";
 
 const ConfigContainer = () => {
   const [message, setMessage] = useState({
@@ -35,6 +37,31 @@ const ConfigContainer = () => {
   const [configs, setConfigs] = useState<IConfig[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+
+  const snap: any = useSnapshot(userToken);
+  const clipboard = useClipboard();
+  const token = snap.token;
+  const [open, setOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    clipboard.copy()
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClosePop = () => {
+    setAnchorEl(null);
+  };
+
+  const openPop = Boolean(anchorEl);
+  const id = openPop ? 'simple-popover' : undefined;
+  const handleClickOpenToken = () => {
+    setOpen(true);
+  };
+  const handleCloseToken = () => {
+    setOpen(false);
+  };
+
 
   const systems = [
     { id: 1, systemName: "IOS Push" },
@@ -277,6 +304,47 @@ const ConfigContainer = () => {
             ) : (
               <DialogTitle>Создание конфигурации</DialogTitle>
             )}
+            {token && (
+        <Box m={1}>
+          <Button onClick={handleClickOpenToken} variant="outlined" color="info">
+            Токен твоего девайса
+          </Button>
+          <Dialog open={open} fullWidth maxWidth={"xs"} onClose={handleCloseToken}>
+            <DialogTitle>Токен твоего девайса для тестового пуш уведомления:</DialogTitle>
+            <DialogContent>
+              <input
+                ref={clipboard.target}
+                value={token}
+                type="token"
+                readOnly
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button
+                aria-describedby={id}
+                color="info"
+                onClick={handleClick}
+              >
+                Скопировать токен
+              </Button>
+              <Popover
+                open={openPop}
+                id={id}
+                anchorEl={anchorEl}
+                onClose={handleClosePop}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "center",
+                }}
+              >
+                <Typography sx={{ p: 1, fontSize:"small",background:"#C2F235"}}>
+                  Токен скопирован
+                </Typography>
+              </Popover>
+            </DialogActions>
+          </Dialog>
+        </Box>
+      )}
             {isLoading ? (
               <Loader />
             ) : message.error ? (
