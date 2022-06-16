@@ -24,7 +24,6 @@ import { Loader } from "../Loader";
 export function PushCreator() {
   const snap: any = useSnapshot(state);
   const snapPush: any = useSnapshot(pushStatus);
-  const snapState: any = useSnapshot(state);
   const [isLoading, setIsLoading] = useState(false);
   const [configs, setConfigs] = useState<IConfig[]>([]);
   const [msg, setMsg] = useState({
@@ -36,13 +35,7 @@ export function PushCreator() {
   const updateState = () => {
     state.status_push = !state.status_push;
     setIsLoading(false);
-    pushStatus.configPush = {
-      id: "",
-      title: "",
-      deviceToken: "",
-      APIKey: "",
-      system: "",
-    };
+    pushStatus.configPush = "";
     pushStatus.titleStatus = "";
     pushStatus.messageStatus = "";
     pushStatus.imageStatus = "";
@@ -72,7 +65,7 @@ export function PushCreator() {
   const handleSubmit = async () => {
     setIsLoading(true);
     if (
-      pushStatus.configPush === null ||
+      pushStatus.configPush === "" ||
       pushStatus.messageStatus === "" ||
       pushStatus.titleStatus === ""
     ) {
@@ -85,8 +78,6 @@ export function PushCreator() {
       return;
     } else {
       try {
-        // await sendPushNotification;
-
         const pushDate = [
           new Date().toLocaleTimeString(),
           new Date().toDateString(),
@@ -155,7 +146,10 @@ export function PushCreator() {
                   )}
                 </Grid>
               </Grid>
-              {configs && (
+
+
+              {/* ToDo */}
+              {configs &&(
                 <FormControl
                   fullWidth
                   color="info"
@@ -170,18 +164,20 @@ export function PushCreator() {
                     label="Config"
                     onChange={(e) => (pushStatus.configPush = e.target.value)}
                   >
+                    <MenuItem key="" value="">
+                      Отменить выбор
+                    </MenuItem>
                     {configs.map((config, index) => (
-                      <MenuItem
-                        key={config.id}
-                        value={JSON.stringify(config)}
-                        defaultValue=""
-                      >
+                      <MenuItem key={config.id} value={JSON.stringify(config)}>
                         {index + 1}. {config.title} - {config.system}
                       </MenuItem>
                     ))}
                   </Select>
                 </FormControl>
               )}
+              {/* ToDo */}
+
+
             </Box>
           </Grid>
           <Grid item xs={12}>
@@ -236,7 +232,7 @@ export function PushCreator() {
       </div>
       <Card className="prototypeMsg">
         <CardContent sx={{ display: "inline-block", maxWidth: "50%" }}>
-          <Typography gutterBottom variant="h6" >
+          <Typography gutterBottom variant="h6">
             {pushStatus.titleStatus
               ? pushStatus.titleStatus
               : "Пример заголовка"}
@@ -254,12 +250,14 @@ export function PushCreator() {
             image={pushStatus.imageStatus}
             alt="Изображение поста не найдено"
           />
-        ):(<CardMedia
-          component="img"
-          className="post_img prev"
-          image="/image.jpg"
-          alt="Изображение поста"
-        />)}
+        ) : (
+          <CardMedia
+            component="img"
+            className="post_img prev"
+            image="/image.jpg"
+            alt="Изображение поста"
+          />
+        )}
       </Card>
     </div>
   );

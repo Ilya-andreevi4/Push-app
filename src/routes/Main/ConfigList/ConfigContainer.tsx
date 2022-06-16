@@ -395,7 +395,7 @@ const ConfigContainer = () => {
             )}
           </Grid>
         </Grid>
-        {configs &&
+        {configs && !isLoading &&
           configs
             .sort((a, b) => b.timeCreateConfig - a.timeCreateConfig)
             .map((doc, index) => (

@@ -85,7 +85,7 @@ const PushList = () => {
                 </Typography>
               </div>
             )}
-            {push &&
+            {push && !isLoading &&
               push
                 .sort((a, b) => b.timePush - a.timePush)
                 .map((push) => (

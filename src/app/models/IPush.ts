@@ -1,6 +1,6 @@
 export interface IPush {
-  id: number;
-  configPush: {
+  id?: number;
+  configsSetting: {
     id: any;
     title: string;
     deviceToken:any;
