@@ -6,14 +6,11 @@ import Main from "./Main/Main";
 function AppRoutes() {
   return (
     <div>
-
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/reg" element={<RegPage />} />
         <Route path="/log" element={<Login />} />
       </Routes>
-
-
     </div>
   );
 }

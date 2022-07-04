@@ -86,7 +86,7 @@
   border-radius: 10px;
   color: #ffffff;
   background: #c12a97;
-  padding: 12px 36px 36px 36px;
+  padding: 24px 36px 36px 36px;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4);
 }
 
@@ -131,7 +131,7 @@
   padding: 0px;
   z-index: 1000;
   margin-top: 8%;
-  max-height: 1000px;
+  max-height: 800px;
   min-height: 586px;
   border-radius: 0px;
   box-shadow: none;
@@ -142,6 +142,7 @@
   float: right;
   justify-content: "flex-end";
   width: 35%;
+  max-height: 800px;
   min-width: 300px;
   padding-top: 24px;
   padding-right: 12px;
@@ -166,8 +167,7 @@
   background: linear-gradient(200deg, #5c1a95 0%, #441072 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#833ab4",endColorstr="#fcb045",GradientType=1);
   padding: 12px 24px;
-  max-height: 700px;
-  min-height: 500px;
+  height: 500px;
   box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.2);
   overflow: auto;
 }
@@ -230,8 +230,7 @@
 
 .message_list {
   padding: 12px;
-  max-height: 700px;
-  min-height: 513px;
+  height: 500px;
   box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.2);
   background: #7d0e5f;
   background: -moz-linear-gradient(120deg, #9f1e7c 0%, #7d0e5f 100%);

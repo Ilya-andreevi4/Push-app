@@ -45,7 +45,7 @@ const PushList = () => {
 
   return (
     <div className="PushList">
-      <Typography variant="h5" noWrap align="center" sx={{ m:2, mr:0, ml:0}}>
+      <Typography variant="h5" noWrap align="center" sx={{ mt:0, mb:2 }}>
         История сообщений
       </Typography>
       <Grid container>
