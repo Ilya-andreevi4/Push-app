@@ -18,7 +18,7 @@ import ConfigDataServices from "../../../services/ConfigServices";
 import PushDataServices from "../../../services/PushService";
 import { IConfig } from "../../../app/models/IConfig";
 import { useSnapshot } from "valtio";
-import { pushStatus, state } from "../../../services/provider/updateState";
+import { pushStatus, state } from "../../../services/provider/proxyStates";
 import { Loader } from "../Loader";
 
 export function PushCreator() {

@@ -2,7 +2,7 @@ import { addDoc, collection } from "firebase/firestore";
 import { getMessaging, getToken } from "firebase/messaging";
 import { useEffect } from "react";
 import { db } from "../firebase";
-import { userToken } from "./provider/updateState";
+import { userToken } from "./provider/proxyStates";
 
 function MessageService() {
   const messaging = getMessaging();

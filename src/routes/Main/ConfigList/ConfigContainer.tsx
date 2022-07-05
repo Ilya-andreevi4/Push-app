@@ -27,7 +27,7 @@ import {
   configStatus,
   state,
   userToken,
-} from "../../../services/provider/updateState";
+} from "../../../services/provider/proxyStates";
 import ConfigItem from "./ConfigItem";
 import { useSnapshot } from "valtio";
 import { useClipboard } from "use-clipboard-copy";
