@@ -11,9 +11,12 @@ import {
 import axios from "axios";
 import { IPush } from "../app/models/IPush";
 
-const pushCollectionRef = collection(db, "pushs");
+
 class PushDataService {
-  addPush = (newPush: IPush) => {
+  
+  addPush = (newPush: IPush, userId:string) => {
+    const pushCollectionRef = collection(db, "users/" + userId + "/pushs");
+
     function spawnNotification() {
       var options = {
         title: newPush.title,
@@ -32,7 +35,7 @@ class PushDataService {
       notification: {
         title: newPush.title,
         body: newPush.message,
-        image: newPush.image||"/logo192.png",
+        image: newPush.image || "/logo192.png",
       },
       data: {
         time: [new Date().toLocaleTimeString(), new Date().toDateString()]
@@ -66,8 +69,13 @@ class PushDataService {
           console.error("Error with send push-notification! ", e);
         });
     };
+
+
     const sendPushNotification = () => {
-      addDoc(pushCollectionRef, newPush);
+      addDoc(pushCollectionRef, newPush).catch((error) => {
+        var errorMessage = error.message;
+        console.error(errorMessage);
+      });
       spawnNotification();
       push();
     };
@@ -76,21 +84,34 @@ class PushDataService {
 
   updatePush = (id: any, updatedPush: any) => {
     const pushDoc = doc(db, "pushs", id);
-    return updateDoc(pushDoc, updatedPush);
+    return updateDoc(pushDoc, updatedPush).catch((error) => {
+      var errorMessage = error.message;
+      console.error(errorMessage);
+    });
   };
 
-  deletePush = (id: any) => {
-    const pushDoc = doc(db, "pushs", id);
-    return deleteDoc(pushDoc);
+  deletePush = (id: any, uid: string) => {
+    const pushDoc = doc(db, "users/" + uid + "/pushs", id);
+    return deleteDoc(pushDoc).catch((error) => {
+      var errorMessage = error.message;
+      console.error(errorMessage);
+    });
   };
 
-  getAllPushs = () => {
-    return getDocs(pushCollectionRef);
+  getAllPushs = (userId:string) => {
+    const pushCollectionRef = collection(db, "users/" + userId + "/pushs");
+    return getDocs(pushCollectionRef).catch((error) => {
+      var errorMessage = error.message;
+      console.error(errorMessage);
+    });
   };
 
-  getPush = (id: any) => {
-    const pushDoc = doc(db, "pushs", id);
-    return getDoc(pushDoc);
+  getPush = (id:any, uid:string) => {
+    const pushDoc = doc(db, "users/" + uid + "/pushs", id);
+    return getDoc(pushDoc).catch((error) => {
+      var errorMessage = error.message;
+      console.error(errorMessage);
+    });
   };
 }
 

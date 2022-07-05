@@ -20,6 +20,7 @@ import { IConfig } from "../../../app/models/IConfig";
 import { useSnapshot } from "valtio";
 import { pushStatus, state } from "../../../services/provider/proxyStates";
 import { Loader } from "../Loader";
+import { useUserAuth } from "../../../services/provider/AuthProvider";
 
 export function PushCreator() {
   const snap: any = useSnapshot(state);
@@ -32,6 +33,7 @@ export function PushCreator() {
     style: "info",
   });
 
+  const {user} = useUserAuth();
   const updateState = () => {
     state.status_push = !state.status_push;
     setIsLoading(false);
@@ -94,7 +96,7 @@ export function PushCreator() {
           pushDate,
           timePush,
         };
-        await PushDataServices.addPush(newPush);
+        await PushDataServices.addPush(newPush, user.uid);
       } catch (e) {
         console.log(e);
       } finally {

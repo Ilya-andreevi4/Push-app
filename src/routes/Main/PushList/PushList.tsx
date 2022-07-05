@@ -5,21 +5,31 @@ import { IPush } from "../../../app/models/IPush";
 import PushDataServices from "../../../services/PushService";
 import PushItem from "./PushItem";
 import { state } from "../../../services/provider/proxyStates";
+import { useUserAuth } from "../../../services/provider/AuthProvider";
 
 const PushList = () => {
   const snap = useSnapshot(state);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [push, setPush] = useState<IPush[]>([]);
+  const { user } = useUserAuth();
 
   const getPushs = async () => {
+    setIsLoading(true);
     setError("");
     try {
-      setIsLoading(true);
-      const data = await PushDataServices.getAllPushs();
-      setPush(
-        data.docs.map((doc: any) => ({ ...doc.data(), id: doc.id } as any))
-      );
+      if (user) {
+        const data: any = await PushDataServices.getAllPushs(user.uid);
+        if (data.docs) {
+          setPush(
+            data.docs.map((doc: any) => ({ ...doc.data(), id: doc.id } as any))
+          );
+        } else {
+          return;
+        }
+      } else{
+        setError("Зарегистрируйтесь или войдите в существующий аккаунт, чтобы увидеть историю сообщений.")
+      }
     } catch (e: any) {
       setError(e.message);
     } finally {
@@ -30,7 +40,7 @@ const PushList = () => {
   const handleRemove = async (id: any) => {
     setError("");
     try {
-      await PushDataServices.deletePush(id);
+      await PushDataServices.deletePush(id, user.uid);
     } catch (e: any) {
       setError(e.message);
     } finally {
@@ -45,15 +55,15 @@ const PushList = () => {
 
   return (
     <div className="PushList">
-      <Typography variant="h5" noWrap align="center" sx={{ mt:0, mb:2 }}>
+      <Typography variant="h5" noWrap align="center" sx={{ mt: 0, mb: 2 }}>
         История сообщений
       </Typography>
       <Grid container>
         <Grid item xs={6}>
           {error && (
             <Typography>
-              {error}
-              Произошла ошибка при загрузке сообщений.
+              Произошла ошибка при загрузке сообщений:
+              {" " + error }
             </Typography>
           )}
         </Grid>
@@ -85,7 +95,8 @@ const PushList = () => {
                 </Typography>
               </div>
             )}
-            {push && !isLoading &&
+            {push &&
+              !isLoading &&
               push
                 .sort((a, b) => b.timePush - a.timePush)
                 .map((push) => (

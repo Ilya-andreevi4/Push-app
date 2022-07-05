@@ -17,12 +17,14 @@ export function UserAuthContextProvider({ children }: any) {
   function signUp(email: any, password: any) {
     return createUserWithEmailAndPassword(auth, email, password)
       .then((user) => {
-        const usersCollectionRef = collection(db, "app/users/" + user.user.uid);
+        const usersCollectionRef = collection(db, "users/");
+        var userId = user.user.uid;
         const newUser = {
-            uid: user.user.uid,
+            pushs: [],
+            uid: userId,
             timestamp: Date.now(),
             email: email,
-          }
+        };
         return addDoc(usersCollectionRef, newUser);
       })
 
