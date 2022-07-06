@@ -67,7 +67,6 @@
   background: rgb(117, 49, 175);
   margin-top: 24px;
   padding: 24px 24px 24px 0px;
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4);
 }
 /* Reg/Log Form */
 
@@ -76,7 +75,6 @@
   color: #fff;
   background: rgb(117, 49, 175);
   padding: 0px 36px 36px 36px;
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4);
 }
 
 .PushCreator {
@@ -87,7 +85,6 @@
   color: #ffffff;
   background: #c12a97;
   padding: 24px 36px 36px 36px;
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4);
 }
 
 .configs {
@@ -116,7 +113,6 @@
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#833ab4",endColorstr="#fcb045",GradientType=1);
   margin-top: 40px;
   padding: 24px 12px 12px 12px;
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4);
   border-radius: 10px;
 }
 
@@ -168,7 +164,6 @@
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#833ab4",endColorstr="#fcb045",GradientType=1);
   padding: 12px 24px;
   height: 500px;
-  box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.2);
   overflow: auto;
 }
 
@@ -189,7 +184,6 @@
   color: rgb(0, 0, 0);
   background: #fefefe;
   padding: 12px;
-  box-shadow: -1px 1px 4px rgba(0, 0, 0, 0.2);
   margin-top: 15px;
   width: 90%;
   border-radius: 5px;
@@ -231,7 +225,6 @@
 .message_list {
   padding: 12px;
   height: 500px;
-  box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.2);
   background: #7d0e5f;
   background: -moz-linear-gradient(120deg, #9f1e7c 0%, #7d0e5f 100%);
   background: -webkit-linear-gradient(120deg, #9f1e7c 0%, #7d0e5f 100%);
