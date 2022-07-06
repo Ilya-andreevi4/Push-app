@@ -7,7 +7,7 @@ See demo: https://test.stroygrad66.ru/
 
 
 
-### Available commands:
+## Available commands:
 
 - `npm start` - start dev server and open browser
 - `npm build` - make a production build
