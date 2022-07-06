@@ -3,7 +3,7 @@ Simple web app for create push-notification.
 
 See demo: https://test.stroygrad66.ru/
 
-![Main_page](https://test.stroygrad66.ru/main_page.jpg)
+![Main-page](https://test.stroygrad66.ru/main_page.jpg)
 
 
 
