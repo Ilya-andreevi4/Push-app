@@ -1,6 +1,6 @@
 
 export interface IConfig {
-  id: any;
+  id?: any;
   title: string;
   deviceToken:any;
   APIKey:string;

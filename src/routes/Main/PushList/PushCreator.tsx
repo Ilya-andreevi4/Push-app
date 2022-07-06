@@ -52,7 +52,7 @@ export function PushCreator() {
         text: "Идёт загрузка конфигов...",
         style: "warning",
       });
-      const data = await ConfigDataServices.getAllConfigs();
+      const data = await ConfigDataServices.getAllConfigs(user.uid);
       setConfigs(
         data.docs.map((doc: any) => ({ ...doc.data(), id: doc.id } as any))
       );

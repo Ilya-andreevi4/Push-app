@@ -1,4 +1,4 @@
-import { Button, Grid, Skeleton, Typography } from "@mui/material";
+import { Alert, Button, Grid, Skeleton, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSnapshot } from "valtio";
 import { IPush } from "../../../app/models/IPush";
@@ -27,8 +27,10 @@ const PushList = () => {
         } else {
           return;
         }
-      } else{
-        setError("Зарегистрируйтесь или войдите в существующий аккаунт, чтобы увидеть историю сообщений.")
+      } else {
+        setError(
+          "Зарегистрируйтесь или войдите в существующий аккаунт, чтобы увидеть историю сообщений."
+        );
       }
     } catch (e: any) {
       setError(e.message);
@@ -51,7 +53,7 @@ const PushList = () => {
 
   useEffect(() => {
     getPushs();
-  }, [snap]);
+  }, [snap, user]);
 
   return (
     <div className="PushList">
@@ -59,14 +61,7 @@ const PushList = () => {
         История сообщений
       </Typography>
       <Grid container>
-        <Grid item xs={6}>
-          {error && (
-            <Typography>
-              Произошла ошибка при загрузке сообщений:
-              {" " + error }
-            </Typography>
-          )}
-        </Grid>
+        <Grid item xs={6}></Grid>
         <Grid item xs={6}>
           {push && (
             <Button
@@ -82,6 +77,7 @@ const PushList = () => {
         </Grid>
         <Grid item xs={12}>
           <div className="message_list">
+            {error && <Alert severity="error">{error}</Alert>}
             {isLoading && (
               <div>
                 <Typography variant="h1">

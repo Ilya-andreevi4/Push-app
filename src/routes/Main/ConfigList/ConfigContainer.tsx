@@ -31,6 +31,7 @@ import {
 import ConfigItem from "./ConfigItem";
 import { useSnapshot } from "valtio";
 import { useClipboard } from "use-clipboard-copy";
+import { useUserAuth } from "../../../services/provider/AuthProvider";
 
 const ConfigContainer = () => {
   const [message, setMessage] = useState({
@@ -41,6 +42,8 @@ const ConfigContainer = () => {
   const [configs, setConfigs] = useState<IConfig[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+
+  const { user } = useUserAuth();
 
   const snap: any = useSnapshot(userToken);
   const clipboard = useClipboard();
@@ -143,9 +146,9 @@ const ConfigContainer = () => {
           system: configStatus.system,
           deviceToken: configStatus.deviceToken,
           APIKey: configStatus.APIKey,
-          timeCreate: time,
+          timeCreateConfig: time,
         };
-        await ConfigDataServices.addConfig(newConfig);
+        await ConfigDataServices.addConfig(newConfig, user.uid);
         setMessage({
           error: false,
           msg: "Создана новая конфигурация!",
@@ -163,10 +166,16 @@ const ConfigContainer = () => {
     setError("");
     try {
       setIsLoading(true);
-      const data = await ConfigDataServices.getAllConfigs();
-      setConfigs(
-        data.docs.map((doc: any) => ({ ...doc.data(), id: doc.id } as any))
-      );
+      if (user) {
+        const data = await ConfigDataServices.getAllConfigs(user.uid);
+        setConfigs(
+          data.docs.map((doc: any) => ({ ...doc.data(), id: doc.id } as any))
+        );
+      } else {
+        setError(
+          "Зарегистрируйтесь или войдите в существующий аккаунт, чтобы увидеть историю сообщений."
+        );
+      }
     } catch (e: any) {
       setError(e.message);
     } finally {
@@ -177,7 +186,7 @@ const ConfigContainer = () => {
   const handleRemove = async (id: any) => {
     setMessage({ error: false, msg: "Введите данные", style: "info" });
     try {
-      await ConfigDataServices.deleteConfig(id);
+      await ConfigDataServices.deleteConfig(id, user.uid);
     } catch (e: any) {
       setMessage({ error: true, msg: e.message, style: "error" });
     } finally {
@@ -201,7 +210,7 @@ const ConfigContainer = () => {
 
   useEffect(() => {
     getConfigs();
-  }, []);
+  }, [user]);
 
   return (
     <div className="ConfigContainer">
