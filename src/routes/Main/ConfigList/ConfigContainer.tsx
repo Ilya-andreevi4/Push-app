@@ -40,6 +40,8 @@ const ConfigContainer = () => {
     style: "info",
   });
   const [configs, setConfigs] = useState<IConfig[]>([]);
+  const localConfigs: any = [];
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -48,20 +50,19 @@ const ConfigContainer = () => {
   const snap: any = useSnapshot(userToken);
   const clipboard = useClipboard();
   const token = snap.token;
+
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     clipboard.copy();
     setAnchorEl(event.currentTarget);
   };
-
   const handleClosePop = () => {
     setAnchorEl(null);
   };
-
   const openPop = Boolean(anchorEl);
   const id = openPop ? "simple-popover" : undefined;
+
   const handleClickOpenToken = () => {
     setOpen(true);
   };
@@ -86,6 +87,7 @@ const ConfigContainer = () => {
     configStatus.APIKey = "";
     configStatus.timeCreateConfig = "";
   };
+
   const snapConf = useSnapshot(configStatus);
   const snapState = useSnapshot(state);
   const matches = useMediaQuery("(max-width:377px)");
@@ -123,42 +125,90 @@ const ConfigContainer = () => {
       setIsLoading(false);
       return;
     }
-    try {
-      if (configStatus.id) {
-        const updateConfig: IConfig = {
-          id: configStatus.id,
-          title: configStatus.title,
-          system: configStatus.system,
-          deviceToken: configStatus.deviceToken,
-          APIKey: configStatus.APIKey,
-          timeCreateConfig: configStatus.timeCreateConfig,
-        };
-        await ConfigDataServices.updateConfig(configStatus.id, updateConfig);
-        setMessage({
-          error: false,
-          msg: "Конфигурация изменена успешно!",
-          style: "success",
-        });
-      } else {
-        const time = new Date();
-        const newConfig = {
-          title: configStatus.title,
-          system: configStatus.system,
-          deviceToken: configStatus.deviceToken,
-          APIKey: configStatus.APIKey,
-          timeCreateConfig: time,
-        };
-        await ConfigDataServices.addConfig(newConfig, user.uid);
-        setMessage({
-          error: false,
-          msg: "Создана новая конфигурация!",
-          style: "success",
-        });
+    if (user) {
+      try {
+        if (configStatus.id) {
+          const updateConfig: IConfig = {
+            id: configStatus.id,
+            title: configStatus.title,
+            system: configStatus.system,
+            deviceToken: configStatus.deviceToken,
+            APIKey: configStatus.APIKey,
+            timeCreateConfig: configStatus.timeCreateConfig,
+          };
+          await ConfigDataServices.updateConfig(configStatus.id, updateConfig);
+          setMessage({
+            error: false,
+            msg: "Конфигурация изменена успешно!",
+            style: "success",
+          });
+        } else {
+          const time = new Date();
+          const newConfig = {
+            title: configStatus.title,
+            system: configStatus.system,
+            deviceToken: configStatus.deviceToken,
+            APIKey: configStatus.APIKey,
+            timeCreateConfig: time,
+          };
+          await ConfigDataServices.addConfig(newConfig, user.uid);
+          setMessage({
+            error: false,
+            msg: "Создана новая конфигурация!",
+            style: "success",
+          });
+        }
+      } catch (e: any) {
+        setMessage({ error: true, msg: e.message, style: "error" });
+      } finally {
+        updateState();
       }
-    } catch (e: any) {
-      setMessage({ error: true, msg: e.message, style: "error" });
-    } finally {
-      updateState();
+    } else {
+      try {
+        if (configStatus.id) {
+          const updateConfig: IConfig = {
+            id: configStatus.id,
+            title: configStatus.title,
+            system: configStatus.system,
+            deviceToken: configStatus.deviceToken,
+            APIKey: configStatus.APIKey,
+            timeCreateConfig: configStatus.timeCreateConfig,
+          };
+          localConfigs.map((c:IConfig) => {
+            if (c.id === updateConfig.id) {
+              return updateConfig;
+            }
+            return c;
+          }
+          );
+          await sessionStorage.setItem("configs", JSON.stringify(localConfigs));
+          setMessage({
+            error: false,
+            msg: "Конфигурация изменена успешно!",
+            style: "success",
+          });
+        } else {
+          const time = new Date();
+          const newConfig = {
+            title: configStatus.title,
+            system: configStatus.system,
+            deviceToken: configStatus.deviceToken,
+            APIKey: configStatus.APIKey,
+            timeCreateConfig: time,
+          };
+          localConfigs.push(newConfig);
+          await sessionStorage.setItem("configs", JSON.stringify(localConfigs));
+          setMessage({
+            error: false,
+            msg: "Создана новая конфигурация!",
+            style: "success",
+          });
+        }
+      } catch (e: any) {
+        setMessage({ error: true, msg: e.message, style: "error" });
+      } finally {
+        updateState();
+      }
     }
   };
 
@@ -172,8 +222,13 @@ const ConfigContainer = () => {
           data.docs.map((doc: any) => ({ ...doc.data(), id: doc.id } as any))
         );
       } else {
+        if (sessionStorage.getItem("configs")){
+          const sessionConfigs:any = JSON.stringify(sessionStorage.getItem("configs"));
+          JSON.parse(sessionConfigs);
+          setConfigs(sessionConfigs.map((doc: IConfig) => ({ ...doc, id: doc.id } as any)))
+      }
         setError(
-          "Зарегистрируйтесь или войдите в существующий аккаунт, чтобы увидеть историю сообщений."
+          "Зарегистрируйтесь или войдите в существующий аккаунт, чтобы сохранить созданные конфиги."
         );
       }
     } catch (e: any) {
@@ -491,6 +546,7 @@ const ConfigContainer = () => {
             )}
           </Grid>
         </Grid>
+
         {configs &&
           !isLoading &&
           configs
