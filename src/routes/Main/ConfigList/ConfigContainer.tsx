@@ -40,7 +40,7 @@ const ConfigContainer = () => {
     style: "info",
   });
   const [configs, setConfigs] = useState<IConfig[]>([]);
-  const localConfigs: any = [];
+  const [localConfigs, setLocalConfigs] = useState ([]);
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -164,6 +164,8 @@ const ConfigContainer = () => {
         updateState();
       }
     } else {
+      const sessionConfigs = sessionStorage.getItem("configs");
+      sessionConfigs && setLocalConfigs(JSON.parse(sessionConfigs));
       try {
         if (configStatus.id) {
           const updateConfig: IConfig = {
@@ -174,13 +176,12 @@ const ConfigContainer = () => {
             APIKey: configStatus.APIKey,
             timeCreateConfig: configStatus.timeCreateConfig,
           };
-          localConfigs.map((c:IConfig) => {
+          localConfigs && localConfigs.map((c: IConfig) => {
             if (c.id === updateConfig.id) {
               return updateConfig;
             }
             return c;
-          }
-          );
+          });
           await sessionStorage.setItem("configs", JSON.stringify(localConfigs));
           setMessage({
             error: false,
@@ -196,8 +197,10 @@ const ConfigContainer = () => {
             APIKey: configStatus.APIKey,
             timeCreateConfig: time,
           };
-          localConfigs.push(newConfig);
-          await sessionStorage.setItem("configs", JSON.stringify(localConfigs));
+
+          // localConfigs.push(newConfig);
+          // await sessionStorage.setItem("configs", JSON.stringify(localConfigs));
+          await sessionStorage.setItem("configs", JSON.stringify(newConfig));
           setMessage({
             error: false,
             msg: "Создана новая конфигурация!",
@@ -222,13 +225,15 @@ const ConfigContainer = () => {
           data.docs.map((doc: any) => ({ ...doc.data(), id: doc.id } as any))
         );
       } else {
-        if (sessionStorage.getItem("configs")){
-          const sessionConfigs:any = JSON.stringify(sessionStorage.getItem("configs"));
-          JSON.parse(sessionConfigs);
-          setConfigs(sessionConfigs.map((doc: IConfig) => ({ ...doc, id: doc.id } as any)))
-      }
+        if (localConfigs.length > 0) {
+          setConfigs(
+            localConfigs.map(
+              (doc: IConfig) => ({ ...doc, id: doc.timeCreateConfig } as any)
+            )
+          );
+        }
         setError(
-          "Зарегистрируйтесь или войдите в существующий аккаунт, чтобы сохранить созданные конфиги."
+          "Зарегистрируйтесь или войдите в существующий аккаунт, чтобы сохранить созданные конфигурации."
         );
       }
     } catch (e: any) {
@@ -372,7 +377,7 @@ const ConfigContainer = () => {
               <DialogTitle>Создание конфигурации</DialogTitle>
             )}
             {token && (
-              <Box m={1}>
+              <Box m={2}>
                 <Button
                   onClick={handleClickOpenToken}
                   variant="outlined"

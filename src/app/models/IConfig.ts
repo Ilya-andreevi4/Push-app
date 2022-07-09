@@ -7,3 +7,6 @@ export interface IConfig {
   system: any;
   timeCreateConfig: any;
 }
+
+// export interface ILocalConfigs {configs: []}
+

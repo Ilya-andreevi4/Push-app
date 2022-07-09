@@ -12,6 +12,7 @@ interface pushCreateProxy {
   messageStatus: string,
   imageStatus: any,
 }
+
 interface configCreateProxy {
   id: any;
   title: string;
@@ -20,10 +21,13 @@ interface configCreateProxy {
   system: any;
   timeCreateConfig: any;
 }
+
 interface tokenProxy {
   token:string,
   id: string,
 }
+
+//*Constans*\\
 
 const state:stateProxy = proxy({
   status_push:false,
