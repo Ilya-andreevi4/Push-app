@@ -101,7 +101,7 @@
   justify-content: center;
   max-height: 250vh;
   width: 100%;
-  padding: 24px;
+  padding: 12px;
 }
 
 .create_push_form {
@@ -162,7 +162,7 @@
   background: -webkit-linear-gradient(200deg, #5c1a95 0%, #441072 100%);
   background: linear-gradient(200deg, #5c1a95 0%, #441072 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#833ab4",endColorstr="#fcb045",GradientType=1);
-  padding: 12px 24px;
+  padding: 12px;
   height: 500px;
   overflow: auto;
 }
@@ -184,7 +184,7 @@
   color: rgb(0, 0, 0);
   background: #fefefe;
   padding: 12px;
-  margin-top: 15px;
+  /* margin-top: 15px; */
   width: 90%;
   border-radius: 5px;
   display: flex;

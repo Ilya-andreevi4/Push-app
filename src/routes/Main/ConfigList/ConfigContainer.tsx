@@ -40,7 +40,7 @@ const ConfigContainer = () => {
     style: "info",
   });
   const [configs, setConfigs] = useState<IConfig[]>([]);
-  const [localConfigs, setLocalConfigs] = useState ([]);
+  const [localConfigs, setLocalConfigs] = useState<IConfig[]>([]);
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -190,7 +190,20 @@ const ConfigContainer = () => {
           });
         } else {
           const time = new Date();
+          const uid = ()=> { // Public Domain/MIT
+            var d = new Date().getTime();
+            if (typeof performance !== 'undefined' && typeof performance.now === 'function'){
+                d += performance.now(); //use high-precision timer if available
+            }
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                var r = (d + Math.random() * 16) % 16 | 0;
+                d = Math.floor(d / 16);
+                return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+            });
+        }
+        
           const newConfig = {
+            id: uid(),
             title: configStatus.title,
             system: configStatus.system,
             deviceToken: configStatus.deviceToken,
@@ -225,10 +238,10 @@ const ConfigContainer = () => {
           data.docs.map((doc: any) => ({ ...doc.data(), id: doc.id } as any))
         );
       } else {
-        if (localConfigs.length > 0) {
+        if (localConfigs) {
           setConfigs(
             localConfigs.map(
-              (doc: IConfig) => ({ ...doc, id: doc.timeCreateConfig } as any)
+              (doc: IConfig) => ({ ...doc, id: doc.id } as any)
             )
           );
         }
