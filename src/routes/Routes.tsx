@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
-import { Login } from "./Login/Login";
-import RegPage from "./Registration/RegPage";
+import { Login } from "./LoginPage/Login";
+import RegPage from "./RegistrationPage/RegPage";
 import Main from "./Main/Main";
 
 function AppRoutes() {

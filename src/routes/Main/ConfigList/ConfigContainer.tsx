@@ -20,7 +20,7 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { IConfig } from "../../../app/models/IConfig";
+import { IConfig, LocalConfigs } from "../../../app/models/IConfig";
 import ConfigDataServices from "../../../services/ConfigServices";
 import { Loader } from "../Loader";
 import {
@@ -40,7 +40,7 @@ const ConfigContainer = () => {
     style: "info",
   });
   const [configs, setConfigs] = useState<IConfig[]>([]);
-  const [localConfigs, setLocalConfigs] = useState<IConfig[]>([]);
+  const [localConfigs, setLocalConfigs] = useState<LocalConfigs>({configs:[]});
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -176,12 +176,13 @@ const ConfigContainer = () => {
             APIKey: configStatus.APIKey,
             timeCreateConfig: configStatus.timeCreateConfig,
           };
-          localConfigs && localConfigs.map((c: IConfig) => {
-            if (c.id === updateConfig.id) {
-              return updateConfig;
-            }
-            return c;
-          });
+          localConfigs &&
+            localConfigs.configs.map((c: IConfig) => {
+              if (c.id === updateConfig.id) {
+                return updateConfig;
+              }
+              return c;
+            });
           await sessionStorage.setItem("configs", JSON.stringify(localConfigs));
           setMessage({
             error: false,
@@ -190,18 +191,25 @@ const ConfigContainer = () => {
           });
         } else {
           const time = new Date();
-          const uid = ()=> { // Public Domain/MIT
+          const uid = () => {
+            // Public Domain/MIT
             var d = new Date().getTime();
-            if (typeof performance !== 'undefined' && typeof performance.now === 'function'){
-                d += performance.now(); //use high-precision timer if available
+            if (
+              typeof performance !== "undefined" &&
+              typeof performance.now === "function"
+            ) {
+              d += performance.now(); //use high-precision timer if available
             }
-            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+              /[xy]/g,
+              function (c) {
                 var r = (d + Math.random() * 16) % 16 | 0;
                 d = Math.floor(d / 16);
-                return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
-            });
-        }
-        
+                return (c === "x" ? r : (r & 0x3) | 0x8).toString(16);
+              }
+            );
+          };
+
           const newConfig = {
             id: uid(),
             title: configStatus.title,
@@ -210,10 +218,9 @@ const ConfigContainer = () => {
             APIKey: configStatus.APIKey,
             timeCreateConfig: time,
           };
-
-          // localConfigs.push(newConfig);
-          // await sessionStorage.setItem("configs", JSON.stringify(localConfigs));
-          await sessionStorage.setItem("configs", JSON.stringify(newConfig));
+            localConfigs.configs.push(newConfig);
+          await sessionStorage.setItem("configs", JSON.stringify(localConfigs));
+          // await sessionStorage.setItem("configs", JSON.stringify(newConfig));
           setMessage({
             error: false,
             msg: "Создана новая конфигурация!",
@@ -240,9 +247,7 @@ const ConfigContainer = () => {
       } else {
         if (localConfigs) {
           setConfigs(
-            localConfigs.map(
-              (doc: IConfig) => ({ ...doc, id: doc.id } as any)
-            )
+            localConfigs.configs.map((doc: IConfig) => ({ ...doc, id: doc.id } as any))
           );
         }
         setError(
