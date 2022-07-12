@@ -40,19 +40,21 @@ const ConfigContainer = () => {
     style: "info",
   });
   const [configs, setConfigs] = useState<IConfig[]>([]);
-  const [localConfigs, setLocalConfigs] = useState<LocalConfigs>({configs:[]});
+  const [localConfigs, setLocalConfigs] = useState<LocalConfigs>({
+    configs: [],
+  });
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [open, setOpen] = useState(false);
 
   const { user } = useUserAuth();
 
   const snap: any = useSnapshot(userToken);
-  const clipboard = useClipboard();
   const token = snap.token;
 
-  const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  const clipboard = useClipboard();
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     clipboard.copy();
     setAnchorEl(event.currentTarget);
@@ -62,7 +64,6 @@ const ConfigContainer = () => {
   };
   const openPop = Boolean(anchorEl);
   const id = openPop ? "simple-popover" : undefined;
-
   const handleClickOpenToken = () => {
     setOpen(true);
   };
@@ -91,7 +92,7 @@ const ConfigContainer = () => {
   const snapConf = useSnapshot(configStatus);
   const snapState = useSnapshot(state);
   const matches = useMediaQuery("(max-width:377px)");
-  const desctopIfc = useMediaQuery("(min-width:1150px)");
+  const desctopInterface = useMediaQuery("(min-width:1150px)");
 
   const handleClickOpen = () => {
     state.open = true;
@@ -191,14 +192,15 @@ const ConfigContainer = () => {
           });
         } else {
           const time = new Date();
+
+          // Создание уникального ID
           const uid = () => {
-            // Public Domain/MIT
             var d = new Date().getTime();
             if (
               typeof performance !== "undefined" &&
               typeof performance.now === "function"
             ) {
-              d += performance.now(); //use high-precision timer if available
+              d += performance.now();
             }
             return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
               /[xy]/g,
@@ -218,9 +220,9 @@ const ConfigContainer = () => {
             APIKey: configStatus.APIKey,
             timeCreateConfig: time,
           };
-            localConfigs.configs.push(newConfig);
-          await sessionStorage.setItem("configs", JSON.stringify(localConfigs));
-          // await sessionStorage.setItem("configs", JSON.stringify(newConfig));
+
+          localConfigs.configs.push(newConfig);
+          sessionStorage.setItem("configs", JSON.stringify(localConfigs));
           setMessage({
             error: false,
             msg: "Создана новая конфигурация!",
@@ -245,11 +247,19 @@ const ConfigContainer = () => {
           data.docs.map((doc: any) => ({ ...doc.data(), id: doc.id } as any))
         );
       } else {
-        if (localConfigs) {
-          setConfigs(
-            localConfigs.configs.map((doc: IConfig) => ({ ...doc, id: doc.id } as any))
+        if (sessionStorage.getItem("configs")) {
+          const configList = JSON.parse(
+            sessionStorage.getItem("configs") || ""
           );
+          setLocalConfigs({ configs: configList });
         }
+        localConfigs &&
+          setConfigs(
+            localConfigs.configs
+            .map(
+              (doc: IConfig) => ({ ...doc, id: doc.id } as any)
+            )
+          );
         setError(
           "Зарегистрируйтесь или войдите в существующий аккаунт, чтобы сохранить созданные конфигурации."
         );
@@ -263,11 +273,22 @@ const ConfigContainer = () => {
 
   const handleRemove = async (id: any) => {
     setMessage({ error: false, msg: "Введите данные", style: "info" });
-    try {
-      await ConfigDataServices.deleteConfig(id, user.uid);
-    } catch (e: any) {
-      setMessage({ error: true, msg: e.message, style: "error" });
-    } finally {
+    if (user) {
+      try {
+        await ConfigDataServices.deleteConfig(id, user.uid);
+      } catch (e: any) {
+        setMessage({ error: true, msg: e.message, style: "error" });
+      } finally {
+        updateState();
+      }
+    } else {
+      localConfigs.configs &&
+        localConfigs.configs.map((c: IConfig) => {
+          if (c.id === id) {
+            var configIndex = localConfigs.configs.indexOf(c);
+            return localConfigs.configs.splice(configIndex, 1);
+          } else return c;
+        });
       updateState();
     }
   };
@@ -334,7 +355,7 @@ const ConfigContainer = () => {
                   </Button>
                 </ButtonGroup>
               </Grid>
-            ) : desctopIfc ? (
+            ) : desctopInterface ? (
               <Grid
                 container
                 alignItems="flex-start"
