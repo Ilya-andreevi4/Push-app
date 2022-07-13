@@ -8,5 +8,5 @@ export interface IConfig {
 }
 
 export interface LocalConfigs {
-  configs: IConfig[];
+  configs?: IConfig[];
 }

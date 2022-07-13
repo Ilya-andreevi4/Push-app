@@ -25,6 +25,7 @@ import ConfigDataServices from "../../../services/ConfigServices";
 import { Loader } from "../Loader";
 import {
   configStatus,
+  localConfigs,
   state,
   userToken,
 } from "../../../services/provider/proxyStates";
@@ -40,13 +41,15 @@ const ConfigContainer = () => {
     style: "info",
   });
   const [configs, setConfigs] = useState<IConfig[]>([]);
-  const [localConfigs, setLocalConfigs] = useState<LocalConfigs>({
-    configs: [],
-  });
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [open, setOpen] = useState(false);
+
+  const snapConfig = useSnapshot(configStatus);
+  const snapState = useSnapshot(state);
+  const matches = useMediaQuery("(max-width:377px)");
+  const desctopInterface = useMediaQuery("(min-width:1150px)");
 
   const { user } = useUserAuth();
 
@@ -88,11 +91,6 @@ const ConfigContainer = () => {
     configStatus.APIKey = "";
     configStatus.timeCreateConfig = "";
   };
-
-  const snapConf = useSnapshot(configStatus);
-  const snapState = useSnapshot(state);
-  const matches = useMediaQuery("(max-width:377px)");
-  const desctopInterface = useMediaQuery("(min-width:1150px)");
 
   const handleClickOpen = () => {
     state.open = true;
@@ -165,8 +163,12 @@ const ConfigContainer = () => {
         updateState();
       }
     } else {
-      const sessionConfigs = sessionStorage.getItem("configs");
-      sessionConfigs && setLocalConfigs(JSON.parse(sessionConfigs));
+      const isSessionConfigs = sessionStorage.getItem("configs");
+      if (isSessionConfigs) {
+        const sessionConfigs: LocalConfigs = JSON.parse(isSessionConfigs);
+        sessionConfigs.configs &&
+          localConfigs.configs.concat(sessionConfigs.configs);
+      }
       try {
         if (configStatus.id) {
           const updateConfig: IConfig = {
@@ -177,14 +179,14 @@ const ConfigContainer = () => {
             APIKey: configStatus.APIKey,
             timeCreateConfig: configStatus.timeCreateConfig,
           };
-          localConfigs &&
-            localConfigs.configs.map((c: IConfig) => {
-              if (c.id === updateConfig.id) {
-                return updateConfig;
-              }
-              return c;
-            });
-          await sessionStorage.setItem("configs", JSON.stringify(localConfigs));
+          const updateConfigs = localConfigs.configs.map((c: IConfig) => {
+            if (c.id === updateConfig.id) {
+              return updateConfig;
+            }
+            return c;
+          });
+          await sessionStorage.setItem("configs", JSON.stringify({configs: updateConfigs}));
+          localConfigs.configs = updateConfigs;
           setMessage({
             error: false,
             msg: "Конфигурация изменена успешно!",
@@ -193,7 +195,7 @@ const ConfigContainer = () => {
         } else {
           const time = new Date();
 
-          // Создание уникального ID
+          // Создание уникального ID START
           const uid = () => {
             var d = new Date().getTime();
             if (
@@ -211,6 +213,7 @@ const ConfigContainer = () => {
               }
             );
           };
+          // Создание уникального ID END
 
           const newConfig = {
             id: uid(),
@@ -247,22 +250,14 @@ const ConfigContainer = () => {
           data.docs.map((doc: any) => ({ ...doc.data(), id: doc.id } as any))
         );
       } else {
-        if (sessionStorage.getItem("configs")) {
-          const configList = JSON.parse(
-            sessionStorage.getItem("configs") || ""
-          );
-          setLocalConfigs({ configs: configList });
-        }
-        localConfigs &&
-          setConfigs(
-            localConfigs.configs
-            .map(
-              (doc: IConfig) => ({ ...doc, id: doc.id } as any)
-            )
-          );
         setError(
           "Зарегистрируйтесь или войдите в существующий аккаунт, чтобы сохранить созданные конфигурации."
         );
+        const configList = sessionStorage.getItem("configs");
+        if (configList) {
+          const sessionConfigs: LocalConfigs = JSON.parse(configList);
+          sessionConfigs.configs && setConfigs(sessionConfigs.configs);
+        } else return;
       }
     } catch (e: any) {
       setError(e.message);
@@ -282,12 +277,17 @@ const ConfigContainer = () => {
         updateState();
       }
     } else {
-      localConfigs.configs &&
         localConfigs.configs.map((c: IConfig) => {
           if (c.id === id) {
             var configIndex = localConfigs.configs.indexOf(c);
             return localConfigs.configs.splice(configIndex, 1);
           } else return c;
+        });
+        await sessionStorage.setItem("configs", JSON.stringify(localConfigs));
+        setMessage({
+          error: false,
+          msg: "Конфигурация изменена успешно!",
+          style: "success",
         });
       updateState();
     }
@@ -310,6 +310,10 @@ const ConfigContainer = () => {
   useEffect(() => {
     getConfigs();
   }, [user]);
+
+  // useEffect(() => {
+  //     sessionStorage.setItem("configs", JSON.stringify(localConfigs.configs));
+  // }, [snapLocalConfigs]);
 
   return (
     <div className="ConfigContainer">
@@ -490,7 +494,7 @@ const ConfigContainer = () => {
                 }}
               >
                 <TextField
-                  value={snapConf.title}
+                  value={snapConfig.title}
                   onChange={(e) => (configStatus.title = e.target.value)}
                   fullWidth={true}
                   // defaultValue={snapConf.title}
@@ -500,7 +504,7 @@ const ConfigContainer = () => {
                 />
 
                 <TextField
-                  value={snapConf.APIKey}
+                  value={snapConfig.APIKey}
                   onChange={(e) => (configStatus.APIKey = e.target.value)}
                   fullWidth={true}
                   // defaultValue={snapConf.APIKey}
@@ -509,7 +513,7 @@ const ConfigContainer = () => {
                   variant="filled"
                 />
                 <TextField
-                  value={snapConf.deviceToken}
+                  value={snapConfig.deviceToken}
                   onChange={(e) => (configStatus.deviceToken = e.target.value)}
                   fullWidth={true}
                   // defaultValue={snapConf.deviceToken}
@@ -526,7 +530,7 @@ const ConfigContainer = () => {
                     labelId="select-label-system"
                     color="info"
                     id="select-system"
-                    value={snapConf.system}
+                    value={snapConfig.system}
                     label="Система"
                     onChange={handleChange}
                   >

@@ -1,4 +1,5 @@
 import { proxy } from "valtio";
+import { IConfig } from "../../app/models/IConfig";
 
 interface stateProxy {
   status_push: boolean,
@@ -11,6 +12,10 @@ interface pushCreateProxy {
   titleStatus: string,
   messageStatus: string,
   imageStatus: any,
+}
+
+interface localConfigsProxy{
+  configs: IConfig[];
 }
 
 interface configCreateProxy {
@@ -29,23 +34,29 @@ interface tokenProxy {
 
 //*Constans*\\
 
-const state:stateProxy = proxy({
+export const state:stateProxy = proxy({
   status_push:false,
   config_status: false,
   open: false,
 });
 
-const userToken:tokenProxy = proxy({
+export const userToken:tokenProxy = proxy({
   token:"",
   id:"",
 });
-const pushStatus:pushCreateProxy = proxy({
+
+export const pushStatus:pushCreateProxy = proxy({
   configPush: "",
   titleStatus: "",
   messageStatus: "",
   imageStatus: "",
 });
-const configStatus:configCreateProxy = proxy({
+
+export const localConfigs:localConfigsProxy = proxy({
+  configs:[],
+});
+
+export const configStatus:configCreateProxy = proxy({
   id: "",
   title: "",
   deviceToken:"",
@@ -54,8 +65,4 @@ const configStatus:configCreateProxy = proxy({
   timeCreateConfig: "",
 });
 
-export {state};
-export {userToken};
-export {pushStatus};
-export {configStatus};
 
