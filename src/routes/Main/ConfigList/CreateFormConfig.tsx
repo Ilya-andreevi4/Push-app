@@ -19,7 +19,7 @@ import {
 import React, { FC, useState } from "react";
 import { useClipboard } from "use-clipboard-copy";
 import { useSnapshot } from "valtio";
-import { IConfig } from "../../../app/models/IConfig";
+import { IConfig, LocalConfigs } from "../../../app/models/IConfig";
 import {
   configStatus,
   localConfigs,
@@ -30,44 +30,23 @@ import ConfigDataServices from "../../../services/ConfigServices";
 import { useUserAuth } from "../../../services/provider/AuthProvider";
 import { Loader } from "../Loader";
 
-interface CreateFormConfigProps {
-  config?: IConfig;
-}
 
-const CreateFormConfig: FC<CreateFormConfigProps> = ({ config }) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [open, setOpen] = useState(false);
+const CreateFormConfig: FC = () => {
   const [message, setMessage] = useState({
     error: false,
     msg: "Введите данные",
     style: "info",
   });
 
-  const systems = [
-    { id: 1, systemName: "IOS Push" },
-    { id: 2, systemName: "Android Push" },
-    { id: 3, systemName: "Web Desktop" },
-  ];
+  const [isLoading, setIsLoading] = useState(false);
+  const [open, setOpen] = useState(false);
 
-  const snapConf = useSnapshot(configStatus);
+  const snapConfig = useSnapshot(configStatus);
   const snapState = useSnapshot(state);
-  
-  // const snapLocalConfigs = useSnapshot(localConfigs.configs);
 
   const { user } = useUserAuth();
 
-  const handleClose = () => {
-    state.open = false;
-    configStatus.id = "";
-    configStatus.title = "";
-    configStatus.system = "";
-    configStatus.deviceToken = "";
-    configStatus.APIKey = "";
-    configStatus.timeCreateConfig = "";
-    setMessage({ error: false, msg: "Введите данные", style: "info" });
-  };
-
-  const snap: any = useSnapshot(userToken);
+  const snap = useSnapshot(userToken);
   const token = snap.token;
 
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
@@ -88,9 +67,15 @@ const CreateFormConfig: FC<CreateFormConfigProps> = ({ config }) => {
     setOpen(false);
   };
 
-  const updateState = () => {
+  const systems = [
+    { id: 1, systemName: "IOS Push" },
+    { id: 2, systemName: "Android Push" },
+    { id: 3, systemName: "Web Desktop" },
+  ];
+
+  const updateState = async () => {
     state.config_status = !state.config_status;
-    // getConfigs();
+    await getConfigs();
     setIsLoading(false);
     configStatus.id = "";
     configStatus.title = "";
@@ -100,8 +85,15 @@ const CreateFormConfig: FC<CreateFormConfigProps> = ({ config }) => {
     configStatus.timeCreateConfig = "";
   };
 
-  const handleChange = (event: SelectChangeEvent) => {
-    configStatus.system = event.target.value as any;
+  const handleClose = () => {
+    state.open = false;
+    configStatus.id = "";
+    configStatus.title = "";
+    configStatus.system = "";
+    configStatus.deviceToken = "";
+    configStatus.APIKey = "";
+    configStatus.timeCreateConfig = "";
+    setMessage({ error: false, msg: "Введите данные", style: "info" });
   };
 
   const handleCreate = async () => {
@@ -160,8 +152,12 @@ const CreateFormConfig: FC<CreateFormConfigProps> = ({ config }) => {
         updateState();
       }
     } else {
-      const sessionConfigs = sessionStorage.getItem("configs");
-      sessionConfigs && localConfigs.configs.push(JSON.parse(sessionConfigs));
+      const isSessionConfigs = sessionStorage.getItem("configs");
+      if (isSessionConfigs) {
+        const sessionConfigs: LocalConfigs = JSON.parse(isSessionConfigs);
+        sessionConfigs.configs &&
+          localConfigs.configs.concat(sessionConfigs.configs);
+      }
       try {
         if (configStatus.id) {
           const updateConfig: IConfig = {
@@ -172,14 +168,17 @@ const CreateFormConfig: FC<CreateFormConfigProps> = ({ config }) => {
             APIKey: configStatus.APIKey,
             timeCreateConfig: configStatus.timeCreateConfig,
           };
-          localConfigs &&
-            localConfigs.configs.map((c: IConfig) => {
-              if (c.id === updateConfig.id) {
-                return updateConfig;
-              }
-              return c;
-            });
-          await sessionStorage.setItem("configs", JSON.stringify(localConfigs));
+          const updateConfigs = localConfigs.configs.map((c: IConfig) => {
+            if (c.id === updateConfig.id) {
+              return updateConfig;
+            }
+            return c;
+          });
+          await sessionStorage.setItem(
+            "configs",
+            JSON.stringify({ configs: updateConfigs })
+          );
+          localConfigs.configs = updateConfigs;
           setMessage({
             error: false,
             msg: "Конфигурация изменена успешно!",
@@ -187,8 +186,7 @@ const CreateFormConfig: FC<CreateFormConfigProps> = ({ config }) => {
           });
         } else {
           const time = new Date();
-
-          // Создание уникального ID
+          // Создание уникального ID START
           const uid = () => {
             var d = new Date().getTime();
             if (
@@ -206,7 +204,7 @@ const CreateFormConfig: FC<CreateFormConfigProps> = ({ config }) => {
               }
             );
           };
-
+          // Создание уникального ID END
           const newConfig = {
             id: uid(),
             title: configStatus.title,
@@ -230,6 +228,37 @@ const CreateFormConfig: FC<CreateFormConfigProps> = ({ config }) => {
         updateState();
       }
     }
+  };
+
+  const getConfigs = async () => {
+    try {
+      setIsLoading(true);
+      if (user) {
+        const data = await ConfigDataServices.getAllConfigs(user.uid);
+
+        localConfigs.configs = data.docs.map(
+          (doc: any) => ({ ...doc.data(), id: doc.id } as any)
+        );
+      } else {
+        const isConfigList = sessionStorage.getItem("configs");
+        if (isConfigList) {
+          const sessionConfigs: LocalConfigs = JSON.parse(isConfigList);
+          if (sessionConfigs.configs) {
+            localConfigs.configs = sessionConfigs.configs.map(
+              (doc: IConfig) => ({ ...doc, id: doc.id } as any)
+            );
+          }
+        } else return;
+      }
+    } catch (e: any) {
+      console.log(e);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleChange = (event: SelectChangeEvent) => {
+    configStatus.system = event.target.value as any;
   };
 
   return (
@@ -315,7 +344,7 @@ const CreateFormConfig: FC<CreateFormConfigProps> = ({ config }) => {
               }}
             >
               <TextField
-                value={snapConf.title}
+                value={snapConfig.title}
                 onChange={(e) => (configStatus.title = e.target.value)}
                 fullWidth={true}
                 // defaultValue={snapConf.title}
@@ -325,7 +354,7 @@ const CreateFormConfig: FC<CreateFormConfigProps> = ({ config }) => {
               />
 
               <TextField
-                value={snapConf.APIKey}
+                value={snapConfig.APIKey}
                 onChange={(e) => (configStatus.APIKey = e.target.value)}
                 fullWidth={true}
                 // defaultValue={snapConf.APIKey}
@@ -334,7 +363,7 @@ const CreateFormConfig: FC<CreateFormConfigProps> = ({ config }) => {
                 variant="filled"
               />
               <TextField
-                value={snapConf.deviceToken}
+                value={snapConfig.deviceToken}
                 onChange={(e) => (configStatus.deviceToken = e.target.value)}
                 fullWidth={true}
                 // defaultValue={snapConf.deviceToken}
@@ -351,7 +380,7 @@ const CreateFormConfig: FC<CreateFormConfigProps> = ({ config }) => {
                   labelId="select-label-system"
                   color="info"
                   id="select-system"
-                  value={snapConf.system}
+                  value={snapConfig.system}
                   label="Система"
                   onChange={handleChange}
                 >
