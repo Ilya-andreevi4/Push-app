@@ -1,5 +1,5 @@
 export interface IPush {
-  id?: number;
+  id?: string;
   configsSetting: {
     id: any;
     title: string;
@@ -13,4 +13,9 @@ export interface IPush {
   image?:any;
   pushDate: any;
   timePush: any;
+}
+
+
+export interface LocalPushs {
+  pushs?: IPush[];
 }

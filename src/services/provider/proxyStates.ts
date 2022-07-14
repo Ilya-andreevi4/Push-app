@@ -1,5 +1,6 @@
 import { proxy } from "valtio";
 import { IConfig } from "../../app/models/IConfig";
+import { IPush } from "../../app/models/IPush";
 
 interface stateProxy {
   status_push: boolean,
@@ -16,6 +17,9 @@ interface pushCreateProxy {
 
 interface localConfigsProxy{
   configs: IConfig[];
+}
+interface localPushsProxy{
+  pushs: IPush[];
 }
 
 interface configCreateProxy {
@@ -65,4 +69,6 @@ export const configStatus:configCreateProxy = proxy({
   timeCreateConfig: "",
 });
 
-
+export const localPushs:localPushsProxy = proxy({
+  pushs:[],
+});

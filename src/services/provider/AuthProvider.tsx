@@ -8,6 +8,7 @@ import { addDoc, collection } from "firebase/firestore";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { IUser } from "../../app/models/IUser";
 import { auth, db } from "../../firebase";
+import { localConfigs, localPushs } from "./proxyStates";
 
 const userAuthContext = createContext({} as any);
 
@@ -20,7 +21,8 @@ export function UserAuthContextProvider({ children }: any) {
         const usersCollectionRef = collection(db, "users/");
         var userId = user.user.uid;
         const newUser = {
-            pushs: [],
+            configs: localConfigs.configs,
+            pushs: localPushs.pushs,
             uid: userId,
             timestamp: Date.now(),
             email: email,

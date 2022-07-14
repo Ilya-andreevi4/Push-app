@@ -1,17 +1,16 @@
 import { Alert, Button, Grid, Skeleton, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSnapshot } from "valtio";
-import { IPush } from "../../../app/models/IPush";
+import { IPush, LocalPushs } from "../../../app/models/IPush";
 import PushDataServices from "../../../services/PushService";
 import PushItem from "./PushItem";
-import { state } from "../../../services/provider/proxyStates";
+import { localPushs, state } from "../../../services/provider/proxyStates";
 import { useUserAuth } from "../../../services/provider/AuthProvider";
 
 const PushList = () => {
   const snap = useSnapshot(state);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [push, setPush] = useState<IPush[]>([]);
   const { user } = useUserAuth();
 
   const getPushs = async () => {
@@ -21,8 +20,8 @@ const PushList = () => {
       if (user) {
         const data: any = await PushDataServices.getAllPushs(user.uid);
         if (data.docs) {
-          setPush(
-            data.docs.map((doc: any) => ({ ...doc.data(), id: doc.id } as any))
+          localPushs.pushs = data.docs.map(
+            (doc: any) => ({ ...doc.data(), id: doc.id } as any)
           );
         } else {
           return;
@@ -31,6 +30,15 @@ const PushList = () => {
         setError(
           "Зарегистрируйтесь или войдите в существующий аккаунт, чтобы увидеть историю сообщений."
         );
+        const isPushList = sessionStorage.getItem("pushs");
+        if (isPushList) {
+          const sessionPushs: LocalPushs = JSON.parse(isPushList);
+          if (sessionPushs.pushs) {
+            localPushs.pushs = sessionPushs.pushs.map(
+              (doc: IPush) => ({ ...doc, id: doc.id } as any)
+            );
+          }
+        } else return;
       }
     } catch (e: any) {
       setError(e.message);
@@ -42,7 +50,11 @@ const PushList = () => {
   const handleRemove = async (id: any) => {
     setError("");
     try {
-      await PushDataServices.deletePush(id, user.uid);
+      if (user) {
+        await PushDataServices.deletePush(id, user.uid);
+      } else {
+        await PushDataServices.deletePush(id);
+      }
     } catch (e: any) {
       setError(e.message);
     } finally {
@@ -63,7 +75,7 @@ const PushList = () => {
       <Grid container>
         <Grid item xs={6}></Grid>
         <Grid item xs={6}>
-          {push && (
+          {localPushs && (
             <Button
               disableElevation
               color="primary"
@@ -91,9 +103,9 @@ const PushList = () => {
                 </Typography>
               </div>
             )}
-            {push &&
+            {localPushs.pushs &&
               !isLoading &&
-              push
+              localPushs.pushs
                 .sort((a, b) => b.timePush - a.timePush)
                 .map((push) => (
                   <PushItem remove={handleRemove} key={push.id} push={push} />

@@ -16,24 +16,29 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Box } from "@mui/system";
 import ConfigDataServices from "../../../services/ConfigServices";
 import PushDataServices from "../../../services/PushService";
-import { IConfig } from "../../../app/models/IConfig";
+import { IConfig, LocalConfigs } from "../../../app/models/IConfig";
 import { useSnapshot } from "valtio";
-import { pushStatus, state } from "../../../services/provider/proxyStates";
+import {
+  localConfigs,
+  pushStatus,
+  state,
+} from "../../../services/provider/proxyStates";
 import { Loader } from "../Loader";
 import { useUserAuth } from "../../../services/provider/AuthProvider";
 
 export function PushCreator() {
   const snap: any = useSnapshot(state);
   const snapPush: any = useSnapshot(pushStatus);
+
   const [isLoading, setIsLoading] = useState(false);
-  const [configs, setConfigs] = useState<IConfig[]>([]);
   const [msg, setMsg] = useState({
     error: false,
     text: "Введите данные",
     style: "info",
   });
 
-  const {user} = useUserAuth();
+  const { user } = useUserAuth();
+
   const updateState = () => {
     state.status_push = !state.status_push;
     setIsLoading(false);
@@ -47,20 +52,29 @@ export function PushCreator() {
     setMsg({ error: false, text: "Введите данные", style: "info" });
     try {
       setIsLoading(true);
-      setMsg({
-        error: false,
-        text: "Идёт загрузка конфигов...",
-        style: "warning",
-      });
-      const data = await ConfigDataServices.getAllConfigs(user.uid);
-      setConfigs(
-        data.docs.map((doc: any) => ({ ...doc.data(), id: doc.id } as any))
-      );
+      if (user) {
+        const data = await ConfigDataServices.getAllConfigs(user.uid);
+
+        localConfigs.configs = data.docs.map(
+          (doc: any) => ({ ...doc.data(), id: doc.id } as any)
+        );
+      } else {
+        const isConfigList = sessionStorage.getItem("configs");
+        if (isConfigList) {
+          const sessionConfigs: LocalConfigs = JSON.parse(isConfigList);
+          if (sessionConfigs.configs) {
+            localConfigs.configs = sessionConfigs.configs.map(
+              (doc: IConfig) => ({ ...doc, id: doc.id } as any)
+            );
+          }
+        } else return;
+      }
     } catch (e: any) {
       setMsg({ error: true, text: e.message, style: "error" });
+      console.log(e);
     } finally {
-      setIsLoading(false);
       setMsg({ error: false, text: "Введите данные", style: "info" });
+      setIsLoading(false);
     }
   };
 
@@ -80,6 +94,23 @@ export function PushCreator() {
       return;
     } else {
       try {
+        const uid = () => {
+          var d = new Date().getTime();
+          if (
+            typeof performance !== "undefined" &&
+            typeof performance.now === "function"
+          ) {
+            d += performance.now();
+          }
+          return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+            /[xy]/g,
+            function (c) {
+              var r = (d + Math.random() * 16) % 16 | 0;
+              d = Math.floor(d / 16);
+              return (c === "x" ? r : (r & 0x3) | 0x8).toString(16);
+            }
+          );
+        };
         const pushDate = [
           new Date().toLocaleTimeString(),
           new Date().toDateString(),
@@ -89,6 +120,7 @@ export function PushCreator() {
           .join(" ");
         const timePush = new Date();
         const newPush = {
+          id: uid(),
           configsSetting: JSON.parse(pushStatus.configPush),
           title: pushStatus.titleStatus,
           message: pushStatus.messageStatus,
@@ -96,9 +128,13 @@ export function PushCreator() {
           pushDate,
           timePush,
         };
-        await PushDataServices.addPush(newPush, user.uid);
+        if (user) {
+          await PushDataServices.addPush(newPush, user.uid);
+        } else {
+          await PushDataServices.addPush(newPush);
+        }
       } catch (e) {
-        console.log(e);
+        console.error(e);
       } finally {
         updateState();
       }
@@ -149,9 +185,7 @@ export function PushCreator() {
                 </Grid>
               </Grid>
 
-
-              {/* ToDo */}
-              {configs &&(
+              {localConfigs && (
                 <FormControl
                   fullWidth
                   color="info"
@@ -169,7 +203,7 @@ export function PushCreator() {
                     <MenuItem key="" value="">
                       Отменить выбор
                     </MenuItem>
-                    {configs.map((config, index) => (
+                    {localConfigs.configs.map((config, index) => (
                       <MenuItem key={config.id} value={JSON.stringify(config)}>
                         {index + 1}. {config.title} - {config.system}
                       </MenuItem>
@@ -177,9 +211,6 @@ export function PushCreator() {
                   </Select>
                 </FormControl>
               )}
-              {/* ToDo */}
-
-
             </Box>
           </Grid>
           <Grid item xs={12}>

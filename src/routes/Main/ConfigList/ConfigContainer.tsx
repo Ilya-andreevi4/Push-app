@@ -53,7 +53,6 @@ const ConfigContainer = () => {
       setIsLoading(true);
       if (user) {
         const data = await ConfigDataServices.getAllConfigs(user.uid);
-
         localConfigs.configs = data.docs.map(
           (doc: any) => ({ ...doc.data(), id: doc.id } as any)
         );
