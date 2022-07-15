@@ -18,7 +18,7 @@ const PushList = () => {
     setError("");
     try {
       if (user) {
-        const data: any = await PushDataServices.getAllPushs(user.uid);
+        const data: any = await PushDataServices.getAllPushs(user.displayName);
         if (data.docs) {
           localPushs.pushs = data.docs.map(
             (doc: any) => ({ ...doc.data(), id: doc.id } as any)
@@ -51,7 +51,7 @@ const PushList = () => {
     setError("");
     try {
       if (user) {
-        await PushDataServices.deletePush(id, user.uid);
+        await PushDataServices.deletePush(id, user.displayName);
       } else {
         await PushDataServices.deletePush(id);
       }

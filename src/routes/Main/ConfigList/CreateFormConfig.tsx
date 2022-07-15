@@ -131,13 +131,12 @@ const CreateFormConfig: FC = () => {
             style: "success",
           });
         } else {
-          const time = new Date();
           const newConfig = {
             title: configStatus.title,
             system: configStatus.system,
             deviceToken: configStatus.deviceToken,
             APIKey: configStatus.APIKey,
-            timeCreateConfig: time,
+            timeCreateConfig: new Date(),
           };
           await ConfigDataServices.addConfig(newConfig, user.displayName);
           setMessage({
@@ -185,7 +184,6 @@ const CreateFormConfig: FC = () => {
             style: "success",
           });
         } else {
-          const time = new Date();
           // Создание уникального ID START
           const uid = () => {
             var d = new Date().getTime();
@@ -211,7 +209,7 @@ const CreateFormConfig: FC = () => {
             system: configStatus.system,
             deviceToken: configStatus.deviceToken,
             APIKey: configStatus.APIKey,
-            timeCreateConfig: time,
+            timeCreateConfig: new Date(),
           };
 
           localConfigs.configs.push(newConfig);
@@ -234,7 +232,7 @@ const CreateFormConfig: FC = () => {
     try {
       setIsLoading(true);
       if (user) {
-        const data = await ConfigDataServices.getAllConfigs(user.uid);
+        const data = await ConfigDataServices.getAllConfigs(user.displayName);
 
         localConfigs.configs = data.docs.map(
           (doc: any) => ({ ...doc.data(), id: doc.id } as any)

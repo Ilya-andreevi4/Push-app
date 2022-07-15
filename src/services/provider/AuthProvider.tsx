@@ -22,17 +22,19 @@ export function UserAuthContextProvider({ children }: any) {
         .then((user) => {
           const usersCollectionRef = collection(db, "users/");
           const newUser = {
-            configs: localConfigs.configs,
-            pushs: localPushs.pushs,
             uid: "",
             timestamp: Date.now(),
             email: email,
           };
           return addDoc(usersCollectionRef, newUser)
             .then((d) => {
+              const userConfigsCollectionRef = collection(db, "users/", d.id, "/configs");
+              const userPushsCollectionRef = collection(db, "users/", d.id, "/pushs");
               return (
                 setDoc(doc(db, "users/", d.id), { uid: d.id }, { merge: true }),
-                (userToken.id = d.id)
+                (userToken.id = d.id),
+                localConfigs.configs.map(async(c)=>{await addDoc(userConfigsCollectionRef, c)}),
+                localPushs.pushs.map(async(p)=>{await addDoc(userPushsCollectionRef, p)})
               );
             })
             .catch((e) => {

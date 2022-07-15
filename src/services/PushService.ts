@@ -4,15 +4,12 @@ import {
   getDocs,
   getDoc,
   addDoc,
-  updateDoc,
   doc,
   deleteDoc,
-  setDoc,
 } from "firebase/firestore";
 import axios from "axios";
 import { IPush, LocalPushs } from "../app/models/IPush";
 import { localPushs } from "./provider/proxyStates";
-import { useUserAuth } from "./provider/AuthProvider";
 
 class PushDataService {
   addPush = (newPush: IPush, userId?: string) => {
@@ -71,11 +68,8 @@ class PushDataService {
       if (userId) {
         const userDoc = collection(db, "users/" + userId + "/pushs");
         console.log(userDoc);
-        setDoc(
-          doc(db, "users/", userId),
-          {pushs: [newPush]},
-          { merge: true }
-        ).catch((error) => {
+        addDoc(userDoc, newPush)
+          .catch((error) => {
             var errorMessage = error.message;
             console.error(errorMessage);
           });
@@ -87,26 +81,6 @@ class PushDataService {
       push();
     };
     return sendPushNotification();
-  };
-
-  updatePush = (id: any, updatedPush: any) => {
-    const { user } = useUserAuth();
-    if (user) {
-      const pushDoc = doc(db, "pushs", id);
-      return updateDoc(pushDoc, updatedPush).catch((error) => {
-        var errorMessage = error.message;
-        console.error(errorMessage);
-      });
-    } else {
-      const updatePushs = localPushs.pushs.map((c: IPush) => {
-        if (c.id === updatedPush.id) {
-          return updatedPush;
-        }
-        return c;
-      });
-      sessionStorage.setItem("pushs", JSON.stringify({ pushs: updatePushs }));
-      localPushs.pushs = updatePushs;
-    }
   };
 
   deletePush = (id: any, uid?: string) => {
@@ -135,7 +109,7 @@ class PushDataService {
         console.error(errorMessage);
       });
     } else {
-      const isPushList = sessionStorage.getItem("configs");
+      const isPushList = sessionStorage.getItem("pushs");
       if (isPushList) {
         const sessionPushs: LocalPushs = JSON.parse(isPushList);
         if (sessionPushs.pushs) {
