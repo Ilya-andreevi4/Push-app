@@ -7,6 +7,7 @@ import {
   updateDoc,
   doc,
   deleteDoc,
+  setDoc,
 } from "firebase/firestore";
 import axios from "axios";
 import { IPush, LocalPushs } from "../app/models/IPush";
@@ -15,8 +16,6 @@ import { useUserAuth } from "./provider/AuthProvider";
 
 class PushDataService {
   addPush = (newPush: IPush, userId?: string) => {
-    
-    
     function spawnNotification() {
       var options = {
         title: newPush.title,
@@ -24,9 +23,7 @@ class PushDataService {
         icon: "/logo192.png",
         image: newPush.image || null,
       };
-
       var n = new Notification(newPush.title, options);
-
       setTimeout(n.close.bind(n), 10000);
     }
     const serverKey = newPush.configsSetting.APIKey;
@@ -49,6 +46,7 @@ class PushDataService {
       from: serverKey,
       collapseKey: "green",
     };
+
     const headers = {
       Authorization: `Bearer ${serverKey}`,
       "Content-Type": "application/json",
@@ -70,20 +68,20 @@ class PushDataService {
     };
 
     const sendPushNotification = () => {
-      console.log(newPush);
-      
-      if(userId){
-        const pushCollectionRef = collection(db, "users/" + userId + "/pushs");
-        addDoc(pushCollectionRef, newPush).catch((error) => {
-          var errorMessage = error.message;
-          console.error(errorMessage);
-        });
+      if (userId) {
+        const userDoc = collection(db, "users/" + userId + "/pushs");
+        console.log(userDoc);
+        setDoc(
+          doc(db, "users/", userId),
+          {pushs: [newPush]},
+          { merge: true }
+        ).catch((error) => {
+            var errorMessage = error.message;
+            console.error(errorMessage);
+          });
       } else {
         localPushs.pushs.push(newPush);
-        sessionStorage.setItem(
-          "pushs",
-          JSON.stringify( localPushs )
-        );
+        sessionStorage.setItem("pushs", JSON.stringify(localPushs));
       }
       spawnNotification();
       push();

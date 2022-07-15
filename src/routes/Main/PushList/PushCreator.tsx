@@ -53,8 +53,7 @@ export function PushCreator() {
     try {
       setIsLoading(true);
       if (user) {
-        const data = await ConfigDataServices.getAllConfigs(user.uid);
-
+        const data = await ConfigDataServices.getAllConfigs(user.displayName);
         localConfigs.configs = data.docs.map(
           (doc: any) => ({ ...doc.data(), id: doc.id } as any)
         );
@@ -129,7 +128,7 @@ export function PushCreator() {
           timePush,
         };
         if (user) {
-          await PushDataServices.addPush(newPush, user.uid);
+          await PushDataServices.addPush(newPush, user.displayName);
         } else {
           await PushDataServices.addPush(newPush);
         }

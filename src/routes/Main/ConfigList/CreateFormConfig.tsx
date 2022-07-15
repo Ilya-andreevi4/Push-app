@@ -139,7 +139,7 @@ const CreateFormConfig: FC = () => {
             APIKey: configStatus.APIKey,
             timeCreateConfig: time,
           };
-          await ConfigDataServices.addConfig(newConfig, user.uid);
+          await ConfigDataServices.addConfig(newConfig, user.displayName);
           setMessage({
             error: false,
             msg: "Создана новая конфигурация!",

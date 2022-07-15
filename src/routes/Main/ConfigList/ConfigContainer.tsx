@@ -52,7 +52,7 @@ const ConfigContainer = () => {
     try {
       setIsLoading(true);
       if (user) {
-        const data = await ConfigDataServices.getAllConfigs(user.uid);
+        const data = await ConfigDataServices.getAllConfigs(user.displayName);
         localConfigs.configs = data.docs.map(
           (doc: any) => ({ ...doc.data(), id: doc.id } as any)
         );
@@ -82,7 +82,7 @@ const ConfigContainer = () => {
   const handleRemove = async (id: any) => {
     if (user) {
       try {
-        await ConfigDataServices.deleteConfig(id, user.uid);
+        await ConfigDataServices.deleteConfig(id, user.displayName);
       } catch (e: any) {
         console.error(e.message);
       } finally {
